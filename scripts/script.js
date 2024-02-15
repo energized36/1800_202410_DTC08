@@ -1,4 +1,10 @@
-function sayHello() {
-    
+function hamburger(){
+    console.log("I have been click")
 }
-//sayHello();
+
+function setUp(){
+    $("#Hamburger").click(hamburger);
+}
+
+
+$("document").ready(setUp);
