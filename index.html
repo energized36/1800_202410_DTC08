@@ -3,15 +3,17 @@
 
 <head>
     <title>Trckr</title>
-    <meta name="comp1800 template" content="My 1800 App">
+    <meta name="document" content="My 1800 App">
 
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./scripts/script.js"></script>
-    <script src="./scripts/tailwind.config.js"></script>
+    <script src="scripts/tailwind.config.js"></script>
 
     <link rel="stylesheet" href="./styles/style.css">
 
@@ -19,15 +21,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet">
 
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {   
+                    fontFamily: {
+                        inter: ['Inter'],   
+                    },
+                    colors: {
+                        'green-main': '#4A9B30',
+                        'green-sub': '#6DB423',
+                        'green-accent': '#4A9B30',
+                        'gold-main': '#FDCC00',
+                        'gold-sub': '#FFD900',
+                    },
+                }
+            }
+        }
+    </script>
+
 </head>
 
 <body>
-    <nav>
-        <div>
-            <img src="https://1.bp.blogspot.com/-LegKewUIfcU/Wmf8QN1m58I/AAAAAAABJyg/B8cia110bPkYs4krzeM2SBhm9fXhO04tgCLcBGAs/s800/money_kasoutsuuka_kusa.png" class="h-">
+
+    <nav class="flex flex-col justify-between p-8 md:flex-row">
+        <div class="my-auto flex row justify-between">
+            <p class="text-6xl font-black font-inter my-auto text-green-main">TRCKR</p>
+            <img class="visible color-green-main md:collapse"  src="images\burger-menu-svgrepo-com.svg" id="Hamburger">
+        </div>
+        <div class="my-auto flex flex-col md:flex-row collapse md:justify-end" id="dropdown">
+            <a href="#" class="text-3xl font-inter text-green-main font-bold ml-6">About</a>
+            <a href="#" class="text-3xl font-inter text-green-main font-bold ml-6">Features</a>
+            <a href="#" class="text-3xl font-inter text-green-main font-bold ml-6 md:collapse">Log In</a>
+            <button href="#" class="bg-green-main hover:bg-green-sub text-white font-inter text-3xl font-black w-32 p-2 ml-6 rounded-full collapse md:visible">LOG IN</button>
         </div>
     </nav>
-    <main></main>
+
+    <main class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center w-[700px] mx-auto mt-28 p-8 rounded-3xl shadow-xl"> 
+            <p class="text-6xl font-black font-inter my-auto text-green-main text-center">Expense Tracking</p>
+            <p class="text-6xl font-black font-inter my-auto text-green-main text-center ">Reimagined.</p>
+            <button class="bg-gold-main hover:bg-gold-sub text-white font-inter text-3xl font-black rounded-full w-[200px] h-20 mt-10 mx-auto">SIGN UP</button>
+        </div>
+    </main>
 
 </body>
 
