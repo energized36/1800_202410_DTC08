@@ -1,10 +1,10 @@
-function hamburger(){
-    console.log("I have been click")
+function hamburger_click_handler() {
+    $("#dropdown").toggleClass("hidden");
 }
 
-function setUp(){
-    $("#Hamburger").click(hamburger);
+function setUp() {
+    $("#dropdown").toggleClass("hidden");
+    $("#Hamburger").click(hamburger_click_handler);
 }
-
 
 $("document").ready(setUp);
