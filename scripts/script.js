@@ -93,8 +93,8 @@ function add_data() {
             break;
     }
 
-   
-    if (category != "empty"){
+
+    if (category != "empty") {
         $("#data_row").append(`
         <div class="rounded-xl bg-white shadow-md p-2 mt-2 flex items-center">
             <div class="size-[40px]">` + category + `</div>
