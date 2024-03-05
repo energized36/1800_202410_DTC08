@@ -12,7 +12,7 @@ var uiConfig = {
       }
     },
     signInFlow: 'popup',
-    signInSuccessUrl: '<url-to-redirect-to-on-success>',
+    signInSuccessUrl: 'home.html',
     signInOptions: [
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
