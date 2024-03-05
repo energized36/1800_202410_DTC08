@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="scripts/tailwind.config.js"></script>
+
+    <link rel="stylesheet" href="./styles/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
+        rel="stylesheet" />
+
+    <script src="./scripts/firebaseapi.js"></script>
+    <script src="./scripts/authentication.js"></script>
+    <script src="./scripts/script.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ["Inter"],
+                    },
+                    colors: {
+                        "green-main": "#4A9B30",
+                        "green-sub": "#6DB423",
+                        "green-accent": "#4A9B30",
+                        "gold-main": "#FDCC00",
+                        "gold-sub": "#FFD900",
+                    },
+                },
+            },
+        };
+    </script>
+
+</head>
+
+<body>
+    <nav class="flex flex-col justify-between md:flex-row">
+        <div class="fixed w-full bg-white rounded-b-xl p-4 shadow-md ">
+            <div class="flex row justify-between items-center">
+                <p class="text-3xl md:text-6xl font-black font-inter my-auto text-green-main">TRCKR</p>
+                <img class="visible color-green-main hover: md:collapse" src="images\burger-menu-svgrepo-com.svg" id="Hamburger"/>
+
+                <div class="hidden md:flex items-center">
+                    <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">About</a></div>
+                    <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">Features</a></div>
+                </div>
+            </div>
+            <div class="z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end md:hidden bg-white" id="dropdown">
+                <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">About</a>
+                <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">Contact</a>
+            </div>
+        </div>
+
+    </nav>
+    <div class="mt-40">
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+    </div>
+</body>
+
+</html>
