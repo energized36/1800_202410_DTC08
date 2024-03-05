@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Trckr</title>
     <meta name="document" content="My 1800 App" />
 
@@ -18,87 +17,80 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet" />
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        inter: ["Inter"],
-                    },
-                    colors: {
-                        "green-main": "#4A9B30",
-                        "green-sub": "#6DB423",
-                        "green-accent": "#4A9B30",
-                        "gold-main": "#FDCC00",
-                        "gold-sub": "#FFD900",
-                    },
-                },
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ["Inter"],
             },
-        };
+            colors: {
+              "green-main": "#4A9B30",
+              "green-sub": "#6DB423",
+              "green-accent": "#4A9B30",
+              "gold-main": "#FDCC00",
+              "gold-sub": "#FFD900",
+            },
+          },
+        },
+      };
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav class="flex flex-col justify-between md:flex-row">
-        <div class="fixed w-full bg-white rounded-b-xl p-4 shadow-md ">
-            <div class="flex row justify-between items-center">
-                <p class="text-3xl md:text-6xl font-black font-inter my-auto text-green-main">TRCKR</p>
-                <img class="visible color-green-main hover: md:collapse" src="images\burger-menu-svgrepo-com.svg" id="Hamburger"/>
+      <div class="fixed w-full bg-white rounded-b-xl p-4 shadow-md">
+        <div class="flex row justify-between items-center">
+          <p class="text-3xl md:text-6xl font-black font-inter my-auto text-green-main">TRCKR</p>
+          <img class="visible color-green-main hover: md:collapse" src="images\burger-menu-svgrepo-com.svg" id="Hamburger" />
 
-                <div class="hidden md:flex items-center">
-                    <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">About</a></div>
-                    <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">Features</a></div>
-                    <a href="login.html" class="bg-green-main hover:bg-green-sub text-white font-inter text-2xl p-2 font-black w-32 rounded-full ml-6">LOG IN</a>
-                </div>
-            </div>
-            <div class="z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end md:hidden bg-white" id="dropdown">
-                <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">About</a>
-                <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">Contact</a>
-                <a href="login.html" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">Log In</a>
-            </div>
+          <div class="hidden md:flex items-center">
+            <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">About</a></div>
+            <div><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold ml-6">Features</a></div>
+            <a href="login.html" class="text-center bg-green-main hover:bg-green-sub text-white font-inter text-2xl p-2 font-black w-32 rounded-full ml-6">LOG IN</a>
+          </div>
         </div>
-
+        <div class="z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end md:hidden bg-white" id="dropdown">
+          <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">About</a>
+          <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full">Contact</a>
+          <a href="login.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full">Log In</a>
+        </div>
+      </div>
     </nav>
 
     <main class="flex flex-col justify-center items-center mt-20">
-        
-        <div class="flex flex-col justify-center md:w-[700px] mx-auto md:mt-32 p-8 rounded-3xl">
-            <img class="m-auto w-[70%]" src="/images/undraw_receipt_re_fre3.svg">
-            <h1 class="text-2xl font-black font-inter my-auto mb-2 text-green-main md:text-center md:text-6xl">
-                Expense Tracking Made Simple.
-            </p>
-            <a href="login.html"
-                class="bg-gold-main font-inter text-2xl text-white font-black rounded-full w-[150px] mt-4 mx-auto p-2 md:w-[200px] md:text-4xl md:p-4">
-                SIGN UP
-        </a>
-        </div>
+      <div class="flex flex-col justify-center md:w-[700px] mx-auto md:mt-32 p-8 rounded-3xl">
+        <img class="m-auto w-[70%]" src="/images/undraw_receipt_re_fre3.svg" />
+        <h1 class="text-2xl font-black font-inter my-auto mb-2 text-green-main md:text-center md:text-6xl">Expense Tracking Made Simple.</h1>
+        <p class="md:text-center">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima vitae quae sed architecto, dicta non itaque doloribus! Repudiandae tempore molestiae odit nihil consequatur soluta, aliquam libero iure provident, nulla excepturi perspiciatis
+          reprehenderit error neque officia!
+        </p>
+        <a href="login.html" class="bg-gold-main font-inter text-2xl text-center text-white font-black rounded-full w-[150px] mt-4 mx-auto p-2 md:w-[200px] md:text-4xl md:p-4">SIGN UP</a>
+      </div>
 
-        <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Maps</p>
-            <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
-                <img src="images\Graph.svg" alt="">
-            </div>
+      <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Maps</p>
+        <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
+          <img src="images\Graph.svg" alt="" />
         </div>
+      </div>
 
-        <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Category</p>
-            <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
-                <img src="images\Graph.svg" alt="">
-            </div>
+      <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Category</p>
+        <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
+          <img src="images\Graph.svg" alt="" />
         </div>
+      </div>
 
-        <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Data View</p>
-            <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
-                <img src="images\Graph.svg" alt="">
-            </div>
+      <div class="rounded-xl shadow-lg w-4/5 max-w-[800px] h-auto p-4">
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Data View</p>
+        <div class="overflow-hidden rounded-xl w-fullf flex justify-center">
+          <img src="images\Graph.svg" alt="" />
         </div>
+      </div>
     </main>
-
-</body>
-
+  </body>
 </html>
