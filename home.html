@@ -91,8 +91,8 @@
       </div>
     </header>
 
-    <div id="data_gui" class="collapse absolute min-h-full min-w-full justify-center items-center flex md:min-h-0 md:min-w-0 md:hidden">
-      <div class="bg-white rounded-xl shadow-md min-w-[90%] m-2 p-2">
+    <div id="data_gui" class="collapse absolute min-h-full min-w-full justify-center items-center flex md:z-[1]">
+      <div class="bg-white rounded-xl shadow-md min-w-[15%] m-2 p-2">
         <div class="flex">
           <div class="size-1/3 m-2">
             <input type="radio" name="category" id="groceries" class="peer hidden" value="groceries" />
@@ -195,6 +195,37 @@
             <path d="M7.01 17h.005" />
             <path d="M10.01 17h.005" />
           </svg>
+          <div class="w-full mx-4">
+            <input type="text" id="data_name" class="bg-slate-200 rounded-lg w-full font-inter py-4 font-bold text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="Name of purchase" />
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="stroke-green-accent size-32 icon icon-tabler icon-tabler-calendar-month"
+            width="44"
+            height="44"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+            <path d="M16 3v4" />
+            <path d="M8 3v4" />
+            <path d="M4 11h16" />
+            <path d="M7 14h.013" />
+            <path d="M10.01 14h.005" />
+            <path d="M13.01 14h.005" />
+            <path d="M16.015 14h.005" />
+            <path d="M13.015 17h.005" />
+            <path d="M7.01 17h.005" />
+            <path d="M10.01 17h.005" />
+          </svg>
 
           <div class="w-full mx-4">
             <input type="text" id="data_date" class="bg-slate-200 rounded-lg w-full font-inter py-4 font-bold text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="DD/MM/YYYY" />
@@ -218,15 +249,16 @@
             <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
             <path d="M12 3v3m0 12v3" />
           </svg>
-          <div class="w-full mx-4"><input type="text" id="data_price" class="bg-slate-200 rounded-lg w-full font-inter py-4 font-bold text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="00.00" /></div>
+          <div class="w-full mx-4"><input type="text" id="data_price" class="bg-slate-50 rounded-lg w-full font-inter py-4 font-bold text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="00.00" /></div>
         </div>
 
-        <div class="flex justify-center mx-20 mb-2">
-          <button id="save" class="py-4 px-6 bg-green-accent font-inter font-bold text-3xl rounded-2xl text-white hover:bg-green-main">save</button>
+        <div class="flex justify-center mx-20 mb-2 gap-2">
+          <button id="save" class="py-4 px-6 bg-green-accent font-inter font-bold text-3xl rounded-2xl text-white hover:bg-green-main shadow-md">Save</button>
+          <button id="cancel" class="py-4 px-6 border font-inter font-bold text-3xl rounded-2xl text-green-accent hover:bg-slate-100 shadow-md">Cancel</button>
         </div>
       </div>
     </div>
-    <main class="flex flex-col mx-8 min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px] md:gap-[10px]">
+    <main class="flex flex-col mx-8 min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
       <div class="hidden md:flex md:flex-col md:visible md:w-[20%] md:rounded-xl md:shadow-md font-bold text-green-accent">
         <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -257,15 +289,6 @@
           <h2>Categories</h2>
         </a>
         <a class="mt-auto inline-block p-[12px] hover:text-green-main flex items-center" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-            <path d="M9 12h12l-3 -3" />
-            <path d="M18 15l3 -3" />
-          </svg>
-          <h2>Settings</h2>
-        </a>
-        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path
@@ -273,24 +296,35 @@
             />
             <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
           </svg>
+          <h2>Settings</h2>
+        </a>
+        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+            <path d="M9 12h12l-3 -3" />
+            <path d="M18 15l3 -3" />
+          </svg>
           <h2>Logout</h2>
         </a>
       </div>
-      <div class="md:flex md:flex-col md:w-[100%]">
-        <div id="Total" class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide p-4 shadow-md text-green-accent">$00.00</div>
+      <div class="md:flex md:flex-col md:w-[100%] mx-2">
+        <div id="Total" class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
+          <h3 class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</h3>
+          $00.00
+        </div>
         <div id="graph" class="flex flex-col justify-center rounded-xl shadow-md border mt-2">
-          <div class="flex w-fit self-center justify-center rounded-2xl m-2 shadow-md gap-1 p-1">
-            <a class="inline-block hover:bg-gold-sub rounded-2xl" href="#">
+          <div class="flex w-fit self-center justify-center rounded-2xl m-2 shadow-md gap-1 p-1 border-green-main border-2">
+            <a class="inline-block rounded-2xl hover:bg-gold-sub focus:bg-gold-sub" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
                 <path d="M9 4v13" />
                 <path d="M15 7v5.5" />
                 <path d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z" />
-                <path d="M19 18v.01" />
               </svg>
             </a>
-            <a class="inline-block hover:bg-gold-sub rounded-2xl" href="#">
+            <a class="inline-block rounded-2xl hover:bg-gold-sub focus:bg-gold-sub" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
@@ -302,11 +336,19 @@
           </div>
           <img src="images\Graph.svg" alt="" class="h-min" />
         </div>
-        <div id="data_row" class="flex flex-col max-h-[300px] overflow-auto pb-4 my-2 h-[100vh] border rounded-xl shadow-md"></div>
+        <div id="data_row" class="mb-auto relative flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
+          <div id="desktop_add_btn" class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+          </div>
+        </div>
       </div>
     </main>
 
-    <footer class="fixed bottom-0 w-full rad border-2 bg-white rounded-2xl md:invisible">
+    <footer class="fixed bottom-0 w-full rad border-2 bg-white rounded-2xl md:hidden">
       <div class="flex justify-evenly items-center">
         <a href="#" class="p-1 px-8 bot-item text-black flex flex-col items-center basis-1/3" id="category">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">

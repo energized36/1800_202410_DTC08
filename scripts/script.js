@@ -119,7 +119,9 @@ function setUp() {
     $("#dropdown").toggleClass("hidden");
     $("#Hamburger").click(hamburger_click_handler);
     $("#add").on("click", add);
+    $("#desktop_add_btn").on("click", add);
     $("#save").on("click", add_data);
+    $("#cancel").on("click", add);
 }
 
 $("document").ready(setUp);
