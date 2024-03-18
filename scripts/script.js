@@ -141,7 +141,28 @@ function display_user_data(user_data){
     }
 }
 
-    add()
+async function get_spending_data(user_id) {
+    var spending_data = [];
+    
+    // Return a promise
+    return new Promise((resolve, reject) => {
+        db.collection("users").doc(user_id).collection("spending_data").onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                if (change.type === "added") {
+                    const doc = change.doc;
+                    spending_data.push({
+                        data_name: doc.data().name,
+                        data_price: doc.data().price,
+                        data_date: doc.data().date,
+                        category: doc.data().category,
+                    });
+                }
+            });
+            // Resolve the promise with the updated spending_data array
+            resolve(spending_data);
+        });
+    });
+}
 
 }
 
