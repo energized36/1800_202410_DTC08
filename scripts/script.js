@@ -6,8 +6,13 @@ function add() {
     $("#data_gui").toggleClass("collapse");
 }
 
-function total() {
+function total(user_data) {
+    var total = 0.0
+    for (let key in user_data) {
+        total += parseFloat(user_data[key].data_price)
+    }
 
+    $("#Total").text(total.toFixed(2))
 }
 
 function add_data() {
