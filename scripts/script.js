@@ -15,17 +15,38 @@ function total(user_data) {
     $("#Total").text(total.toFixed(2))
 }
 
-function add_data() {
-    let category = $("input[name='category']:checked").val()
-    let data_name = $("#data_name").val();
-    let data_price = $("#data_price").val();
-    let data_date = $("#data_date").val();
+function add_data(user_id) {
+    var category = $("input[name='category']:checked").val()
+    var data_name = $("#data_name").val();
+    var data_price = $("#data_price").val();
+    var data_date = $("#data_date").val();
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
     $("input[name='category']").prop('checked', false);
+    
+    if (category != "empty" && data_price != ""){
+        console.log("adding data to", user_id, category, data_date, data_name, data_price)
+        var document_attributes = {
+            category: category,
+            name: data_name,
+            price: data_price,
+            date: data_date
+          };
+        
+        db.collection("users").doc(user_id).collection("spending_data").add(document_attributes)
+            .then( function (docRef) {
+                console.log("Document added with ID: ", docRef.id)
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+    }
 
-    console.log(category)
+    // closes the ui
+    add();
+
+}
 
     switch (category) {
         case "groceries":
