@@ -341,6 +341,15 @@
           <img src="images\Graph.svg" alt="" class="h-min" />
         </div>
         <div id="data_row" class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
+          <div>
+            <label for="longitude_input"><strong>Longitude</strong></label>
+            <input id="longitude_input" type="text">
+            <label for="lattitude_input"><strong>Lattitude</strong></label>
+            <input id="lattitude_input" type="text">
+            <button id="add_geolocation_btn" class="border p-4 rounded-md" type="button">Add geopoint location</button>
+            <div id="geoResults">
+            </div>
+          </div>
           <div id="desktop_add_btn" class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100 hidden md:block">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
