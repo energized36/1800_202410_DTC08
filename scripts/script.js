@@ -1,25 +1,24 @@
 function hamburger_click_handler() {
+    console.log("inside hamburger_click_handler")
     $("#dropdown").toggleClass("hidden");
 }
 
 function add() {
+    console.log("Inside add function")
     $("#data_gui").toggleClass("collapse");
 }
 
-function total(user_data) {
-    var total = 0.0
-    for (let key in user_data) {
-        total += parseFloat(user_data[key].data_price)
-    }
-
-    $("#Total").text(total.toFixed(2))
+async function update_total(user_id) {
+    const total = await get_user_total(user_id)
+    $("#Total").text(total)
 }
 
-function add_data(user_id) {
+async function add_data(user_id) {
     var category = $("input[name='category']:checked").val()
     var data_name = $("#data_name").val();
     var data_price = $("#data_price").val();
     var data_date = $("#data_date").val();
+    var user_ref = db.collection("users").doc(user_id)
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
@@ -34,13 +33,20 @@ function add_data(user_id) {
             date: data_date
           };
         
-        db.collection("users").doc(user_id).collection("spending_data").add(document_attributes)
+        const current_total = await get_user_total(user_id);
+        const new_total = parseFloat(current_total) + parseFloat(data_price);
+        await db.collection("users").doc(user_id).update({
+            total: new_total
+        });
+
+        user_ref.collection("spending_data").add(document_attributes)
             .then( function (docRef) {
                 console.log("Document added with ID: ", docRef.id)
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
             });
+        
     }
 
     // closes the ui
@@ -142,27 +148,27 @@ function display_user_data(user_data){
 }
 
 async function get_spending_data(user_id) {
-    var spending_data = [];
-    
-    // Return a promise
     return new Promise((resolve, reject) => {
-        db.collection("users").doc(user_id).collection("spending_data").onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-                if (change.type === "added") {
-                    const doc = change.doc;
+        db.collection("users").doc(user_id).collection("spending_data")
+            .onSnapshot(snapshot => {
+                const spending_data = [];
+                snapshot.forEach(doc => {
                     spending_data.push({
                         data_name: doc.data().name,
                         data_price: doc.data().price,
                         data_date: doc.data().date,
                         category: doc.data().category,
                     });
-                }
+                });
+                resolve(spending_data);
+            }, error => {
+                console.error("Error fetching spending data:", error);
+                reject(error);
             });
-            // Resolve the promise with the updated spending_data array
-            resolve(spending_data);
-        });
     });
 }
+
+
 
 // retrive the current user id to be used for logging data for that user in the data base
 async function get_user_id (){
@@ -179,10 +185,22 @@ async function get_user_id (){
     });
 }
 
+async function get_user_total (user_id) {
+    return new Promise((resolve) => {
+        db.collection("users").doc(user_id)
+        .onSnapshot(doc => {
+            const total = doc.data().total;
+            console.log(total);
+            resolve(total)
+        })
+    })
+}
+
 async function setUp() {
     const user_id = await get_user_id();
     const user_data = await get_spending_data(user_id)
-    total(user_data);
+    const total = await get_user_total(user_id)
+    update_total(user_id);
     display_user_data(user_data);
     $("#dropdown").toggleClass("hidden");
     $("#Hamburger").on("click", hamburger_click_handler);
