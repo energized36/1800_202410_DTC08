@@ -12,8 +12,10 @@ function total() {
 
 function add_data() {
     let category = $("input[name='category']:checked").val()
+    let data_name = $("#data_name").val();
     let data_price = $("#data_price").val();
     let data_date = $("#data_date").val();
+    $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
     $("input[name='category']").prop('checked', false);
@@ -96,11 +98,14 @@ function add_data() {
 
     if (category != "empty") {
         $("#data_row").append(`
-        <div class="rounded-xl bg-white shadow-md p-2 mt-2 flex items-center">
-            <div class="size-[40px]">` + category + `</div>
-            <div class="font-inter font-bold flex text-md px-3 justify-between w-full text-2xl">
-                <div class="text-green-accent text-opacity-7">`+ data_date + `</div>
-                <div class="text-green-accent">$ `+ data_price + `</div>
+        <div class="rounded-xl bg-white shadow-md mx-2 mt-2 flex items-center flex-col border">
+            <div class="h-[28px] w-full bg-green-sub rounded-t-xl my-auto px-2 text-white font-semibold">` + data_name + `</div>
+            <div class="flex items-center">
+                <div class="size-[40px]">` + category + `</div>
+                <div class="font-inter font-bold flex text-md px-3 justify-between w-full text-2xl">
+                    <div class="text-green-accent text-opacity-7">`+ data_date + `</div>
+                    <div class="text-green-accent">$ `+ data_price + `</div>
+                </div>
             </div>
         </div>
         `)
@@ -114,7 +119,9 @@ function setUp() {
     $("#dropdown").toggleClass("hidden");
     $("#Hamburger").click(hamburger_click_handler);
     $("#add").on("click", add);
+    $("#desktop_add_btn").on("click", add);
     $("#save").on("click", add_data);
+    $("#cancel").on("click", add);
 }
 
 $("document").ready(setUp);
