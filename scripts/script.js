@@ -179,12 +179,18 @@ async function get_user_id (){
     });
 }
 
-function setUp() {
+async function setUp() {
+    const user_id = await get_user_id();
+    const user_data = await get_spending_data(user_id)
+    total(user_data);
+    display_user_data(user_data);
     $("#dropdown").toggleClass("hidden");
-    $("#Hamburger").click(hamburger_click_handler);
+    $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
-    $("#save").on("click", add_data);
+    $("#save").on("click", function () {
+        add_data(user_id)
+    });
     $("#cancel").on("click", add);
 }
 
