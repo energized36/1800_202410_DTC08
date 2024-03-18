@@ -164,6 +164,19 @@ async function get_spending_data(user_id) {
     });
 }
 
+// retrive the current user id to be used for logging data for that user in the data base
+async function get_user_id (){
+    return new Promise((resolve, reject) => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log(user.uid);
+                resolve(user.uid);
+            } else {
+                console.log("No user is logged in.");
+                reject("No user is logged in.");
+            }
+        });
+    });
 }
 
 function setUp() {
