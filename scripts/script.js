@@ -8,45 +8,37 @@ function add() {
     $("#data_gui").toggleClass("collapse");
 }
 
-async function update_total(user_id) {
-    const total = await get_user_total(user_id)
-    $("#Total").text(total)
-}
-
-async function add_data(user_id) {
+async function add_data(userID) {
     var category = $("input[name='category']:checked").val()
     var data_name = $("#data_name").val();
     var data_price = $("#data_price").val();
     var data_date = $("#data_date").val();
-    var user_ref = db.collection("users").doc(user_id)
+    var user_ref = db.collection("users").doc(userID)
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
     $("input[name='category']").prop('checked', false);
-    
-    if (category != "empty" && data_price != ""){
-        console.log("adding data to", user_id, category, data_date, data_name, data_price)
+
+    if (category != "empty" && data_price != "") {
+        console.log("adding data to", userID, category, data_date, data_name, data_price)
         var document_attributes = {
             category: category,
             name: data_name,
             price: data_price,
             date: data_date
-          };
-        
-        const current_total = await get_user_total(user_id);
+        };
+        const current_total = await getTotal(userID);
         const new_total = parseFloat(current_total) + parseFloat(data_price);
-        await db.collection("users").doc(user_id).update({
+        await db.collection("users").doc(userID).update({
             total: new_total
         });
-
         user_ref.collection("spending_data").add(document_attributes)
-            .then( function (docRef) {
+            .then(function (docRef) {
                 console.log("Document added with ID: ", docRef.id)
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.error("Error adding document: ", error);
             });
-        
     }
 
     // closes the ui
@@ -54,10 +46,9 @@ async function add_data(user_id) {
 
 }
 
-function display_user_data(user_data){
-    for (let key in user_data) {
-
-        switch (user_data[key].category) {
+function displayUserData(spendingData) {
+    for (let key in spendingData) {
+        switch (spendingData[key].category) {
             case "groceries":
                 category_icon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-shopping-cart stroke-gold-main" width="44" height="44"
@@ -129,53 +120,43 @@ function display_user_data(user_data){
                 category_icon = "empty"
                 break;
         }
-    
-        if (user_data[key].category != "empty") {
+
+        if (spendingData[key].category != "empty") {
             $("#data_row").append(`
             <div class="rounded-xl bg-white shadow-md mx-2 mt-2 flex items-center flex-col border">
-                <div class="h-[28px] w-full bg-green-sub rounded-t-xl my-auto px-2 text-white font-semibold">` + user_data[key].data_name + `</div>
+                <div class="h-[28px] w-full bg-green-sub rounded-t-xl my-auto px-2 text-white font-semibold">${spendingData[key].name}</div>
                 <div class="flex items-center justify-between w-full">
-                    <div class="size-[40px]">` + category_icon + `</div>
+                    <div class="size-[40px] ">
+                        ${category_icon}
+                    </div>
                     <div class="font-inter font-bold flex text-md px-3 justify-between w-full text-2xl">
-                        <div class="text-green-accent text-opacity-7">`+ user_data[key].data_date + `</div>
-                        <div class="text-green-accent">$ `+ user_data[key].data_price + `</div>
+                        <div class="text-green-accent text-opacity-7">${spendingData[key].date}</div>
+                        <div class="text-green-accent">$ ${spendingData[key].price}</div>
                     </div>
                 </div>
             </div>
-            `)
-        }    
+        `)
+        }
     }
 }
 
-async function get_spending_data(user_id) {
+function getTotal(userID) {
     return new Promise((resolve, reject) => {
-        db.collection("users").doc(user_id).collection("spending_data")
-            .onSnapshot(snapshot => {
-                const spending_data = [];
-                snapshot.forEach(doc => {
-                    spending_data.push({
-                        data_name: doc.data().name,
-                        data_price: doc.data().price,
-                        data_date: doc.data().date,
-                        category: doc.data().category,
-                    });
-                });
-                resolve(spending_data);
-            }, error => {
-                console.error("Error fetching spending data:", error);
-                reject(error);
-            });
+        db.collection("users").doc(userID).onSnapshot(snapshot => {
+            const total = snapshot.data().total;
+            console.log("Total:", total);
+            resolve(total);
+        }, error => {
+            console.error("Error getting total:", error);
+            reject(error);
+        });
     });
 }
 
-
-
-// retrive the current user id to be used for logging data for that user in the data base
-async function get_user_id (){
+async function getUserID() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user.uid);
                 resolve(user.uid);
             } else {
                 console.log("No user is logged in.");
@@ -185,29 +166,38 @@ async function get_user_id (){
     });
 }
 
-async function get_user_total (user_id) {
-    return new Promise((resolve) => {
-        db.collection("users").doc(user_id)
-        .onSnapshot(doc => {
-            const total = doc.data().total;
-            console.log(total);
-            resolve(total)
-        })
+async function getSpendingData(userID) {
+    return new Promise((resolve, reject) => {
+        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
+            let spendingData = []
+            snapshot.docs.forEach((doc) => {
+                spendingData.push({ ...doc.data() })
+            })
+            resolve(spendingData)
+        }), error => {
+            console.error("Error getting spending data:", error)
+            reject(error);
+        }
     })
 }
 
 async function setUp() {
-    const user_id = await get_user_id();
-    const user_data = await get_spending_data(user_id)
-    const total = await get_user_total(user_id)
-    update_total(user_id);
-    display_user_data(user_data);
+    const userID = await getUserID();
+    getSpendingData(userID).then(resp => {
+        displayUserData(resp);
+        console.log(resp)
+    })
+
+    getTotal(userID).then(resp => {
+        $("#total").text(resp)
+    })
+
     $("#dropdown").toggleClass("hidden");
     $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", function () {
-        add_data(user_id)
+        add_data(userID);
     });
     $("#cancel").on("click", add);
 }
