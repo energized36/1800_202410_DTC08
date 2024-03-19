@@ -380,7 +380,103 @@
         </div>
       </div>
     </div>
-  </main>
+    <main class="flex flex-col mx-8 min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
+      <div class="hidden md:flex md:flex-col md:visible md:w-[20%] md:rounded-xl md:shadow-md font-bold text-green-accent">
+        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+            <path d="M10 12h4v4h-4z" />
+          </svg>
+          <h2>Home</h2>
+        </a>
+        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+          </svg>
+          <h2>Profile</h2>
+        </a>
+        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-category-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 4h6v6h-6z" />
+            <path d="M4 14h6v6h-6z" />
+            <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+            <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          </svg>
+          <h2>Categories</h2>
+        </a>
+        <a class="mt-auto inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
+            />
+            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+          </svg>
+          <h2>Settings</h2>
+        </a>
+        <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+            <path d="M9 12h12l-3 -3" />
+            <path d="M18 15l3 -3" />
+          </svg>
+          <h2>Logout</h2>
+        </a>
+      </div>
+      <div class="md:flex md:flex-col md:w-[100%] mx-2">
+        <div id="Total" class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
+          <h3 class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</h3>
+        </div>
+        <div id="graph" class="flex flex-col justify-center rounded-xl shadow-md border mt-2">
+          <div class="flex w-fit self-center justify-center rounded-2xl m-2 shadow-md gap-1 p-1 border-green-main border-2">
+            <a class="inline-block rounded-2xl hover:bg-gold-sub focus:bg-gold-sub" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 18.5l-3 -1.5l-6 3v-13l6 -3l6 3l6 -3v7.5" />
+                <path d="M9 4v13" />
+                <path d="M15 7v5.5" />
+                <path d="M21.121 20.121a3 3 0 1 0 -4.242 0c.418 .419 1.125 1.045 2.121 1.879c1.051 -.89 1.759 -1.516 2.121 -1.879z" />
+              </svg>
+            </a>
+            <a class="inline-block rounded-2xl hover:bg-gold-sub focus:bg-gold-sub" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M4 20l14 0" />
+              </svg>
+            </a>
+          </div>
+          <img src="images\Graph.svg" alt="" class="h-min" />
+        </div>
+        <div id="data_row" class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
+          <div>
+            <label for="longitude_input"><strong>Longitude</strong></label>
+            <input id="longitude_input" type="text">
+            <label for="lattitude_input"><strong>Lattitude</strong></label>
+            <input id="lattitude_input" type="text">
+            <button id="add_geolocation_btn" class="border p-4 rounded-md" type="button">Add geopoint location</button>
+            <div id="geoResults">
+            </div>
+          </div>
+          <div id="desktop_add_btn" class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100 hidden md:block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </main>
 
   <footer class="fixed bottom-0 w-full rad border-2 bg-white rounded-2xl md:hidden">
     <div class="flex justify-evenly items-center">
