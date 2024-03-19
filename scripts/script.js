@@ -240,7 +240,7 @@ async function setUp() {
     })
 
     getTotal(userID).then(resp => {
-        $("#total").text(resp)
+        $("#total").text(resp.toFixed(2))
     })
 
     $("#dropdown").toggleClass("hidden");
