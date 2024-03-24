@@ -3,6 +3,7 @@ module.exports = {
         require('flowbite/plugin')
     ],
     darkMode: false,
+    charts: true,
 
 }
 
