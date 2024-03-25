@@ -1,6 +1,6 @@
 function hamburger_click_handler() {
-    console.log("inside hamburger_click_handler")
-    $("#dropdown").toggleClass("hidden");
+    console.log("inside hamburger_click_handler");
+    $('#dropdown').toggleClass("collapse");
 }
 
 function add() {
