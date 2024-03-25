@@ -9,44 +9,43 @@ function add() {
 }
 
 async function add_data(userID) {
-    var category = $("input[name='category']:checked").val()
+    var category = $("input[name='category']:checked").val();
     var data_name = $("#data_name").val();
     var data_price = $("#data_price").val();
     var data_date = $("#data_date").val();
-    var user_ref = db.collection("users").doc(userID)
+    var user_ref = db.collection("users").doc(userID);
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
     $("input[name='category']").prop('checked', false);
 
     if (category != "empty" && data_price != "") {
-        console.log("adding data to", userID, category, data_date, data_name, data_price)
+        console.log("adding data to", userID, category, data_date, data_name, data_price);
         var document_attributes = {
             category: category,
             name: data_name,
             price: data_price,
             date: data_date
         };
-        const current_total = await getTotal(userID);
-        const new_total = parseFloat(current_total) + parseFloat(data_price);
-        await db.collection("users").doc(userID).update({
-            total: new_total
-        });
+        var userDoc = await user_ref.get();
+        var current_total = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
+        var new_total = current_total + parseFloat(data_price);
+        await user_ref.update({ total: new_total });
+
         user_ref.collection("spending_data").add(document_attributes)
             .then(function (docRef) {
-                console.log("Document added with ID: ", docRef.id)
+                console.log("Document added with ID: ", docRef.id);
             })
             .catch(function (error) {
                 console.error("Error adding document: ", error);
             });
     }
-
-    // closes the ui
     add();
-
 }
 
 function displayUserData(spendingData) {
+    // Clears the div to update it
+    $("#data_row").empty()
     for (let key in spendingData) {
         switch (spendingData[key].category) {
             case "groceries":
@@ -140,16 +139,30 @@ function displayUserData(spendingData) {
     }
 }
 
-function getTotal(userID) {
-    return new Promise((resolve, reject) => {
-        db.collection("users").doc(userID).onSnapshot(snapshot => {
-            const total = snapshot.data().total;
-            console.log("Total:", total);
-            resolve(total);
-        }, error => {
-            console.error("Error getting total:", error);
-            reject(error);
+function queryUserTotal(userID) {
+    db.collection("users").doc(userID).onSnapshot((doc) => {
+        if (doc.exists) {
+            let total = doc.data().total || 0; 
+            total = parseFloat(total).toFixed(2)
+            $("#total").text(total)
+        } else {
+            $("#total").text("00.00");
+        }
+    }, (error) => {
+        console.error("Error getting user document:", error);
+    });
+}
+
+function queryUserData(userID) {
+    db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
+        let spendingData = [];
+        snapshot.docs.forEach((doc) => {
+            spendingData.push({ ...doc.data() });
         });
+        console.log(spendingData);
+        displayUserData(spendingData);
+    }, error => {
+        console.error("Error getting spending data:", error);
     });
 }
 
@@ -167,22 +180,7 @@ async function getUserID() {
     });
 }
 
-async function getSpendingData(userID) {
-    return new Promise((resolve, reject) => {
-        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
-            let spendingData = []
-            snapshot.docs.forEach((doc) => {
-                spendingData.push({ ...doc.data() })
-            })
-            resolve(spendingData)
-        }), error => {
-            console.error("Error getting spending data:", error)
-            reject(error);
-        }
-    })
 
-
-}
 
 async function add_geolocation_btn_hander(){
     const user_id = await get_user_id();
@@ -232,30 +230,26 @@ async function display_geopoints(){
     })
 }
 
-async function setUp() {
-    const userID = await getUserID();
-    getSpendingData(userID).then(resp => {
-        displayUserData(resp);
-        console.log(resp)
-    })
-
-    getTotal(userID).then(resp => {
-        $("#total").text(resp.toFixed(2))
-    })
-
+async function setUp(userID) {
+    queryUserData(userID);
+    queryUserTotal(userID);
     $("#dropdown").toggleClass("hidden");
     $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
-    $("#save").on("click", function () {
+    $("#save").on("click", () => {
         add_data(userID);
     });
     $("#cancel").on("click", add);
-    display_geopoints()
-    $("#add_geolocation_btn").on("click", add_geolocation_btn_hander);
+    // display_geopoints()
+    // $("#add_geolocation_btn").on("click", add_geolocation_btn_hander);
 }
 
-$("document").ready(setUp);
+$("document").ready(() => {
+    getUserID().then( (userID) => {
+        setUp(userID)
+    })
+});
 
 
 
