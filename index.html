@@ -1,110 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Trckr</title>
-    <meta name="document" content="My 1800 App" />
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Trckr</title>
+  <meta name="document" content="My 1800 App" />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-    <script src="https://www.gstatic.com/firebaseis/8.10.0/firebase-firestore.is"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="scripts/tailwind.config.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebaseis/8.10.0/firebase-firestore.is"></script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/tailwind.config.js"></script>
 
-    <script src="./scripts/script.js"></script>
-    
+  <script src="./scripts/skeleton.js"></script>
+  <script src="./scripts/script.js"></script>
+  <script src="./scripts/authentication.js"></script>
+  <script src="./scripts/firebaseapi.js"></script>
 
-    <link rel="stylesheet" href="./styles/style.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/style.css" />
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              inter: ["Inter"],
-            },
-            colors: {
-              "green-main": "#4A9B30",
-              "green-sub": "#6DB423",
-              "green-accent": "#4A9B30",
-              "gold-main": "#FDCC00",
-              "gold-sub": "#FFD900",
-            },
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
+    rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ["Inter"],
+          },
+          colors: {
+            "green-main": "#4A9B30",
+            "green-sub": "#6DB423",
+            "green-accent": "#4A9B30",
+            "gold-main": "#FDCC00",
+            "gold-sub": "#FFD900",
           },
         },
-      };
-    </script>
-  </head>
+      },
+    };
+  </script>
+</head>
 
-<body class="min-h-screen">
-    <nav class="flex flex-col justify-between md:flex-row fixed top-0 w-full p-8 pb-2 items-center bg-white">
-        <div class="flex row justify-between items-center w-full">
-            <p class="text-4xl md:text-6xl font-black font-inter my-auto text-green-main">Trckr</p>
-            <img class="visible color-green-main hover: md:collapse size-10" src="images\burger-menu-svgrepo-com.svg" id="Hamburger"/>
-        </div>                
+<body>
+  <div class="min-h-screen">
+  <nav id="topnavholder"></nav>
 
-        <div class="hidden md:flex items-center p-4">
-          <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">About</a></div>
-          <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">Features</a></div>
-          <a href="login.html" class="bg-green-main hover:bg-green-sub text-white font-inter text-2xl p-2 font-black w-32 rounded-full ml-6 text-center">LOG IN</a>
-        </div>
-
-        <div id="dropdown" class="collapse z-50 relative my-auto flex flex-col items-center w-full bg-white rounded-xl">
-          <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl pl-1">About</a>
-          <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl pl-1">Contact</a>
-          <a href="login.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full rounded-xl pl-1">Log In</a>
-        </div>
-    </nav>
-
-    <main class="flex flex-col justify-center items-center my-20">
-      <div class="flex flex-col justify-center md:w-[700px] mx-auto md:mt-32 p-8 rounded-3xl">
-        <img class="m-auto w-[60%]" src="/images/undraw_receipt_re_fre3.svg" />
-        <div class="flex flex-col p-[25px]">
-          <h1 class="font-black font-inter my-auto mb-2 text-green-main text-center text-4xl">Expense Tracking Made Simple.</h1>
-          <p class="text-center">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima vitae quae sed architecto, dicta non itaque doloribus! Repudiandae tempore molestiae odit nihil consequatur soluta, aliquam libero iure provident, nulla excepturi perspiciatis
-            reprehenderit error neque officia!
-          </p>
-          <a href="login.html" class="bg-gold-main font-inter text-xl text-center text-white font-black rounded-full mt-4 mx-auto p-3 shadow-md">SIGN UP</a>
-        </div>
+  <main class="flex flex-col justify-center items-center my-20">
+    <div class="flex flex-col justify-center md:w-[700px] mx-auto md:mt-32 p-8 rounded-3xl">
+      <img class="m-auto w-[60%]" src="/images/undraw_receipt_re_fre3.svg" />
+      <div class="flex flex-col p-[25px]">
+        <h1 class="text-2xl font-black font-inter my-auto mb-2 text-green-main text-center text-4xl">Expense Tracking
+          Made Simple.</h1>
+        <p class="text-center">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima vitae quae sed architecto, dicta non itaque
+          doloribus! Repudiandae tempore molestiae odit nihil consequatur soluta, aliquam libero iure provident, nulla
+          excepturi perspiciatis
+          reprehenderit error neque officia!
+        </p>
+        <a href="login.html"
+          class="bg-gold-main font-inter text-xl text-center text-white font-black rounded-full mt-4 mx-auto p-3 shadow-md">SIGN
+          UP</a>
       </div>
+    </div>
 
-      <div class="gap-10 flex flex-col md:flex-row items-center md:justify-center">
-          <div class=" border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
-            <div class="w-full h-[25px] bg-green-accent"></div>
-            <img src="images\Graph.svg" alt="" class="object-contain" />
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Maps</p>
-            <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea, laboriosam facere? Saepe veritatis ad iure quidem.</p>
-          </div>
-          <div class=" border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
-            <div class="w-full h-[25px] bg-green-accent"></div>
-            <img src="images\Graph.svg" alt="" class="object-contain" />
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Graphs</p>
-            <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea, laboriosam facere? Saepe veritatis ad iure quidem.</p>
-          </div>          
-          <div class="border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
-            <div class="w-full h-[25px] bg-green-accent"></div>
-            <img src="images\Graph.svg" alt="" class="object-contain" />
-            <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Categories</p>
-            <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea, laboriosam facere? Saepe veritatis ad iure quidem.</p>
-          </div>
+    <div class="gap-10 flex flex-col md:flex-row items-center md:justify-center">
+      <div
+        class="rounded-xl border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
+        <div class="w-full h-[25px] bg-green-accent"></div>
+        <img src="images\Graph.svg" alt="" class="object-contain" />
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Maps</p>
+        <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas
+          veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea,
+          laboriosam facere? Saepe veritatis ad iure quidem.</p>
       </div>
+      <div
+        class="rounded-xl border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
+        <div class="w-full h-[25px] bg-green-accent"></div>
+        <img src="images\Graph.svg" alt="" class="object-contain" />
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Graphs</p>
+        <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas
+          veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea,
+          laboriosam facere? Saepe veritatis ad iure quidem.</p>
+      </div>
+      <div
+        class="rounded-xl border shadow-lg h-fit flex-col overflow-hidden rounded-xl text-center flex justify-center items-center w-2/3 md:w-1/5 ">
+        <div class="w-full h-[25px] bg-green-accent"></div>
+        <img src="images\Graph.svg" alt="" class="object-contain" />
+        <p class="font-inter text-green-main font-bold text-center text-4xl mt-4">Categories</p>
+        <p class="p-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium veniam soluta iusto quas
+          veritatis error suscipit rem, eos earum optio, assumenda temporibus, eius id ullam expedita officiis? Ea,
+          laboriosam facere? Saepe veritatis ad iure quidem.</p>
+      </div>
+    </div>
 
-      <footer>
-        <div>instagram, facebook, X</div>
-      </footer>
+  
+  </main>
+  </div>
+  <footer id="footerholder"></footer>
+</body>
 
-    </main>
-  </body>
 </html>

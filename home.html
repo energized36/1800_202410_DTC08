@@ -110,6 +110,7 @@
         Out</a>
     </div>
   </header>
+
   <div id="data_gui" class="collapse absolute min-h-full min-w-full justify-center items-center flex md:z-[1] top-0">
     <div class="bg-white rounded-xl shadow-md min-w-[15%] m-2 p-2 md:max-w-[50%]">
       <div class="flex md:justify-center">
@@ -439,7 +440,7 @@
         </div>
       </div>
     </div>
-    <!-- <main class="flex flex-col mx-8 min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
+    <main class="flex flex-col mx-8 min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
       <div class="hidden md:flex md:flex-col md:visible md:w-[20%] md:rounded-xl md:shadow-md font-bold text-green-accent">
         <a class="inline-block p-[12px] hover:text-green-main flex items-center" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -535,49 +536,18 @@
           </div>
         </div>
       </div>
-    </main> -->
+    </main>
 
-    <footer class="fixed bottom-0 left-0 w-full border-2 border-gold-main bg-white rounded-2xl md:hidden">
-      <div class="flex justify-evenly items-center">
-        <a href="#" class="p-1 px-8 bot-item text-black flex flex-col items-center basis-1/3" id="category">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-category-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 4h6v6h-6z" />
-            <path d="M4 14h6v6h-6z" />
-            <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-          </svg>
-          <span class="text-sm">Categories</span>
-        </a>
-        <a href="#" class="p-1 px-8 bot-item text-black flex flex-col items-center basis-1/3" id="home">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-          </svg>
-          <span class="text-sm">Home</span>
-        </a>
-        <a href="#" class="p-1 px-8 bot-item text-black flex flex-col items-center basis-1/3" id="add">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-plus" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-            <path d="M12 11l0 6" />
-            <path d="M9 14l6 0" />
-          </svg>
-          <span class="text-sm">Add</span>
-        </a>
-      </div>
-    </footer>
-  
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <footer id="homebarholder"></footer>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="/node_modules/flowbite/dist/flowbite.turbo.js"></script>
   <script src="/node_modules/flowbite/dist/datepicker.js"></script>
   <script src="/scripts/tailwind.config.js"></script>
   <script src="./scripts/firebaseapi.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/skeleton.js"></script>
 </body>
 
 </html>
