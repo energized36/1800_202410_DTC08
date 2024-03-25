@@ -19,7 +19,8 @@ async function add_data(userID) {
     $("#data_date").val("");
     $("input[name='category']").prop('checked', false);
 
-    if (category != "empty" && data_price != "") {
+    if (category && data_price) {
+        
         console.log("adding data to", userID, category, data_date, data_name, data_price);
         var document_attributes = {
             category: category,
@@ -115,17 +116,16 @@ function getLogo(name) {
                 </svg>`
             break;
         default:
-            categoryIcon = "empty"
+            categoryIcon = null
             break;
     }
     return categoryIcon
 }
 
 function displayUserData(spendingData, targetID, logo) {
-    console.log(targetID)
-    for (let key in spendingData) {
+    Object.keys(spendingData).forEach(key => {
         categoryIcon = getLogo(spendingData[key].category);
-        if (spendingData[key].category != "empty") {
+        if (categoryIcon) {
             if (logo) {
                 $(`#${targetID}`).append(`
             <div class="rounded-xl bg-white shadow-md mx-2 mt-2 flex items-center flex-col border">
@@ -152,21 +152,25 @@ function displayUserData(spendingData, targetID, logo) {
             </div>
         </div>`)
             }
+        } else {
+            console.log("empty log")
         }
-    }
+    })
 }
 
 function displayCategories(spendingData) {
     const categoryTotals = {};
-    var total = 0
+    var total = 0;
     spendingData.forEach(log => {
-        const category = log.category;
+        if (Object.keys(log).length != 0) {
+                    const category = log.category;
         const price = log.price;
         if (!categoryTotals[category]) {
             categoryTotals[category] = 0;
         }
-        total += parseFloat(price)
+        total += parseFloat(price);
         categoryTotals[category] += parseFloat(price);
+        }
     });
 
     const categoryResults = Object.keys(categoryTotals).map(category => {
@@ -190,14 +194,13 @@ function displayCategories(spendingData) {
             </div>
             <div id="${category.category}-total" class="font-inter font-semibold text-green-main text-xl">${category.total.toFixed(2)}</div>
             <div id="${category.category}-logs" class="max-h-[200px]"></div>
-        </div>`)
+        </div>`);
 
         const categoryLogs = spendingData.filter(log => log.category === category.category);
-        displayUserData(categoryLogs, `${category.category}-logs`, false)
-    })
-
-
+        displayUserData(categoryLogs, `${category.category}-logs`, false);
+    });
 }
+
 
 function queryUserTotal(userID) {
     db.collection("users").doc(userID).onSnapshot((doc) => {
