@@ -25,7 +25,7 @@ async function add_data(userID) {
         var document_attributes = {
             category: category,
             name: data_name,
-            price: data_price,
+            price: parseFloat(data_price).toFixed(2),
             date: data_date
         };
         var userDoc = await user_ref.get();
@@ -223,6 +223,7 @@ function queryUserData(userID) {
             spendingData.push({ ...doc.data() });
         });
         $(`#data_row`).empty()
+        $("#categories").empty()
         console.log(spendingData);
         displayUserData(spendingData, "data_row", true);
         displayCategories(spendingData);
