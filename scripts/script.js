@@ -1,3 +1,71 @@
+const options = {
+    chart: {
+        id: 'mychart',
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+            enabled: false,
+        },
+        toolbar: {
+            show: false,
+        },
+    },
+    tooltip: {
+        enabled: true,
+        x: {
+            show: false,
+        },
+    },
+    fill: {
+        type: "gradient",
+        gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#6DB423",
+            gradientToColors: ["#1C64F2"],
+        },
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    stroke: {
+        width: 6,
+    },
+    grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            left: 2,
+            right: 2,
+            top: 0
+        },
+    },
+    series: [
+        {
+            name: "Price",
+            data: [10, 6418, 6456, 6526, 6356, 6456],
+            color: "#4A9B30",
+        },
+    ],
+    xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        },
+    },
+    yaxis: {
+        show: false,
+    },
+}
+
 function hamburger_click_handler() {
     console.log("inside hamburger_click_handler")
     $("#dropdown").toggleClass("hidden");
@@ -153,11 +221,11 @@ function getTotal(userID) {
     });
 }
 
-async function getUserID() {
+function getUserID() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user.uid);
+                // console.log(user.uid);
                 resolve(user.uid);
             } else {
                 console.log("No user is logged in.");
@@ -180,12 +248,10 @@ async function getSpendingData(userID) {
             reject(error);
         }
     })
-
-
 }
 
-async function add_geolocation_btn_hander(){
-    const user_id = await get_user_id();
+async function add_geolocation_btn_hander() {
+    const user_id = await getUserID();
     const longitude = $("#longitude_input").val();
     const lattitude = $("#lattitude_input").val();
     const result = await db.collection("users").doc(user_id).collection("spending_data");
@@ -199,21 +265,21 @@ async function add_geolocation_btn_hander(){
     display_geopoints()
 }
 
-async function display_geopoints(){
-    $("#geoResults").empty() 
-    const user_id = await get_user_id();
+async function display_geopoints() {
+    $("#geoResults").empty()
+    const user_id = await getUserID();
 
     return await db.collection("users").doc(user_id)
         .collection("spending_data")
         .orderBy(`lat`)
         .get()
         .then(snapshot => {
-                snapshot.forEach(item => {
-                    // console.log(item.id)
-                    // console.log(item.data().long)
-                    // console.log(item.data().lat)
-                    // console.log(item.data())
-                    $("#geoResults").append(`
+            snapshot.forEach(item => {
+                // console.log(item.id)
+                // console.log(item.data().long)
+                // console.log(item.data().lat)
+                // console.log(item.data())
+                $("#geoResults").append(`
                         <div class="border flex gap-2 w-max-content">
                             <div class="flex gap-2">
                                 <label for="${item.id}"><strong>ID:</strong></label>
@@ -228,15 +294,17 @@ async function display_geopoints(){
                                 <div id="${item.id}">${item.data().lat}</div>
                             </div>
                         </div>
-                        `)})
-    })
+                        `)
+            })
+        })
 }
+
 
 async function setUp() {
     const userID = await getUserID();
     getSpendingData(userID).then(resp => {
         displayUserData(resp);
-        console.log(resp)
+        // console.log(resp)
     })
 
     getTotal(userID).then(resp => {
@@ -251,87 +319,41 @@ async function setUp() {
         add_data(userID);
     });
     $("#cancel").on("click", add);
-    display_geopoints()
-    $("#add_geolocation_btn").on("click", add_geolocation_btn_hander);
+
+
+    // getPrices().then((resp) => {
+    //     // console.log(resp)
+    //     console.log(resp)
+    //     chart.updateSeries([{
+
+    //         data: resp
+    //     }])
+    // })
+
+    db.collection("users").docc(userID).get().then(userDoc => {
+        console.log(userDoc.data())
+    })
+
+
+
+
+
 }
 
 $("document").ready(setUp);
+let chart = new ApexCharts(document.getElementById("area-chart"), options);
+chart.render();
 
 
 
 
-const options = {
-    chart: {
-      height: "100%",
-      maxWidth: "100%",
-      type: "area",
-      fontFamily: "Inter, sans-serif",
-      dropShadow: {
-        enabled: false,
-      },
-      toolbar: {
-        show: false,
-      },
-    },
-    tooltip: {
-      enabled: true,
-      x: {
-        show: false,
-      },
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        opacityFrom: 0.55,
-        opacityTo: 0,
-        shade: "#6DB423",
-        gradientToColors: ["#1C64F2"],
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      width: 6,
-    },
-    grid: {
-      show: false,
-      strokeDashArray: 4,
-      padding: {
-        left: 2,
-        right: 2,
-        top: 0
-      },
-    },
-    series: [
-      {
-        name: "Nsew user",
-        data: [10, 6418, 6456, 6526, 6356, 6456],
-        color: "#4A9B30",
-      },
-    ],
-    xaxis: {
-      categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-      labels: {
-        show: false,
-      },
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
-    },
-    yaxis: {
-      show: false,
-    },
-  }
-  
-  if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(document.getElementById("area-chart"), options);
-    chart.render();
-  }
-  
+
+
+
+
+
+
+
 
 
 
