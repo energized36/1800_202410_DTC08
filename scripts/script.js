@@ -201,7 +201,6 @@ function displayCategories(spendingData) {
     });
 }
 
-
 function queryUserTotal(userID) {
     db.collection("users").doc(userID).onSnapshot((doc) => {
         if (doc.exists) {
@@ -217,11 +216,12 @@ function queryUserTotal(userID) {
 }
 
 function queryUserData(userID) {
-    db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
+    db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
             spendingData.push({ ...doc.data() });
         });
+        spendingData = spendingData.reverse()
         $(`#data_row`).empty()
         $("#categories").empty()
         console.log(spendingData);
@@ -366,7 +366,7 @@ const options = {
     },
     series: [
         {
-            name: "Nsew user",
+            name: "Spending",
             data: [10, 6418, 6456, 6526, 6356, 6456],
             color: "#4A9B30",
         },
