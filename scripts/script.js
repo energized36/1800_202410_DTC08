@@ -288,9 +288,11 @@ function queryUserTotal(userID) {
 
 function displayChart(spending_data) {
     userPriceArray = []
+    total = 0
     spending_data.forEach(purchase => {
-        userPriceArray.push(purchase.price)
+        userPriceArray.push(total += parseFloat(purchase.price))
     })
+    console.log(userPriceArray)
     chart.updateSeries([{
         data: userPriceArray
     }])
