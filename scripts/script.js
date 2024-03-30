@@ -1,3 +1,73 @@
+const options = {
+    chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+            enabled: false,
+        },
+        toolbar: {
+            show: false,
+        },
+    },
+    tooltip: {
+        enabled: true,
+        x: {
+            show: false,
+        },
+    },
+    fill: {
+        type: "gradient",
+        gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#6DB423",
+            gradientToColors: ["#1C64F2"],
+        },
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    stroke: {
+        width: 6,
+    },
+    grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+            left: 2,
+            right: 2,
+            top: 0
+        },
+    },
+    series: [
+        {
+            name: "Spending",
+            data: [10, 6418, 6456, 6526, 6356, 6456],
+            color: "#4A9B30",
+        },
+    ],
+    xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        axisTicks: {
+            show: false,
+        },
+    },
+    yaxis: {
+        show: false,
+    },
+}
+
+const chart = new ApexCharts(document.getElementById("area-chart"), options);
+chart.render()
+
 function hamburger_click_handler() {
     console.log("inside hamburger_click_handler");
     $('#dropdown').toggleClass("collapse");
@@ -20,7 +90,7 @@ async function add_data(userID) {
     $("input[name='category']").prop('checked', false);
 
     if (category && data_price) {
-        
+
         console.log("adding data to", userID, category, data_date, data_name, data_price);
         var document_attributes = {
             category: category,
@@ -163,13 +233,13 @@ function displayCategories(spendingData) {
     var total = 0;
     spendingData.forEach(log => {
         if (Object.keys(log).length != 0) {
-                    const category = log.category;
-        const price = log.price;
-        if (!categoryTotals[category]) {
-            categoryTotals[category] = 0;
-        }
-        total += parseFloat(price);
-        categoryTotals[category] += parseFloat(price);
+            const category = log.category;
+            const price = log.price;
+            if (!categoryTotals[category]) {
+                categoryTotals[category] = 0;
+            }
+            total += parseFloat(price);
+            categoryTotals[category] += parseFloat(price);
         }
     });
 
@@ -207,36 +277,51 @@ function queryUserTotal(userID) {
         if (doc.exists) {
             let total = doc.data().total || 0;
             total = parseFloat(total).toFixed(2)
-            $("#total").text(total)
+            $("#total").text(`$${total}`)
         } else {
-            $("#total").text("00.00");
+            $("#total").text("$00.00");
         }
     }, (error) => {
         console.error("Error getting user document:", error);
     });
 }
 
+function displayChart(spending_data) {
+    userPriceArray = []
+    total = 0
+    spending_data.forEach(purchase => {
+        userPriceArray.push(total += parseFloat(purchase.price))
+    })
+    console.log(userPriceArray)
+    chart.updateSeries([{
+        data: userPriceArray
+    }])
+
+}
+
 function queryUserData(userID) {
-    db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
+    db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
             spendingData.push({ ...doc.data() });
         });
+        spendingData = spendingData.reverse()
         $(`#data_row`).empty()
         $("#categories").empty()
-        console.log(spendingData);
+        // console.log(spendingData);
         displayUserData(spendingData, "data_row", true);
         displayCategories(spendingData);
+        displayChart(spendingData)
     }, error => {
         console.error("Error getting spending data:", error);
     });
 }
 
-async function getUserID() {
+async function get_user_id() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user.uid);
+                // console.log(user.uid);
                 resolve(user.uid);
             } else {
                 console.log("No user is logged in.");
@@ -246,61 +331,24 @@ async function getUserID() {
     });
 }
 
-
-
-async function add_geolocation_btn_hander() {
-    const user_id = await get_user_id();
-    const longitude = $("#longitude_input").val();
-    const lattitude = $("#lattitude_input").val();
-    const result = await db.collection("users").doc(user_id).collection("spending_data");
-
-    result.add({
-        "long": longitude,
-        "lat": lattitude,
-        "last_updated": firebase.firestore.FieldValue.serverTimestamp()
-    })
-    // console.log(result)
-    display_geopoints()
-}
-
-async function display_geopoints() {
-    $("#geoResults").empty()
-    const user_id = await get_user_id();
-
-    return await db.collection("users").doc(user_id)
-        .collection("spending_data")
-        .orderBy(`lat`)
-        .get()
-        .then(snapshot => {
-            snapshot.forEach(item => {
-                // console.log(item.id)
-                // console.log(item.data().long)
-                // console.log(item.data().lat)
-                // console.log(item.data())
-                $("#geoResults").append(`
-                        <div class="border flex gap-2 w-max-content">
-                            <div class="flex gap-2">
-                                <label for="${item.id}"><strong>ID:</strong></label>
-                                <div id="${item.id}">${item.id}</div>
-                            </div>
-                            <div class="flex gap-2">
-                                <label for="${item.id}"><strong>Long</strong></label>
-                                <div id="${item.id}">${item.data().long}</div>
-                            </div>
-                            <div class="flex gap-2">
-                                <label for="lat_${item.id}"><strong>Lat</strong></label>
-                                <div id="${item.id}">${item.data().lat}</div>
-                            </div>
-                        </div>
-                        `)
+async function getSpendingData(userID) {
+    return new Promise((resolve, reject) => {
+        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
+            let spendingData = []
+            snapshot.docs.forEach((doc) => {
+                spendingData.push({ ...doc.data() })
             })
-        })
+            resolve(spendingData)
+        }), error => {
+            console.error("Error getting spending data:", error)
+            reject(error);
+        }
+    })
 }
 
 async function setUp(userID) {
     queryUserData(userID);
     queryUserTotal(userID);
-
     $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
@@ -308,91 +356,20 @@ async function setUp(userID) {
         add_data(userID);
     });
     $("#cancel").on("click", add);
-    // display_geopoints()
-    // $("#add_geolocation_btn").on("click", add_geolocation_btn_hander);
+
+
+    // ToDo: fix widescreen desktop sidebar not reaching all the way to the end
+    // ToDo: mobile navbar not working
+    // ToDo: Add button on mobile and desktop not showing
+    // ToDo: About page
+    // ToDo: new user
+    // ToDo: cumulative data
+    // ToDo: remove map island
+
 }
 
 $("document").ready(() => {
-    getUserID().then((userID) => {
+    get_user_id().then((userID) => {
         setUp(userID)
     })
 });
-
-
-
-
-const options = {
-    chart: {
-        height: "100%",
-        maxWidth: "100%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-            enabled: false,
-        },
-        toolbar: {
-            show: false,
-        },
-    },
-    tooltip: {
-        enabled: true,
-        x: {
-            show: false,
-        },
-    },
-    fill: {
-        type: "gradient",
-        gradient: {
-            opacityFrom: 0.55,
-            opacityTo: 0,
-            shade: "#6DB423",
-            gradientToColors: ["#1C64F2"],
-        },
-    },
-    dataLabels: {
-        enabled: false,
-    },
-    stroke: {
-        width: 6,
-    },
-    grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-            left: 2,
-            right: 2,
-            top: 0
-        },
-    },
-    series: [
-        {
-            name: "Nsew user",
-            data: [10, 6418, 6456, 6526, 6356, 6456],
-            color: "#4A9B30",
-        },
-    ],
-    xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-        labels: {
-            show: false,
-        },
-        axisBorder: {
-            show: false,
-        },
-        axisTicks: {
-            show: false,
-        },
-    },
-    yaxis: {
-        show: false,
-    },
-}
-
-if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(document.getElementById("area-chart"), options);
-    chart.render();
-}
-
-
-
-
