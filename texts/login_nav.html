@@ -1,6 +1,15 @@
 <nav class="flex flex-col justify-between md:flex-row">
-    <div class="fixed w-full bg-white p-8">
+    <div class=" w-full bg-gray-100 p-4 md:p-4">
         <div class="flex row justify-between items-center">
-            <p class="text-3xl md:text-6xl font-black font-inter my-auto text-green-main"><a href="index.html">Trckr</a></p>
+        <p class="text-4xl md:text-6xl font-black font-inter my-auto text-green-main">Trckr</p>
+        <img class="visible color-green-main hover: md:collapse size-10" src="images\burger-menu-svgrepo-com.svg" id="Hamburger"/>   
+        <div class="hidden md:flex items-center p-4">
+        <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">About</a></div>
+        <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">Features</a></div>
+        </div>
     </div>
-</nav>
+    <div class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end md:hidden bg-white rounded-xl pl-4" id="dropdown">
+      <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl">About</a>
+      <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl">Contact</a>
+    </div>
+  </nav>

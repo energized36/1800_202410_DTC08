@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Trckr</title>
+    <meta name="document" content="My 1800 App" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -16,53 +17,97 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="scripts/tailwind.config.js"></script>
-    <script src="./scripts/skeleton.js"></script>
+
+
 
     <link rel="stylesheet" href="./styles/style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet" />
+
+    <script src="./scripts/skeleton.js"></script>
 
     <script src="./scripts/firebaseapi.js"></script>
     <script src="./scripts/authentication.js"></script>
     <script src="./scripts/script.js"></script>
-
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        inter: ["Inter"],
-                    },
-                    colors: {
-                        "green-main": "#4A9B30",
-                        "green-sub": "#6DB423",
-                        "green-accent": "#4A9B30",
-                        "gold-main": "#FDCC00",
-                        "gold-sub": "#FFD900",
-                    },
-                },
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ["Inter"],
             },
-        };
+            colors: {
+              "green-main": "#4A9B30",
+              "green-sub": "#6DB423",
+              "green-accent": "#4A9B30",
+              "gold-main": "#FDCC00",
+              "gold-sub": "#FFD900",
+            },
+          },
+        },
+      };
     </script>
-
-</head>
+  </head>
 
 <body>
     <nav id="loginnav"></nav>
 
-    <div class="mt-40">
-        <div id="firebaseui-auth-container"></div>
-        <div id="loader">Loading...</div>
+    <br>
+    <div class="cont">
+        <div class="form sign-in">
+            <h2>Welcome</h2>
+            <label>
+                <span>Email</span>
+                <input id="login-email" type="email" />
+            </label>
+            <label>
+                <span>Password</span>
+                <input id="login-password" type="password" />
+            </label>
+            <p class="forgot-pass">Forgot password?</p>
+            <button type="button" class="submit" onclick="login()">Sign In</button>
+        </div>
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img__text m--up">
+                    <h3>Don't have an account? Please Sign up!<h3>
+                </div>
+                <div class="img__text m--in">
+                    <h3>If you already have an account, just sign in.<h3>
+                </div>
+                <div class="img__btn">
+                    <span class="m--up">Sign Up</span>
+                    <span class="m--in">Sign In</span>
+                </div>
+            </div>
+            <div class="form sign-up">
+                <h2>Create your Account</h2>
+                <label>
+                    <span>Name</span>
+                    <input id="name" type="text" />
+                </label>
+                <label>
+                    <span>Email</span>
+                    <input id="signup-email" type="email" />
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input id="signup-password" type="password" />
+                </label>
+                <button type="button" class="submit" onclick="register()">Sign Up</button>
+            </div>
+        </div>
     </div>
 
     <footer id="footerholder"></footer>
+
+    <script>
+        document.querySelector('.img__btn').addEventListener('click', function () {
+            document.querySelector('.cont').classList.toggle('s--signup');
+        });
+    </script>
 </body>
 
 </html>
