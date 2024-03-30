@@ -146,7 +146,6 @@
 
 
 
-// registration.js
 function register() {
     var fullname = document.getElementById('name').value;
     var email = document.getElementById('signup-email').value;
@@ -185,7 +184,6 @@ function register() {
       });
   }
   
-  // login.js
   function login() {
     var email = document.getElementById('login-email').value;
     var password = document.getElementById('login-password').value;
@@ -200,7 +198,6 @@ function register() {
       });
   }
   
-  // Validation functions (unchanged)
   function validate_email(email) {
     var expression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return expression.test(String(email).toLowerCase());
@@ -210,3 +207,82 @@ function register() {
     return password.length >= 6;
   }
   
+function saveChanges() {
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    const newName = document.getElementById('name').value;
+    const newBio = document.getElementById('message').value;
+
+    firestore.collection("users").doc(currentUser.uid).update({
+      name: newName,
+      bio: newBio
+    })
+    .then(() => {
+      console.log("User information updated successfully");
+      alert("Changes saved successfully!");
+    })
+    .catch((error) => {
+      console.error("Error updating user information: ", error);
+    });
+  } else {
+    console.log("No user is signed in");
+  }
+}
+
+function deleteAccount() {
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    const confirmation = confirm("Are you sure you want to delete your account?");
+    if (confirmation) {
+      firestore.collection("users").doc(currentUser.uid).delete()
+        .then(() => {
+          console.log("User document deleted from Firestore");
+          currentUser.delete()
+            .then(() => {
+              console.log("User account deleted successfully");
+              window.location.href = "index.html";
+            })
+            .catch((error) => {
+              console.error("Error deleting user account: ", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error deleting user document from Firestore: ", error);
+        });
+    }
+  } else {
+    console.log("No user is signed in");
+  }
+}
+
+function loadUserData() {
+  var user = firebase.auth().currentUser;
+  if (user) {
+    var docRef = db.collection("users").doc(user.uid);
+
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        var userData = doc.data();
+        document.getElementById("name").value = userData.name || '';
+        document.getElementById("email").value = userData.email || '';
+        document.getElementById("message").value = userData.bio || '';
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+  } else {
+    console.log("User not logged in");
+  }
+}
+
+window.onload = function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      loadUserData();
+    } else {
+      console.log("User not logged in");
+    }
+  });
+};
