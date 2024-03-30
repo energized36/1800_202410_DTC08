@@ -9,5 +9,9 @@ const firebaseConfig = {
 };
 
 
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+
+// Get references to Firebase services
+const auth = firebase.auth();
+const database = firebase.database();
+const firestore = firebase.firestore();
