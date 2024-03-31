@@ -1,5 +1,6 @@
 const options = {
     chart: {
+        id: 'mychart',
         height: "100%",
         maxWidth: "100%",
         type: "area",
@@ -43,13 +44,13 @@ const options = {
     },
     series: [
         {
-            name: "Spending",
-            data: [10, 6418, 6456, 6526, 6356, 6456],
+            name: "Total",
+            data: [],
             color: "#4A9B30",
         },
     ],
     xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        categories: [],
         labels: {
             show: false,
         },
@@ -288,14 +289,22 @@ function queryUserTotal(userID) {
 
 function displayChart(spending_data) {
     userPriceArray = []
+    userPurchaseDateArray = []
     total = 0
     spending_data.forEach(purchase => {
         userPriceArray.push(total += parseFloat(purchase.price))
+        userPurchaseDateArray.push(purchase.date)
     })
-    console.log(userPriceArray)
+    // console.log(userPriceArray)
+    // console.log(userPurchaseDateArray)
     chart.updateSeries([{
         data: userPriceArray
     }])
+    chart.updateOptions({
+        xaxis: {
+            categories: userPurchaseDateArray
+        }
+    })
 
 }
 
@@ -373,3 +382,9 @@ $("document").ready(() => {
         setUp(userID)
     })
 });
+
+// chart.updateOptions({
+//     xaxis: {
+//         categories: ['29 Mar', '02 Mar', '03 Mar', '04 Mar', '05 Mar', '06 Apr', '07 February'],
+//     }
+// })
