@@ -289,15 +289,19 @@ function queryUserTotal(userID) {
 
 function displayChart(spending_data) {
     spending_data.reverse()
-    userPriceArray = []
-    userPurchaseDateArray = []
-    total = 0
+    let userPriceArray = []
+    let userPurchaseDateArray = []
+    let total = 0
+    const sevenDaysInMS = 604800000
+    let dateLimit = Date.now() - sevenDaysInMS
+
     spending_data.forEach(purchase => {
-        userPriceArray.push(total += parseFloat(purchase.price))
-        userPurchaseDateArray.push(purchase.date)
+        let date = Date.parse(purchase.date)
+        if (date >= dateLimit) {
+            userPriceArray.push(total += parseFloat(purchase.price))
+            userPurchaseDateArray.push(purchase.date)
+        }
     })
-    // console.log(userPriceArray)
-    // console.log(userPurchaseDateArray)
     chart.updateSeries([{
         data: userPriceArray
     }])
