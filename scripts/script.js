@@ -288,6 +288,7 @@ function queryUserTotal(userID) {
 }
 
 function displayChart(spending_data) {
+    spending_data.reverse()
     userPriceArray = []
     userPurchaseDateArray = []
     total = 0
@@ -317,7 +318,7 @@ function queryUserData(userID) {
         spendingData = spendingData.reverse()
         $(`#data_row`).empty()
         $("#categories").empty()
-        // console.log(spendingData);
+        console.log(spendingData);
         displayUserData(spendingData, "data_row", true);
         displayCategories(spendingData);
         displayChart(spendingData)
@@ -367,13 +368,15 @@ async function setUp(userID) {
     $("#cancel").on("click", add);
 
 
-    // ToDo: fix widescreen desktop sidebar not reaching all the way to the end
     // ToDo: mobile navbar not working
     // ToDo: Add button on mobile and desktop not showing
     // ToDo: About page
-    // ToDo: new user
-    // ToDo: cumulative data
-    // ToDo: remove map island
+
+    // db.collection("users").doc(userID).collection("spending_data").get().then(docRef => {
+    //     docRef.docs.forEach(item => {
+    //         console.log(item.data().date)
+    //     })
+    // })
 
 }
 
@@ -383,8 +386,5 @@ $("document").ready(() => {
     })
 });
 
-// chart.updateOptions({
-//     xaxis: {
-//         categories: ['29 Mar', '02 Mar', '03 Mar', '04 Mar', '05 Mar', '06 Apr', '07 February'],
-//     }
-// })
+
+
