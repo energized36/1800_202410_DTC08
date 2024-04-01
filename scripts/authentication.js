@@ -147,42 +147,43 @@
 
 
 function register() {
-    var fullname = document.getElementById('name').value;
-    var email = document.getElementById('signup-email').value;
-    var password = document.getElementById('signup-password').value;
-  
-    if (validate_email(email) == false || validate_password(password) == false) {
-      alert('Invalid Password/Email');
-      return;
-    }
-  
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(function (userCredential) {
-        var user = userCredential.user;
-  
-        firestore.collection('users').doc(user.uid).set({
-          name: fullname,
-          email: email,
-          last_login: Date.now()
-        })
+  var fullname = document.getElementById('name').value;
+  var email = document.getElementById('signup-email').value;
+  var password = document.getElementById('signup-password').value;
+
+  if (validate_email(email) == false || validate_password(password) == false) {
+    alert('Invalid Password/Email');
+    return;
+  }
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(function (userCredential) {
+      var user = userCredential.user;
+
+      db.collection('users').doc(user.uid).set({
+        name: fullname,
+        email: email,
+        last_login: Date.now()
+      })
+      .then(function () {
+        db.collection('users').doc(user.uid).collection('spending_data').add({})
         .then(function () {
-          firestore.collection('users').doc(user.uid).collection('spending_data').add({})
-          .then(function () {
-            alert('User Created!');
-            window.location.href = 'home.html';
-          })
-          .catch(function (error) {
-            alert('Error adding spending data: ' + error.message);
-          });
+          alert('User Created!');
+          window.location.href = 'home.html';
         })
         .catch(function (error) {
-          alert('Error adding user to Firestore: ' + error.message);
+          alert('Error adding spending data: ' + error.message);
         });
       })
       .catch(function (error) {
-        alert('Error creating user: ' + error.message);
+        alert('Error adding user to Firestore: ' + error.message);
       });
-  }
+    })
+    .catch(function (error) {
+      alert('Error creating user: ' + error.message);
+    });
+}
+
   
   function login() {
     var email = document.getElementById('login-email').value;
@@ -213,7 +214,7 @@ function saveChanges() {
     const newName = document.getElementById('name').value;
     const newBio = document.getElementById('message').value;
 
-    firestore.collection("users").doc(currentUser.uid).update({
+    db.collection("users").doc(currentUser.uid).update({
       name: newName,
       bio: newBio
     })
@@ -234,7 +235,7 @@ function deleteAccount() {
   if (currentUser) {
     const confirmation = confirm("Are you sure you want to delete your account?");
     if (confirmation) {
-      firestore.collection("users").doc(currentUser.uid).delete()
+      db.collection("users").doc(currentUser.uid).delete()
         .then(() => {
           console.log("User document deleted from Firestore");
           currentUser.delete()
