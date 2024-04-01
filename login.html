@@ -20,7 +20,7 @@
 
 
 
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/loginstyle.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -51,63 +51,64 @@
     </script>
   </head>
 
-<body>
+<body class="">
     <nav id="loginnav"></nav>
 
     <br>
-    <div class="cont">
-        <div class="form sign-in">
-            <h2>Welcome</h2>
-            <label>
-                <span>Email</span>
-                <input id="login-email" type="email" />
-            </label>
-            <label>
-                <span>Password</span>
-                <input id="login-password" type="password" />
-            </label>
-            <p class="forgot-pass">Forgot password?</p>
-            <button type="button" class="submit" onclick="login()">Sign In</button>
-        </div>
-        <div class="sub-cont">
-            <div class="img">
-                <div class="img__text m--up">
-                    <h3>Don't have an account? Please Sign up!<h3>
-                </div>
-                <div class="img__text m--in">
-                    <h3>If you already have an account, just sign in.<h3>
-                </div>
-                <div class="img__btn">
-                    <span class="m--up">Sign Up</span>
-                    <span class="m--in">Sign In</span>
-                </div>
+    <div class="login-wrap">
+        <div class="login-html">
+          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+          <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+          <div class="login-form">
+            <div class="sign-in-htm">
+              <div class="group">
+                <label for="login-email" class="label">Email</label>
+                <input id="login-email" type="email" class="input">
+              </div>
+              <div class="group">
+                <label for="login-password" class="label">Password</label>
+                <input id="login-password" type="password" class="input" data-type="password">
+              </div>
+              <div class="group">
+                <input id="check" type="checkbox" class="check" checked>
+                <label for="check"><span class="icon"></span> Keep me Signed in</label>
+              </div>
+              <div class="group">
+                <input type="submit" class="button" value="Sign In" onclick="login()">
+              </div>
+              <div class="hr"></div>
+              <div class="foot-lnk">
+                <a href="#forgot">Forgot Password?</a>
+              </div>
             </div>
-            <div class="form sign-up">
-                <h2>Create your Account</h2>
-                <label>
-                    <span>Name</span>
-                    <input id="name" type="text" />
-                </label>
-                <label>
-                    <span>Email</span>
-                    <input id="signup-email" type="email" />
-                </label>
-                <label>
-                    <span>Password</span>
-                    <input id="signup-password" type="password" />
-                </label>
-                <button type="button" class="submit" onclick="register()">Sign Up</button>
+            <div class="sign-up-htm">
+              <div class="group">
+                <label for="name" class="label">Name</label>
+                <input id="name" type="text" class="input">
+              </div>
+              <div class="group">
+                <label for="signup-email" class="label">Email</label>
+                <input id="signup-email" type="email" class="input">
+              </div>
+              <div class="group">
+                <label for="signup-password" class="label">Password</label>
+                <input id="signup-password" type="password" class="input" data-type="password">
+              </div>
+              <div class="group">
+                <input type="submit" class="button" value="Sign Up" onclick="register()">
+              </div>
+              <div class="hr"></div>
+              <div class="foot-lnk">
+                <label for="tab-1">Already Member?</a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
+      
 
     <footer id="footerholder"></footer>
 
-    <script>
-        document.querySelector('.img__btn').addEventListener('click', function () {
-            document.querySelector('.cont').classList.toggle('s--signup');
-        });
-    </script>
 </body>
 
 </html>
