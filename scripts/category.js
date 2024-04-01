@@ -1,117 +1,23 @@
-const options = {
-    chart: {
-        id: 'mychart',
-        height: "100%",
-        maxWidth: "100%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-            enabled: true,
-        },
-        toolbar: {
-            show: true,
-        },
-    },
-    tooltip: {
-        enabled: true,
-        x: {
-            show: true,
-        },
-    },
-    fill: {
-        type: "gradient",
-        gradient: {
-            opacityFrom: 0.55,
-            opacityTo: 0.25,
-            shade: "#6DB423",
-            gradientToColors: ["#1C64F2"],
-        },
-    },
-    dataLabels: {
-        enabled: false,
-        formatter: function (val, opts) {
-            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        }
-    },
-    stroke: {
-        curve: "straight",
-        width: 2,
-    },
-    grid: {
-        show: true,
-        strokeDashArray: 4,
-        // padding: {
-        //     left: 0,
-        //     right: 0
-        // },
-    },
-
-    series: [
-        {
-            name: "Total Spent",
-            data: [],
-            color: "#4A9B30",
-        },
-    ],
-    xaxis: {
-        type: "datetime",
-        min: new Date(Date.now() - 604800000).getTime(),
-        categories: [],
-        labels: {
-            show: true,
-            rotate: 45,
-        },
-        axisBorder: {
-            show: false,
-        },
-        axisTicks: {
-            show: true,
-        },
-    },
-    yaxis: {
-        labels: {
-            formatter: function (value) {
-                return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-        },
-        show: true,
-    },
-}
-
-const chart = new ApexCharts(document.getElementById("area-chart"), options);
-chart.render()
-
 function hamburger_click_handler() {
     console.log("inside hamburger_click_handler");
     $('#dropdown').toggleClass("collapse");
 }
 
 function add() {
-    window.scrollTo(0, 0);
     console.log("Inside add function")
+    $("input[name='category']").prop('checked', false);
     $("#data_gui").toggleClass("collapse");
 }
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    const todaysDate = new Date();
-    const yesterdaysDate = new Date();
-
-    yesterdaysDate.setDate(yesterdaysDate.getDate() - 1);
-
-    if (date.getDate() === todaysDate.getDate() &&
-        date.getMonth() === todaysDate.getMonth() &&
-        date.getFullYear() === todaysDate.getFullYear()) {
-        return "Today";
-    }
-
-    if (date.getDate() === yesterdaysDate.getDate() &&
-        date.getMonth() === yesterdaysDate.getMonth() &&
-        date.getFullYear() === yesterdaysDate.getFullYear()) {
-        return "Yesterday";
-    }
-
     return date.toLocaleDateString(undefined, { dateStyle: "medium" });
+}
+
+function toTitleCase(str) {
+    return str.toLowerCase().replace(/\b\w/g, function (char) {
+        return char.toUpperCase();
+    });
 }
 
 async function addData(userID) {
@@ -243,7 +149,6 @@ function displayUserData(spendingData, targetID, logo) {
     // Generate HTML for each date group
     Object.keys(groupedByDate).forEach(date => {
         const logs = groupedByDate[date];
-        const categoryIcon = logo ? getLogo(logs[0].category) : '';
 
         let html = `
             <div class="bg-white mx-2 mt-2 flex items-center flex-col">
@@ -251,15 +156,10 @@ function displayUserData(spendingData, targetID, logo) {
 
         logs.forEach(log => {
             html += `
-                    <div class="flex items-center justify-between w-full">
-                    <div class="size-[60px] mx-4">
-                        ${categoryIcon}
-                    </div>
-                    <div class="font-inter font-black flex text-md justify-between w-full text-lg">
+                    <div class="font-inter font-black flex text-md justify-between w-full text-lg pl-8">
                         <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
                         <div class="text-green-accent">$ ${log.price}</div>
-                    </div>
-                </div>`;
+                    </div>`;
         });
 
         html += `</div>`;
@@ -267,6 +167,51 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 }
+
+
+function displayCategories(spendingData) {
+    const categoryTotals = {};
+    let total = 0;
+    spendingData.forEach(log => {
+        if (Object.keys(log).length != 0) {
+            const { category, price } = log;
+            if (!categoryTotals[category]) {
+                categoryTotals[category] = 0;
+            }
+            total += parseFloat(price);
+            categoryTotals[category] += parseFloat(price);
+        }
+    });
+
+    const categoryResults = Object.keys(categoryTotals).map(category => {
+        const categoryTotal = categoryTotals[category];
+        const percentage = Math.round((categoryTotal / total) * 100);
+        return { category, total: categoryTotal, percentage };
+    });
+
+    categoryResults.sort((a, b) => b.total - a.total);
+
+    categoryResults.forEach(category => {
+        const adjustedPercentage = Math.max(category.percentage, 1);
+        const categoryLogs = spendingData.filter(log => log.category === category.category);
+        $("#categories").append(`
+        <div id="${category.category}">
+            <div class="flex justify-between items-baseline">
+                <div class="size-16">${getLogo(category.category)}</div>
+                <div class="font-inter font-bold text-green-main text-3xl">${adjustedPercentage}%</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-8 bg-green-main overflow-clip">
+                <div class=" bg-green-accent h-8 rounded-full" style="width: ${adjustedPercentage}%"></div>
+            </div>
+            <div id="${category.category}-total" class="font-inter font-bold text-green-main text-xl text-right">${category.total.toFixed(2)}</div>
+            <div id="${category.category}-logs" class="max-h-[200px] overflow-y-auto -z-10"></div>
+        </div>`);
+        
+        displayUserData(categoryLogs, `${category.category}-logs`, false);
+    });
+}
+
+
 
 function queryUserTotal(userID) {
     db.collection("users").doc(userID).onSnapshot((doc) => {
@@ -282,46 +227,6 @@ function queryUserTotal(userID) {
     });
 }
 
-function displayChart(spending_data) {
-    spending_data.reverse()
-    let userPriceArray = []
-    let userPurchaseDateArray = []
-    let total = 0
-    // const sevenDaysInMS = 604800000
-    // let dateLimit = Date.now() - sevenDaysInMS
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    spending_data.forEach(purchase => {
-        let date = new Date(purchase.date)
-
-        let purchaseDate = new Date(purchase.date)
-        let purchaseDay = purchaseDate.getDate()
-        let purchaseMonth = monthNames[purchaseDate.getMonth()]
-        let purchaseYear = purchaseDate.getFullYear()
-        let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`
-        // console.log(dateString)
-        if (userPurchaseDateArray.includes(dateString)) {
-            userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price)
-        }
-        else {
-            total = 0
-            userPriceArray.push(total += parseFloat(purchase.price))
-            userPurchaseDateArray.push(dateString)
-        }
-    })
-    // console.log(userPriceArray)
-    // console.log(userPurchaseDateArray)
-    chart.updateSeries([{
-        data: userPriceArray
-    }])
-    chart.updateOptions({
-        xaxis: {
-            categories: userPurchaseDateArray
-        }
-    })
-
-}
-
 function queryUserData(userID) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
@@ -331,9 +236,9 @@ function queryUserData(userID) {
         spendingData = spendingData.reverse()
         $(`#data_row`).empty()
         $("#categories").empty()
-        // console.log(spendingData);
+        console.log(spendingData);
         displayUserData(spendingData, "data_row", true);
-        displayChart(spendingData)
+        displayCategories(spendingData);
     }, error => {
         console.error("Error getting spending data:", error);
     });
@@ -368,63 +273,7 @@ async function getSpendingData(userID) {
     })
 }
 
-function toggleBarGraph() {
-    ApexCharts.exec("mychart", 'updateOptions', {
-        chart: {
-            type: "bar"
-        },
-    })
-}
-
-function toggleLineGraph() {
-    chart.updateOptions({
-        chart: {
-            type: "area"
-        }
-    })
-}
-
-function toggleGraph90Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 7776000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph30Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 2592000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph7Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 604800000).getTime(),
-        }
-    })
-}
-
-function toggleGraphToday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 86400000).getTime(),
-        }
-    })
-}
-
-function toggleGraphYesterday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 172800000).getTime(),
-        }
-    })
-}
-
-async function setUp(userID) {
+function setUp(userID) {
     queryUserData(userID);
     queryUserTotal(userID);
     $("#Hamburger").on("click", hamburger_click_handler);
@@ -434,19 +283,6 @@ async function setUp(userID) {
         addData(userID);
     });
     $("#cancel").on("click", add);
-    $("#barGraphButton").on("click", toggleBarGraph);
-    $("#lineGraphButton").on("click", toggleLineGraph);
-    $("#last90DaysButton").on("click", toggleGraph90Days);
-    $("#last30DaysButton").on("click", toggleGraph30Days);
-    $("#last7DaysButton").on("click", toggleGraph7Days);
-    $("#todayButton").on("click", toggleGraphToday);
-    $("#yesterdayButton").on("click", toggleGraphYesterday);
-
-    // Michael ToDo:
-    // ToDo: About page
-    // ToDo: fix lorem on landing page
-    // ToDo: add border around island buttons
-    // ToDo: fix formatting on bar chart
 }
 
 $("document").ready(() => {
@@ -454,4 +290,6 @@ $("document").ready(() => {
         setUp(userID)
     })
 });
+
+
 

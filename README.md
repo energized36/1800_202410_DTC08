@@ -11,7 +11,7 @@ List team members and/or short bio's here...
 - my name is michael and i want to make cool stuff with code!
 - I am Erryl and I am eager to implement my idea into a fully functioning website
 - I am Alzen Landayan and I am very excited about this project because a a lot of cool ideas will be manifested..
-- ...
+
 
 ## 3. Technologies and Resources Used
 
@@ -20,7 +20,8 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
 - Firebase 8.0 (BAAS - Backend as a Service)
-- ...
+- Flowbite footer, and chart library
+- Apex charts
 
 ## 4. Complete setup/installion/usage
 
