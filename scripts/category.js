@@ -4,13 +4,55 @@ function hamburger_click_handler() {
 }
 
 function add() {
+    window.scrollTo(0, 0);
     console.log("Inside add function")
-    $("input[name='category']").prop('checked', false);
     $("#data_gui").toggleClass("collapse");
+}
+
+function filterByTimeRange(timeRange, dataList) {
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = today.getMonth() + 1
+    const day = today.getDate()
+    const currentDate = new Date(year, month - 1, day)
+    switch (timeRange) {
+        case 'week':
+            const lastMonday = new Date(currentDate)
+            lastMonday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
+            return dataList.filter(item => new Date(item.date) >= lastMonday && new Date(item.date) <= currentDate);
+        case 'month':
+            const firstDayOfMonth = new Date(year, month - 1, 1);
+            return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
+        case 'year':
+            const firstDayOfYear = new Date(year, 0, 1);
+            return dataList.filter(item => new Date(item.date) >= firstDayOfYear && new Date(item.date) <= currentDate);
+        case 'all':
+            return dataList;
+        default:
+            console.error('Invalid time range');
+            return [];
+    }
 }
 
 function formatDate(dateString) {
     const date = new Date(dateString);
+    const todaysDate = new Date();
+    const yesterdaysDate = new Date();
+
+    yesterdaysDate.setDate(yesterdaysDate.getDate() - 1);
+
+    if (date.getDate() === todaysDate.getDate() &&
+        date.getMonth() === todaysDate.getMonth() &&
+        date.getFullYear() === todaysDate.getFullYear()) {
+        return "Today";
+    }
+
+    if (date.getDate() === yesterdaysDate.getDate() &&
+        date.getMonth() === yesterdaysDate.getMonth() &&
+        date.getFullYear() === yesterdaysDate.getFullYear()) {
+        return "Yesterday";
+    }
+
     return date.toLocaleDateString(undefined, { dateStyle: "medium" });
 }
 
@@ -156,7 +198,7 @@ function displayUserData(spendingData, targetID, logo) {
 
         logs.forEach(log => {
             html += `
-                    <div class="font-inter font-black flex text-md justify-between w-full text-lg pl-8">
+                    <div class="font-inter font-bold flex text-md justify-between w-full text-lg pl-8">
                         <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
                         <div class="text-green-accent">$ ${log.price}</div>
                     </div>`;
@@ -211,23 +253,15 @@ function displayCategories(spendingData) {
     });
 }
 
-
-
-function queryUserTotal(userID) {
-    db.collection("users").doc(userID).onSnapshot((doc) => {
-        if (doc.exists) {
-            let total = doc.data().total || 0;
-            total = parseFloat(total).toFixed(2)
-            $("#total").text(`$${total}`)
-        } else {
-            $("#total").text("$00.00");
-        }
-    }, (error) => {
-        console.error("Error getting user document:", error);
-    });
+function getUserTotal(spendingData) {
+    total = 0
+    spendingData.forEach(data => {
+        total += parseFloat(data.price)
+    })
+    return total.toFixed(2)
 }
 
-function queryUserData(userID) {
+function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
@@ -236,9 +270,10 @@ function queryUserData(userID) {
         spendingData = spendingData.reverse()
         $(`#data_row`).empty()
         $("#categories").empty()
-        console.log(spendingData);
-        displayUserData(spendingData, "data_row", true);
+        spendingData = filterByTimeRange(timeRange, spendingData);
         displayCategories(spendingData);
+        displayUserData(spendingData, "data_row", true);
+        $("#total").text(`$${getUserTotal(spendingData)}`)
     }, error => {
         console.error("Error getting spending data:", error);
     });
@@ -274,8 +309,7 @@ async function getSpendingData(userID) {
 }
 
 function setUp(userID) {
-    queryUserData(userID);
-    queryUserTotal(userID);
+    queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
@@ -283,6 +317,9 @@ function setUp(userID) {
         addData(userID);
     });
     $("#cancel").on("click", add);
+    $('input[name="date-picker"]').on('change', function() {
+        queryUserData(userID, $(this).val());
+    });
 }
 
 $("document").ready(() => {
