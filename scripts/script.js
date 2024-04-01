@@ -267,11 +267,13 @@ function displayUserData(spendingData, targetID, logo) {
         const logs = groupedByDate[date];
         const categoryIcon = logo ? getLogo(logs[0].category) : '';
         let html = `
-            <div class="bg-white mx-2 mt-2 flex items-center flex-col">
-                <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
+                <div class="bg-white mx-2 mt-2 flex items-center flex-col">
+                    <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
         logs.forEach(log => {
             html += `
-                    <div class="flex items-center justify-between w-full">
+                <div class="flex items-center justify-between w-full">
+                    <input type="checkbox" id="${log.id}" class="peer hidden">
+                    <label for="${log.id}" class=" ml-4 inline-block relative rounded-full h-4 w-5 border-2 border-gray-300 cursor-pointer peer-checked:border-gold-main peer-checked:bg-gold-main"></label>
                     <div class="size-[60px] mx-4">
                         ${categoryIcon}
                     </div>
@@ -284,7 +286,25 @@ function displayUserData(spendingData, targetID, logo) {
         html += `</div>`;
         $(`#${targetID}`).append(html);
     });
+
+    $(`#${targetID}_form`).submit(function(event) {
+        event.preventDefault();
+        $(this).find('input[type="checkbox"]:checked').each(function() {
+            get_user_id().then(userID => {
+                var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
+                
+                spendingData.delete().then(function() {
+                    console.log("Document successfully deleted!");
+                }).catch(function(error) {
+                    console.error("Error deleting document: ", error);
+                });
+            })
+        });
+    });
 }
+
+
+
 
 function getUserTotal(spendingData) {
     total = 0
@@ -332,7 +352,7 @@ function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
-            spendingData.push({ ...doc.data() });
+            spendingData.push({...doc.data(), id: doc.id});
         });
         spendingData = spendingData.reverse();
         $("#data_row").empty();
