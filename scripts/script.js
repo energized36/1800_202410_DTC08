@@ -77,6 +77,7 @@ function hamburger_click_handler() {
 }
 
 function add() {
+    window.scrollTo(0, 0);
     console.log("Inside add function")
     $("#data_gui").toggleClass("collapse");
 }
