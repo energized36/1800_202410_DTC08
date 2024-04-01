@@ -6,10 +6,10 @@ const options = {
         type: "area",
         fontFamily: "Inter, sans-serif",
         dropShadow: {
-            enabled: false,
+            enabled: true,
         },
         toolbar: {
-            show: false,
+            show: true,
         },
     },
     tooltip: {
@@ -22,39 +22,44 @@ const options = {
         type: "gradient",
         gradient: {
             opacityFrom: 0.55,
-            opacityTo: 0,
+            opacityTo: 0.25,
             shade: "#6DB423",
             gradientToColors: ["#1C64F2"],
         },
     },
     dataLabels: {
-        enabled: true,
-        offsetX: 10,
+        enabled: false,
+        formatter: function (val, opts) {
+            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
     },
     stroke: {
-        curve: "stepline",
+        curve: "straight",
         width: 2,
     },
     grid: {
         show: true,
         strokeDashArray: 4,
-        padding: {
-            left: 50,
-            right: 0
-        },
+        // padding: {
+        //     left: 0,
+        //     right: 0
+        // },
     },
 
     series: [
         {
-            name: "Total",
+            name: "Total Spent",
             data: [],
             color: "#4A9B30",
         },
     ],
     xaxis: {
+        type: "datetime",
+        min: new Date(Date.now() - 604800000).getTime(),
         categories: [],
         labels: {
             show: true,
+            rotate: 45,
         },
         axisBorder: {
             show: false,
@@ -64,7 +69,12 @@ const options = {
         },
     },
     yaxis: {
-        show: false,
+        labels: {
+            formatter: function (value) {
+                return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+        },
+        show: true,
     },
 }
 
@@ -115,13 +125,13 @@ function formatDate(dateString) {
 
     yesterdaysDate.setDate(yesterdaysDate.getDate() - 1);
 
-    if (date.getDate() === todaysDate.getDate() && 
+    if (date.getDate() === todaysDate.getDate() &&
         date.getMonth() === todaysDate.getMonth() &&
         date.getFullYear() === todaysDate.getFullYear()) {
         return "Today";
     }
 
-    if (date.getDate() === yesterdaysDate.getDate() && 
+    if (date.getDate() === yesterdaysDate.getDate() &&
         date.getMonth() === yesterdaysDate.getMonth() &&
         date.getFullYear() === yesterdaysDate.getFullYear()) {
         return "Yesterday";
@@ -297,32 +307,28 @@ function displayChart(spending_data) {
     let userPriceArray = []
     let userPurchaseDateArray = []
     let total = 0
-    const sevenDaysInMS = 604800000
-    let dateLimit = Date.now() - sevenDaysInMS
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    // const sevenDaysInMS = 604800000
+    // let dateLimit = Date.now() - sevenDaysInMS
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     spending_data.forEach(purchase => {
         let date = new Date(purchase.date)
 
-        if (date >= dateLimit) {
-            let purchaseDate = new Date(purchase.date)
-            let purchaseDay = purchaseDate.getDate()
-            let purchaseMonth = monthNames[purchaseDate.getMonth()]
-            let purchaseYear = purchaseDate.getFullYear()
-            let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`
-            // console.log(dateString)
-            if (userPurchaseDateArray.includes(dateString)) {
-                userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price)
-            }
-            else {
-                userPriceArray.push(total += parseFloat(purchase.price))
-                userPurchaseDateArray.push(dateString)
-            }
-
+        let purchaseDate = new Date(purchase.date)
+        let purchaseDay = purchaseDate.getDate()
+        let purchaseMonth = monthNames[purchaseDate.getMonth()]
+        let purchaseYear = purchaseDate.getFullYear()
+        let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`
+        // console.log(dateString)
+        if (userPurchaseDateArray.includes(dateString)) {
+            userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price)
         }
-
+        else {
+            total = 0
+            userPriceArray.push(total += parseFloat(purchase.price))
+            userPurchaseDateArray.push(dateString)
+        }
     })
-    console.log(userPriceArray)
     // console.log(userPriceArray)
     // console.log(userPurchaseDateArray)
     chart.updateSeries([{
@@ -399,7 +405,46 @@ function toggleLineGraph() {
         chart: {
             type: "area"
         }
+    })
+}
 
+function toggleGraph90Days() {
+    chart.updateOptions({
+        xaxis: {
+            min: new Date(Date.now() - 7776000000).getTime(),
+        }
+    })
+}
+
+function toggleGraph30Days() {
+    chart.updateOptions({
+        xaxis: {
+            min: new Date(Date.now() - 2592000000).getTime(),
+        }
+    })
+}
+
+function toggleGraph7Days() {
+    chart.updateOptions({
+        xaxis: {
+            min: new Date(Date.now() - 604800000).getTime(),
+        }
+    })
+}
+
+function toggleGraphToday() {
+    chart.updateOptions({
+        xaxis: {
+            min: new Date(Date.now() - 86400000).getTime(),
+        }
+    })
+}
+
+function toggleGraphYesterday() {
+    chart.updateOptions({
+        xaxis: {
+            min: new Date(Date.now() - 172800000).getTime(),
+        }
     })
 }
 
@@ -419,11 +464,10 @@ async function setUp(userID) {
     });
 
     // Michael ToDo:
-    // ToDo: mobile navbar not working
-    // ToDo: Add button on mobile and desktop not showing
-    // ToDo: add $ sign to labels on charts
     // ToDo: About page
     // ToDo: fix lorem on landing page
+    // ToDo: add border around island buttons
+    // ToDo: fix formatting on bar chart
 }
 
 $("document").ready(() => {
@@ -431,6 +475,4 @@ $("document").ready(() => {
         setUp(userID)
     })
 });
-
-
 
