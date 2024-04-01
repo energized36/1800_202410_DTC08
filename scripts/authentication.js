@@ -214,7 +214,7 @@ function saveChanges() {
     const newName = document.getElementById('name').value;
     const newBio = document.getElementById('message').value;
 
-    firestore.collection("users").doc(currentUser.uid).update({
+    db.collection("users").doc(currentUser.uid).update({
       name: newName,
       bio: newBio
     })
@@ -235,7 +235,7 @@ function deleteAccount() {
   if (currentUser) {
     const confirmation = confirm("Are you sure you want to delete your account?");
     if (confirmation) {
-      firestore.collection("users").doc(currentUser.uid).delete()
+      db.collection("users").doc(currentUser.uid).delete()
         .then(() => {
           console.log("User document deleted from Firestore");
           currentUser.delete()
