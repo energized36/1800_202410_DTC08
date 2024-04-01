@@ -39,8 +39,8 @@ const options = {
         show: true,
         strokeDashArray: 4,
         padding: {
-            left: 25,
-            right: 25
+            left: 50,
+            right: 0
         },
     },
 
@@ -56,7 +56,6 @@ const options = {
         labels: {
             show: true,
         },
-        offsetX: 25,
         axisBorder: {
             show: false,
         },
@@ -382,10 +381,10 @@ async function getSpendingData(userID) {
 }
 
 function toggleBarGraph() {
-    chart.updateOptions({
+    ApexCharts.exec("mychart", 'updateOptions', {
         chart: {
             type: "bar"
-        }
+        },
     })
 }
 
@@ -394,6 +393,7 @@ function toggleLineGraph() {
         chart: {
             type: "area"
         }
+
     })
 }
 
