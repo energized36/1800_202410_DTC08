@@ -15,7 +15,7 @@ const options = {
     tooltip: {
         enabled: true,
         x: {
-            show: false,
+            show: true,
         },
     },
     fill: {
@@ -28,20 +28,22 @@ const options = {
         },
     },
     dataLabels: {
-        enabled: false,
+        enabled: true,
+        offsetX: 10,
     },
     stroke: {
-        width: 6,
+        curve: "stepline",
+        width: 2,
     },
     grid: {
-        show: false,
+        show: true,
         strokeDashArray: 4,
         padding: {
-            left: 2,
-            right: 2,
-            top: 0
+            left: 25,
+            right: 25
         },
     },
+
     series: [
         {
             name: "Total",
@@ -52,13 +54,14 @@ const options = {
     xaxis: {
         categories: [],
         labels: {
-            show: false,
+            show: true,
         },
+        offsetX: 25,
         axisBorder: {
             show: false,
         },
         axisTicks: {
-            show: false,
+            show: true,
         },
     },
     yaxis: {
@@ -294,14 +297,32 @@ function displayChart(spending_data) {
     let total = 0
     const sevenDaysInMS = 604800000
     let dateLimit = Date.now() - sevenDaysInMS
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
     spending_data.forEach(purchase => {
-        let date = Date.parse(purchase.date)
+        let date = new Date(purchase.date)
+
         if (date >= dateLimit) {
-            userPriceArray.push(total += parseFloat(purchase.price))
-            userPurchaseDateArray.push(purchase.date)
+            let purchaseDate = new Date(purchase.date)
+            let purchaseDay = purchaseDate.getDate()
+            let purchaseMonth = monthNames[purchaseDate.getMonth()]
+            let purchaseYear = purchaseDate.getFullYear()
+            let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`
+            // console.log(dateString)
+            if (userPurchaseDateArray.includes(dateString)) {
+                userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price)
+            }
+            else {
+                userPriceArray.push(total += parseFloat(purchase.price))
+                userPurchaseDateArray.push(dateString)
+            }
+
         }
+
     })
+    console.log(userPriceArray)
+    // console.log(userPriceArray)
+    // console.log(userPurchaseDateArray)
     chart.updateSeries([{
         data: userPriceArray
     }])
@@ -360,6 +381,15 @@ async function getSpendingData(userID) {
     })
 }
 
+function toggleBarGraph() {
+    console.log("clicked")
+    // chart.updateOptions({
+    //     chart: {
+    //         type: "bar"
+    //     }
+    // })
+}
+
 async function setUp(userID) {
     queryUserData(userID);
     queryUserTotal(userID);
@@ -370,18 +400,14 @@ async function setUp(userID) {
         add_data(userID);
     });
     $("#cancel").on("click", add);
+    $("#barGraph").on("click", toggleBarGraph);
 
-
+    // Michael ToDo:
     // ToDo: mobile navbar not working
     // ToDo: Add button on mobile and desktop not showing
+    // ToDo: add $ sign to labels on charts
     // ToDo: About page
-
-    // db.collection("users").doc(userID).collection("spending_data").get().then(docRef => {
-    //     docRef.docs.forEach(item => {
-    //         console.log(item.data().date)
-    //     })
-    // })
-
+    // ToDo: fix lorem on landing page
 }
 
 $("document").ready(() => {
