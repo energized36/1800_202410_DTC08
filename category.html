@@ -172,6 +172,28 @@
             </a>
         </div>
 
+        <!-- date range picker -->
+        <div>
+            <ul class="flex items-center justify-evenly w-full text-sm font-inter  bg-whiterounded-lg shadow-md my-4 font-extrabold">
+              <li>
+                  <input id="horizontal-list-radio-1m" type="radio" value="week" name="date-picker" class="hidden peer" checked>
+                  <label for="horizontal-list-radio-1m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Week</label>
+              </li>
+              <li>
+                  <input id="horizontal-list-radio-3m" type="radio" value="month" name="date-picker" class="hidden peer">
+                  <label for="horizontal-list-radio-3m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Month</label>
+              </li>
+              <li>
+                  <input id="horizontal-list-radio-6m" type="radio" value="year" name="date-picker" class="hidden peer">
+                  <label for="horizontal-list-radio-6m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Year</label>
+              </li>
+              <li>
+                  <input id="horizontal-list-radio-all" type="radio" value="all" name="date-picker" class="hidden peer">
+                  <label for="horizontal-list-radio-all" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">ALL</label>
+              </li>
+          </ul>
+        </div>
+
         <div class="md:flex md:flex-col md:w-[100%] mx-2">
             <div class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
                 <p class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</p>

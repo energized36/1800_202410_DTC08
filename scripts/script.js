@@ -275,7 +275,7 @@ function displayUserData(spendingData, targetID, logo) {
                     <div class="size-[60px] mx-4">
                         ${categoryIcon}
                     </div>
-                    <div class="font-inter font-black flex text-md justify-between w-full text-lg">
+                    <div class="font-inter font-bold flex text-md justify-between w-full text-lg">
                         <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
                         <div class="text-green-accent">$ ${log.price}</div>
                     </div>
@@ -346,8 +346,6 @@ function queryUserData(userID, timeRange) {
         console.error("Error getting spending data:", error);
     });
 }
-
-
 
 async function get_user_id() {
     return new Promise((resolve, reject) => {
