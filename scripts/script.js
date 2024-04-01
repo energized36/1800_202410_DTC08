@@ -81,7 +81,29 @@ function add() {
     $("#data_gui").toggleClass("collapse");
 }
 
-async function add_data(userID) {
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const todaysDate = new Date();
+    const yesterdaysDate = new Date();
+
+    yesterdaysDate.setDate(yesterdaysDate.getDate() - 1);
+
+    if (date.getDate() === todaysDate.getDate() && 
+        date.getMonth() === todaysDate.getMonth() &&
+        date.getFullYear() === todaysDate.getFullYear()) {
+        return "Today";
+    }
+
+    if (date.getDate() === yesterdaysDate.getDate() && 
+        date.getMonth() === yesterdaysDate.getMonth() &&
+        date.getFullYear() === yesterdaysDate.getFullYear()) {
+        return "Yesterday";
+    }
+
+    return date.toLocaleDateString(undefined, { dateStyle: "medium" });
+}
+
+async function addData(userID) {
     var category = $("input[name='category']:checked").val();
     var data_name = $("#data_name").val();
     var data_price = $("#data_price").val();
@@ -136,7 +158,7 @@ function getLogo(name) {
         case "food":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                 class=" size-full icon icon-tabler icon-tabler-tools-kitchen-2 stroke-gold-main" width="44" height="44"
-                viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
                 stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path
@@ -145,7 +167,7 @@ function getLogo(name) {
             break;
         case "clothing":
             categoryIcon = ` <svg xmlns="http://www.w3.org/2000/svg" class="stroke-gold-main size-full icon icon-tabler icon-tabler-shirt"
-                width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none"
+                width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
@@ -167,7 +189,7 @@ function getLogo(name) {
         case "online_shopping":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-world-www stroke-gold-main" width="44" height="44"
-                            viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+                            viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M19.5 7a9 9 0 0 0 -7.5 -4a8.991 8.991 0 0 0 -7.484 4" />
@@ -182,7 +204,7 @@ function getLogo(name) {
                             </svg>`
             break;
         case "school":
-            categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="stroke-gold-main size-full icon icon-tabler icon-tabler-school" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="stroke-gold-main size-full icon icon-tabler icon-tabler-school" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
                 <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
@@ -196,84 +218,44 @@ function getLogo(name) {
 }
 
 function displayUserData(spendingData, targetID, logo) {
+    const groupedByDate = {};
+
+    // Group spending data by date
     Object.keys(spendingData).forEach(key => {
-        categoryIcon = getLogo(spendingData[key].category);
-        if (categoryIcon) {
-            if (logo) {
-                $(`#${targetID}`).append(`
-            <div class="rounded-xl bg-white shadow-md mx-2 mt-2 flex items-center flex-col border">
-                <div class="h-[28px] w-full bg-green-sub rounded-t-xl my-auto px-2 text-white font-semibold">${spendingData[key].name}</div>
-                <div class="flex items-center justify-between w-full">
-                    <div class="size-[40px] ">
+        const date = formatDate(spendingData[key].date);
+        if (!groupedByDate[date]) {
+            groupedByDate[date] = [];
+        }
+        groupedByDate[date].push(spendingData[key]);
+    });
+
+    // Generate HTML for each date group
+    Object.keys(groupedByDate).forEach(date => {
+        const logs = groupedByDate[date];
+        const categoryIcon = logo ? getLogo(logs[0].category) : '';
+
+        let html = `
+            <div class="bg-white mx-2 mt-2 flex items-center flex-col">
+                <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
+
+        logs.forEach(log => {
+            html += `
+                    <div class="flex items-center justify-between w-full">
+                    <div class="size-[60px] mx-4">
                         ${categoryIcon}
                     </div>
-                    <div class="font-inter font-bold flex text-md px-3 justify-between w-full text-2xl">
-                        <div class="text-green-accent text-opacity-7">${spendingData[key].date}</div>
-                        <div class="text-green-accent">$ ${spendingData[key].price}</div>
+                    <div class="font-inter font-black flex text-md justify-between w-full text-lg">
+                        <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
+                        <div class="text-green-accent">$ ${log.price}</div>
                     </div>
-                </div>
-            </div>`)
-            } else {
-                $(`#${targetID}`).append(`
-        <div class="rounded-xl bg-white shadow-md mx-2 mt-2 flex items-center flex-col border">
-            <div class="h-[28px] w-full bg-green-sub rounded-t-xl my-auto px-2 text-white font-semibold">${spendingData[key].name}</div>
-            <div class="flex items-center justify-between w-full">
-                <div class="font-inter font-bold flex text-md px-3 justify-between w-full text-2xl">
-                    <div class="text-green-accent text-opacity-7">${spendingData[key].date}</div>
-                    <div class="text-green-accent">$ ${spendingData[key].price}</div>
-                </div>
-            </div>
-        </div>`)
-            }
-        } else {
-            console.log("empty log")
-        }
-    })
-}
+                </div>`;
+        });
 
-function displayCategories(spendingData) {
-    const categoryTotals = {};
-    var total = 0;
-    spendingData.forEach(log => {
-        if (Object.keys(log).length != 0) {
-            const category = log.category;
-            const price = log.price;
-            if (!categoryTotals[category]) {
-                categoryTotals[category] = 0;
-            }
-            total += parseFloat(price);
-            categoryTotals[category] += parseFloat(price);
-        }
-    });
+        html += `</div>`;
 
-    const categoryResults = Object.keys(categoryTotals).map(category => {
-        const categoryTotal = categoryTotals[category];
-        const percentage = Math.round((categoryTotal / total) * 100);
-        return { category: category, total: categoryTotal, percentage: percentage };
-    });
-
-    categoryResults.sort((a, b) => b.total - a.total);
-
-    categoryResults.forEach(category => {
-        const adjustedPercentage = Math.max(category.percentage, 1);
-        $("#categories").append(`
-        <div id="${category.category}" class="mb-8">
-            <div class="flex justify-between mb-1 items-baseline">
-                <div class="size-16">${getLogo(category.category)}</div>
-                <p class="font-inter font-bold text-green-main text-xl">${adjustedPercentage}%</p>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-8 bg-green-main overflow-clip">
-                <div class=" bg-green-accent h-8 rounded-full" style="width: ${adjustedPercentage}%"></div>
-            </div>
-            <div id="${category.category}-total" class="font-inter font-semibold text-green-main text-xl">${category.total.toFixed(2)}</div>
-            <div id="${category.category}-logs" class="max-h-[200px]"></div>
-        </div>`);
-
-        const categoryLogs = spendingData.filter(log => log.category === category.category);
-        displayUserData(categoryLogs, `${category.category}-logs`, false);
+        $(`#${targetID}`).append(html);
     });
 }
-
 
 function queryUserTotal(userID) {
     db.collection("users").doc(userID).onSnapshot((doc) => {
@@ -344,7 +326,6 @@ function queryUserData(userID) {
         $("#categories").empty()
         console.log(spendingData);
         displayUserData(spendingData, "data_row", true);
-        displayCategories(spendingData);
         displayChart(spendingData)
     }, error => {
         console.error("Error getting spending data:", error);
@@ -404,7 +385,7 @@ async function setUp(userID) {
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
-        add_data(userID);
+        addData(userID);
     });
     $("#cancel").on("click", add);
     $("#barGraphButton").on("click", toggleBarGraph);
