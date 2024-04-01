@@ -256,8 +256,6 @@ function getLogo(name) {
 
 function displayUserData(spendingData, targetID, logo) {
     const groupedByDate = {};
-
-    // Group spending data by date
     Object.keys(spendingData).forEach(key => {
         const date = formatDate(spendingData[key].date);
         if (!groupedByDate[date]) {
@@ -265,16 +263,12 @@ function displayUserData(spendingData, targetID, logo) {
         }
         groupedByDate[date].push(spendingData[key]);
     });
-
-    // Generate HTML for each date group
     Object.keys(groupedByDate).forEach(date => {
         const logs = groupedByDate[date];
         const categoryIcon = logo ? getLogo(logs[0].category) : '';
-
         let html = `
             <div class="bg-white mx-2 mt-2 flex items-center flex-col">
                 <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
-
         logs.forEach(log => {
             html += `
                     <div class="flex items-center justify-between w-full">
@@ -287,19 +281,17 @@ function displayUserData(spendingData, targetID, logo) {
                     </div>
                 </div>`;
         });
-
         html += `</div>`;
-
         $(`#${targetID}`).append(html);
     });
 }
 
-function displayUserTotal(spendingData) {
+function getUserTotal(spendingData) {
     total = 0
     spendingData.forEach(data => {
         total += parseFloat(data.price)
     })
-    $("#total").text(`$${total}`)
+    return total.toFixed(2)
 }
 
 function displayChart(spending_data) {
@@ -307,13 +299,9 @@ function displayChart(spending_data) {
     let userPriceArray = []
     let userPurchaseDateArray = []
     let total = 0
-    // const sevenDaysInMS = 604800000
-    // let dateLimit = Date.now() - sevenDaysInMS
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
     spending_data.forEach(purchase => {
         let date = new Date(purchase.date)
-
         let purchaseDate = new Date(purchase.date)
         let purchaseDay = purchaseDate.getDate()
         let purchaseMonth = monthNames[purchaseDate.getMonth()]
@@ -329,8 +317,6 @@ function displayChart(spending_data) {
             userPurchaseDateArray.push(dateString)
         }
     })
-    // console.log(userPriceArray)
-    // console.log(userPurchaseDateArray)
     chart.updateSeries([{
         data: userPriceArray
     }])
@@ -354,7 +340,7 @@ function queryUserData(userID, timeRange) {
         spendingData = filterByTimeRange(timeRange, spendingData);
         console.log(spendingData)
         displayUserData(spendingData, "data_row", true);
-        displayUserTotal(spendingData)
+        $("#total").text(`$${getUserTotal(spendingData)}`)
         displayChart(spendingData);
     }, error => {
         console.error("Error getting spending data:", error);
