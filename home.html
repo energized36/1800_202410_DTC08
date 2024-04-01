@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <script src="./navbar/style.css"></script>
+    <link rel="stylesheet" type="text/css" href="./navbar/style.css" />
 
     <script>
       tailwind.config = {
@@ -48,6 +48,7 @@
         },
       };
     </script>
+
     <style>
       footer .bot-item:hover svg {
         stroke: #4a9b30;
@@ -60,7 +61,7 @@
   </head>
 
   <body class="min-h-screen max-w-[2000px] mx-auto flex flex-col justify-center">
-    <header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col">
+    <header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col z-[1000]">
       <div class="flex w-full justify-between items-center">
         <div class="hidden">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle stroke-green-main md:hidden" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -227,7 +228,7 @@
             <path d="M10.01 17h.005" />
           </svg>
 
-          <div class="w-full mx-3">
+          <div class="w-full mx-4">
             <div class="relative w-full">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
               <input
@@ -244,7 +245,7 @@
           </div>
         </div>
 
-        <div class="flex items-center m-2">
+        <div class="flex items-center m-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-currency-dollar"
@@ -261,7 +262,8 @@
             <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
             <path d="M12 3v3m0 12v3" />
           </svg>
-          <div class="w-full mx-4"><input type="text" id="data_price" class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="00.00" /></div>
+          <div class="w-full mx-4">
+            <input type="text" id="data_price" class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="00.00" /></div>
         </div>
 
         <div class="flex justify-center mx-4 md:mx-20 mb-2 gap-2">
@@ -328,8 +330,8 @@
           <p class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</p>
           <p id="total" class=""></p>
         </div>
-        <div id="graph" class="flex flex-col justify-center rounded-xl shadow-md mt-2">
-          <div class="flex flex-col self-center justify-center rounded-2xl shadow-md gap-1 p-1 border-green-main border-2 w-full">
+        <div id="graph" class="flex flex-col justify-center mt-2">
+          <div class="flex flex-col self-center justify-center rounded-2xl gap-1 p-1 border-green-main border-2 w-full">
             <div class="flex justify-center">
               <a id="lineGraphButton" class="inline-block rounded-sm hover:bg-gold-sub focus:bg-gold-sub" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-histogram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -353,24 +355,16 @@
               </a>
             </div>
             <!-- Flowbite chart -->
-            <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-              <div class="flex justify-between">
-                <!-- <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-                  12%
-                  <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
-                  </svg>
-                </div> -->
-              </div>
+            <div class="w-full bg-white rounded-lg p-4 md:p-6">
               <div id="area-chart"></div>
-              <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+              <div class="grid grid-cols-1 items-center border-gray-200 border-t  justify-between">
                 <div class="flex justify-between items-center pt-5">
                   <!-- Dropdown Button -->
                   <button
                     id="dropdownDefaultButton"
                     data-dropdown-toggle="lastDaysdropdown"
                     data-dropdown-placement="bottom"
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                    class="text-sm font-medium text-gray-500  hover:text-gray-900 text-center inline-flex items-center "
                     type="button"
                   >
                     Last 7 days
@@ -379,26 +373,26 @@
                     </svg>
                   </button>
                   <!-- Dropdown menu -->
-                  <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
                       <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                        <a id="yesterdayButton" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
                       </li>
                       <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                        <a id="todayButton" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
                       </li>
                       <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
+                        <a id="last7DaysButton" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
                       </li>
                       <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
+                        <a id="last30DaysButton" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
                       </li>
                       <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
+                        <a id="last90DaysButton" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
                       </li>
                     </ul>
                   </div>
-                  <a
+                  <!-- <a
                     href="#"
                     class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
                   >
@@ -406,12 +400,12 @@
                     <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
                     </svg>
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </div>
           </div>
-          <div id="data_row" class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
+          <div id="data_row" class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%]">
             <div id="desktop_add_btn" class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100 hidden md:block">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -424,7 +418,8 @@
       </div>
     </main>
 
-    <footer id="homebarholder"></footer>
+    <footer id="homebarholder">
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="/node_modules/flowbite/dist/flowbite.turbo.js"></script>

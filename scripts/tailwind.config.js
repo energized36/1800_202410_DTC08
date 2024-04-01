@@ -1,8 +1,9 @@
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
     plugins: [
         require('flowbite/plugin')
     ],
-    darkMode: false,
     charts: true,
 
 }
