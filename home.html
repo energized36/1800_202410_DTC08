@@ -1,78 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Trckr</title>
-    <meta name="document" content="My 1800 App" />
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Trckr</title>
+  <meta name="document" content="My 1800 App" />
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-    <link rel="stylesheet" href="./styles/style.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="./styles/style.css" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <script src="./navbar/style.css"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              inter: ["Inter"],
-            },
-            colors: {
-              "green-main": "#4A9B30",
-              "green-sub": "#6DB423",
-              "green-accent": "#76BA27",
-              "gold-main": "#FDCC00",
-              "gold-sub": "#FFD900",
-            },
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <script src="./navbar/style.css"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ["Inter"],
+          },
+          colors: {
+            "green-main": "#4A9B30",
+            "green-sub": "#6DB423",
+            "green-accent": "#76BA27",
+            "gold-main": "#FDCC00",
+            "gold-sub": "#FFD900",
           },
         },
-      };
-    </script>
-    <style>
-      footer .bot-item:hover svg {
-        stroke: #4a9b30;
-      }
+      },
+    };
+  </script>
+  <style>
+    footer .bot-item:hover svg {
+      stroke: #4a9b30;
+    }
 
-      footer .bot-item:hover span {
-        color: #4a9b30;
-      }
-    </style>
-  </head>
+    footer .bot-item:hover span {
+      color: #4a9b30;
+    }
+  </style>
+</head>
 
-  <body class="min-h-screen max-w-[2000px] mx-auto flex flex-col justify-center">
-    <header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col">
-      <div class="flex w-full justify-between items-center">
-        <div class="hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle stroke-green-main md:hidden" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-          </svg>
-        </div>
-        <p class="text-3xl md:text-6xl font-black text-green-main font-inter">Trckr</p>
+<body class="min-h-screen max-w-[2000px] mx-auto flex flex-col justify-center">
+  <header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col">
+    <div class="flex w-full justify-between items-center">
+      <div class="hidden">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-user-circle stroke-green-main md:hidden" width="44" height="44"
+          viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+        </svg>
+      </div>
+      <p class="text-3xl md:text-6xl font-black text-green-main font-inter">Trckr</p>
 
-        <!-- <div class="flex w-full mx-4">
+      <!-- <div class="flex w-full mx-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="p-2 icon icon-tabler icon-tabler-search" width="44" height="44"
           viewBox="0 0 24 24" stroke-width="3" stroke="#4A9B30" fill="none" stroke-linecap="round"
           stroke-linejoin="round">
@@ -83,356 +90,411 @@
         <input class="rounded-2xl w-full" type="text" />
       </div> -->
 
-        <div id="Hamburger" class="md:hidden size-10">
-          <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-main" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M4 6l16 0" />
-            <path d="M4 12l16 0" />
-            <path d="M4 18l16 0" />
-          </svg>
-        </div>
-      </div>
-
-      <div class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4" id="dropdown">
-        <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Profile</a>
-        <a href="profile.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Settings</a>
-        <a href="login.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Log Out</a>
-      </div>
-    </header>
-
-    <div id="data_gui" class="collapse absolute z-50 top-[100px] left-0 w-full">
-      <div class="bg-white rounded-xl shadow-md w-full md:max-w-[600px] p-2">
-        <div class="flex md:justify-center">
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="groceries" class="peer hidden" value="groceries" />
-            <label for="groceries" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-shopping-cart" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                <path d="M17 17h-11v-14h-2" />
-                <path d="M6 5l14 1l-1 7h-13" />
-              </svg>
-            </label>
-          </div>
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="food" class="peer hidden" value="food" />
-            <label for="food" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-tools-kitchen-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" />
-              </svg>
-            </label>
-          </div>
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="clothing" class="peer hidden" value="clothing" />
-            <label for="clothing" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-shirt" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
-              </svg>
-            </label>
-          </div>
-        </div>
-
-        <div class="flex md:justify-center">
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="self_care" class="peer hidden" value="self_care" />
-            <label for="self_care" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-mood-heart" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M21 12a9 9 0 1 0 -8.012 8.946" />
-                <path d="M9 10h.01" />
-                <path d="M15 10h.01" />
-                <path d="M9.5 15a3.59 3.59 0 0 0 2.774 .99" />
-                <path d="M18.994 21.5l2.518 -2.58a1.74 1.74 0 0 0 .004 -2.413a1.627 1.627 0 0 0 -2.346 -.005l-.168 .172l-.168 -.172a1.627 1.627 0 0 0 -2.346 -.004a1.74 1.74 0 0 0 -.004 2.412l2.51 2.59z" />
-              </svg>
-            </label>
-          </div>
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="online_shopping" class="peer hidden" value="online_shopping" />
-            <label for="online_shopping" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-world-www" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M19.5 7a9 9 0 0 0 -7.5 -4a8.991 8.991 0 0 0 -7.484 4" />
-                <path d="M11.5 3a16.989 16.989 0 0 0 -1.826 4" />
-                <path d="M12.5 3a16.989 16.989 0 0 1 1.828 4" />
-                <path d="M19.5 17a9 9 0 0 1 -7.5 4a8.991 8.991 0 0 1 -7.484 -4" />
-                <path d="M11.5 21a16.989 16.989 0 0 1 -1.826 -4" />
-                <path d="M12.5 21a16.989 16.989 0 0 0 1.828 -4" />
-                <path d="M2 10l1 4l1.5 -4l1.5 4l1 -4" />
-                <path d="M17 10l1 4l1.5 -4l1.5 4l1 -4" />
-                <path d="M9.5 10l1 4l1.5 -4l1.5 4l1 -4" />
-              </svg>
-            </label>
-          </div>
-
-          <div class="size-1/3 m-2 md:size-fit">
-            <input type="radio" name="category" id="school" class="peer hidden" value="school" />
-            <label for="school" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer stroke-green-accent">
-              <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-school" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-                <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-              </svg>
-            </label>
-          </div>
-        </div>
-
-        <div class="flex items-center m-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-receipt"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" />
-          </svg>
-          <div class="w-full mx-4">
-            <input type="text" id="data_name" class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="Name of purchase" />
-          </div>
-        </div>
-
-        <div class="flex items-center m-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-calendar-month"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-            <path d="M16 3v4" />
-            <path d="M8 3v4" />
-            <path d="M4 11h16" />
-            <path d="M7 14h.013" />
-            <path d="M10.01 14h.005" />
-            <path d="M13.01 14h.005" />
-            <path d="M16.015 14h.005" />
-            <path d="M13.015 17h.005" />
-            <path d="M7.01 17h.005" />
-            <path d="M10.01 17h.005" />
-          </svg>
-
-          <div class="w-full mx-4">
-            <div class="relative w-full">
-              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
-              <input
-                datepicker
-                datepicker-buttons
-                datepicker-autoselect-today
-                datepicker-format="yyyy/mm/dd"
-                type="text"
-                class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent"
-                placeholder="Select date"
-                id="data_date"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="flex items-center m-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-currency-dollar"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
-            <path d="M12 3v3m0 12v3" />
-          </svg>
-          <div class="w-full mx-4">
-            <input type="text" id="data_price" class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent" placeholder="00.00" /></div>
-        </div>
-
-        <div class="flex justify-center mx-4 md:mx-20 mb-2 gap-2">
-          <button id="save" class="md:py-4 md:px-6 py-2 px-4 font-inter font-bold text-xl md:text-3xl rounded-2xl text-white bg-green-accent shadow-md">Save</button>
-          <button id="cancel" class="md:py-4 md:px-6 py-2 px-4 bg-white text-green-accent font-inter font-bold text-xl md:text-3xl rounded-2xl shadow-md">Cancel</button>
-        </div>
+      <div id="Hamburger" class="md:hidden size-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-main"
+          width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 6l16 0" />
+          <path d="M4 12l16 0" />
+          <path d="M4 18l16 0" />
+        </svg>
       </div>
     </div>
 
-    <main class="flex flex-col min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
-      <!-- desktop side bar -->
-      <div class="collapse md:flex md:flex-col md:visible md:w-[20%] md:rounded-xl md:shadow-md font-bold text-green-accent">
-        <a class="p-[12px] hover:text-green-main flex items-center" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-home-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-            <path d="M10 12h4v4h-4z" />
-          </svg>
-          <h2 class="text-lg">Home</h2>
-        </a>
-        <a class="p-[12px] hover:text-green-main flex items-center" href="profile.html">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-          </svg>
-          <h2 class="text-lg">Profile</h2>
-        </a>
-        <a class="p-[12px] hover:text-green-main flex items-center" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-category-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 4h6v6h-6z" />
-            <path d="M4 14h6v6h-6z" />
-            <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-          </svg>
-          <h2 class="text-lg">Categories</h2>
-        </a>
-        <a class="mt-auto p-[12px] hover:text-green-main flex items-center" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"
-            />
-            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-          </svg>
-          <h2 class="text-lg">Settings</h2>
-        </a>
-        <a class="p-[12px] hover:text-green-main flex items-center" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-            <path d="M9 12h12l-3 -3" />
-            <path d="M18 15l3 -3" />
-          </svg>
-          <h2 class="text-lg">Logout</h2>
-        </a>
+    <div
+      class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4"
+      id="dropdown">
+      <a href="#"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Profile</a>
+      <a href="profile.html"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Settings</a>
+      <a href="login.html"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Log
+        Out</a>
+    </div>
+  </header>
+
+  <div id="data_gui" class="collapse absolute z-50 top-[100px] left-0 w-full">
+    <div class="bg-white rounded-xl shadow-md w-full md:max-w-[600px] p-2">
+      <div class="flex md:justify-center">
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="groceries" class="peer hidden" value="groceries" />
+          <label for="groceries"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-shopping-cart"
+              width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M17 17h-11v-14h-2" />
+              <path d="M6 5l14 1l-1 7h-13" />
+            </svg>
+          </label>
+        </div>
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="food" class="peer hidden" value="food" />
+          <label for="food"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-tools-kitchen-2"
+              width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" />
+            </svg>
+          </label>
+        </div>
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="clothing" class="peer hidden" value="clothing" />
+          <label for="clothing"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-shirt" width="44"
+              height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
+            </svg>
+          </label>
+        </div>
       </div>
 
-      <div class="md:flex md:flex-col md:w-[100%] mx-2">
-        <div class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
-          <p class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</p>
-          <p id="total" class=""></p>
+      <div class="flex md:justify-center">
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="self_care" class="peer hidden" value="self_care" />
+          <label for="self_care"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-mood-heart" width="44"
+              height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M21 12a9 9 0 1 0 -8.012 8.946" />
+              <path d="M9 10h.01" />
+              <path d="M15 10h.01" />
+              <path d="M9.5 15a3.59 3.59 0 0 0 2.774 .99" />
+              <path
+                d="M18.994 21.5l2.518 -2.58a1.74 1.74 0 0 0 .004 -2.413a1.627 1.627 0 0 0 -2.346 -.005l-.168 .172l-.168 -.172a1.627 1.627 0 0 0 -2.346 -.004a1.74 1.74 0 0 0 -.004 2.412l2.51 2.59z" />
+            </svg>
+          </label>
         </div>
-        <div id="graph" class="flex flex-col justify-center rounded-xl shadow-md mt-2">
-          <div class="flex flex-col self-center justify-center rounded-2xl shadow-md gap-1 p-1 border-green-main border-2 w-full">
-            <div class="flex justify-center">
-              <a id="lineGraphButton" class="inline-block rounded-sm hover:bg-gold-sub focus:bg-gold-sub" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-histogram" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M3 3v18h18" />
-                  <path d="M20 18v3" />
-                  <path d="M16 16v5" />
-                  <path d="M12 13v8" />
-                  <path d="M8 16v5" />
-                  <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
-                </svg>
-              </a>
-              <a id="barGraphButton" class="inline-block rounded-sm hover:bg-gold-sub focus:bg-gold-sub" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                  <path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                  <path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
-                  <path d="M4 20l14 0" />
-                </svg>
-              </a>
-            </div>
-            <!-- Flowbite chart -->
-            <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-              <div class="flex justify-between">
-                <!-- <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="online_shopping" class="peer hidden" value="online_shopping" />
+          <label for="online_shopping"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-world-www" width="44"
+              height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M19.5 7a9 9 0 0 0 -7.5 -4a8.991 8.991 0 0 0 -7.484 4" />
+              <path d="M11.5 3a16.989 16.989 0 0 0 -1.826 4" />
+              <path d="M12.5 3a16.989 16.989 0 0 1 1.828 4" />
+              <path d="M19.5 17a9 9 0 0 1 -7.5 4a8.991 8.991 0 0 1 -7.484 -4" />
+              <path d="M11.5 21a16.989 16.989 0 0 1 -1.826 -4" />
+              <path d="M12.5 21a16.989 16.989 0 0 0 1.828 -4" />
+              <path d="M2 10l1 4l1.5 -4l1.5 4l1 -4" />
+              <path d="M17 10l1 4l1.5 -4l1.5 4l1 -4" />
+              <path d="M9.5 10l1 4l1.5 -4l1.5 4l1 -4" />
+            </svg>
+          </label>
+        </div>
+
+        <div class="size-1/3 m-2 md:size-fit">
+          <input type="radio" name="category" id="school" class="peer hidden" value="school" />
+          <label for="school"
+            class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer stroke-green-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-school" width="44"
+              height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+              <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+            </svg>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex items-center m-3">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-receipt" width="44" height="44"
+          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" />
+        </svg>
+        <div class="w-full mx-4">
+          <input type="text" id="data_name"
+            class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent"
+            placeholder="Name of purchase" />
+        </div>f
+      </div>
+
+      <div class="flex items-center m-3">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-calendar-month" width="44"
+          height="44" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+          <path d="M16 3v4" />
+          <path d="M8 3v4" />
+          <path d="M4 11h16" />
+          <path d="M7 14h.013" />
+          <path d="M10.01 14h.005" />
+          <path d="M13.01 14h.005" />
+          <path d="M16.015 14h.005" />
+          <path d="M13.015 17h.005" />
+          <path d="M7.01 17h.005" />
+          <path d="M10.01 17h.005" />
+        </svg>
+
+        <div class="w-full mx-4">
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"></div>
+            <input datepicker datepicker-buttons datepicker-autoselect-today datepicker-format="yyyy/mm/dd" type="text"
+              class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent"
+              placeholder="Select date" id="data_date" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center m-3">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="stroke-green-accent size-10 md:size-28 icon icon-tabler icon-tabler-currency-dollar" width="44"
+          height="44" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+          <path d="M12 3v3m0 12v3" />
+        </svg>
+        <div class="w-full mx-4">
+          <input type="text" id="data_price"
+            class="bg-slate-200 rounded-lg w-full font-inter md:py-4 font-bold text-xl md:text-3xl focus:ring-0 focus:border-none border-transparent"
+            placeholder="00.00" />
+        </div>
+      </div>
+
+      <div class="flex justify-center mx-4 md:mx-20 mb-2 gap-2">
+        <button id="save"
+          class="md:py-4 md:px-6 py-2 px-4 font-inter font-bold text-xl md:text-3xl rounded-2xl text-white bg-green-accent shadow-md">Save</button>
+        <button id="cancel"
+          class="md:py-4 md:px-6 py-2 px-4 bg-white text-green-accent font-inter font-bold text-xl md:text-3xl rounded-2xl shadow-md">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex flex-col min-h-screen py-[90px] md:flex-row md:mx-0 md:pb-0 md:pt-[90px]">
+    <!-- desktop side bar -->
+    <div
+      class="collapse md:flex md:flex-col md:visible md:w-[20%] md:rounded-xl md:shadow-md font-bold text-green-accent">
+      <a class="p-[12px] hover:text-green-main flex items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-home-2" width="24" height="24"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+          <path d="M10 12h4v4h-4z" />
+        </svg>
+        <h2 class="text-lg">Home</h2>
+      </a>
+      <a class="p-[12px] hover:text-green-main flex items-center" href="profile.html">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-user-circle" width="24"
+          height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+        </svg>
+        <h2 class="text-lg">Profile</h2>
+      </a>
+      <a class="p-[12px] hover:text-green-main flex items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-category-2" width="24"
+          height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M14 4h6v6h-6z" />
+          <path d="M4 14h6v6h-6z" />
+          <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+        </svg>
+        <h2 class="text-lg">Categories</h2>
+      </a>
+      <a class="mt-auto p-[12px] hover:text-green-main flex items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-settings" width="24"
+          height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+          <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+        </svg>
+        <h2 class="text-lg">Settings</h2>
+      </a>
+      <a class="p-[12px] hover:text-green-main flex items-center" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-2 icon icon-tabler icon-tabler-logout" width="24" height="24"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+          <path d="M9 12h12l-3 -3" />
+          <path d="M18 15l3 -3" />
+        </svg>
+        <h2 class="text-lg">Logout</h2>
+      </a>
+    </div>
+
+    <div class="md:flex md:flex-col md:w-[100%] mx-2">
+
+      <!-- date range changer -->
+      <div>
+          <ul class="flex items-center justify-evenly w-full text-sm font-inter  bg-whiterounded-lg shadow-md my-4 font-extrabold">
+            <li>
+                <input id="horizontal-list-radio-1m" type="radio" value="week" name="date-picker" class="hidden peer" checked>
+                <label for="horizontal-list-radio-1m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Week</label>
+            </li>
+            <li>
+                <input id="horizontal-list-radio-3m" type="radio" value="month" name="date-picker" class="hidden peer">
+                <label for="horizontal-list-radio-3m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Month</label>
+            </li>
+            <li>
+                <input id="horizontal-list-radio-6m" type="radio" value="year" name="date-picker" class="hidden peer">
+                <label for="horizontal-list-radio-6m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Year</label>
+            </li>
+            <li>
+                <input id="horizontal-list-radio-all" type="radio" value="all" name="date-picker" class="hidden peer">
+                <label for="horizontal-list-radio-all" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">ALL</label>
+            </li>
+        </ul>
+      </div>
+      
+      <div class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
+        <p class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</p>
+        <p id="total" class=""></p>
+      </div>
+      <div id="graph" class="flex flex-col justify-center rounded-xl shadow-md mt-2">
+        <div
+          class="flex flex-col self-center justify-center rounded-2xl shadow-md gap-1 p-1 border-green-main border-2 w-full">
+          <div class="flex justify-center">
+            <a id="lineGraphButton" class="inline-block rounded-sm hover:bg-gold-sub focus:bg-gold-sub" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-histogram" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 3v18h18" />
+                <path d="M20 18v3" />
+                <path d="M16 16v5" />
+                <path d="M12 13v8" />
+                <path d="M8 16v5" />
+                <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
+              </svg>
+            </a>
+            <a id="barGraphButton" class="inline-block rounded-sm hover:bg-gold-sub focus:bg-gold-sub" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6DB423" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                <path d="M4 20l14 0" />
+              </svg>
+            </a>
+          </div>
+          <!-- Flowbite chart -->
+          <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <div class="flex justify-between">
+              <!-- <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
                   12%
                   <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4" />
                   </svg>
                 </div> -->
-              </div>
-              <div id="area-chart"></div>
-              <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-                <div class="flex justify-between items-center pt-5">
-                  <!-- Dropdown Button -->
-                  <button
-                    id="dropdownDefaultButton"
-                    data-dropdown-toggle="lastDaysdropdown"
-                    data-dropdown-placement="bottom"
-                    class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                    type="button"
-                  >
-                    Last 7 days
-                    <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                    </svg>
-                  </button>
-                  <!-- Dropdown menu -->
-                  <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7 days</a>
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30 days</a>
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90 days</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <a
-                    href="#"
-                    class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
-                  >
-                    Users Report
-                    <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
             </div>
-          </div>
-          <div id="data_row" class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
-            <div id="desktop_add_btn" class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100 hidden md:block">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-              </svg>
+            <div id="area-chart"></div>
+            <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+              <div class="flex justify-between items-center pt-5">
+                <!-- Dropdown Button -->
+                <button id="dropdownDefaultButton" data-dropdown-toggle="lastDaysdropdown"
+                  data-dropdown-placement="bottom"
+                  class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+                  type="button">
+                  Last 7 days
+                  <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 1 4 4 4-4" />
+                  </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="lastDaysdropdown"
+                  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                  <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                      <a href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yesterday</a>
+                    </li>
+                    <li>
+                      <a href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                    </li>
+                    <li>
+                      <a href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 7
+                        days</a>
+                    </li>
+                    <li>
+                      <a href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 30
+                        days</a>
+                    </li>
+                    <li>
+                      <a href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Last 90
+                        days</a>
+                    </li>
+                  </ul>
+                </div>
+                <a href="#"
+                  class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
+                  Users Report
+                  <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m1 9 4-4-4-4" />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
+        <div id="data_row"
+          class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%] border rounded-xl shadow-md">
+          <div id="desktop_add_btn"
+            class="absolute bottom-6 right-8 rounded-[50%] w-fit shadow-md border-2 border-green-accent hover:p-[2px] hover:ease-in hover:duration-100 hidden md:block">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="35" height="35"
+              viewBox="0 0 24 24" stroke-width="2" stroke="#6DB423" fill="none" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer id="homebarholder"></footer>
+  <footer id="homebarholder"></footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    <script src="/node_modules/flowbite/dist/flowbite.turbo.js"></script>
-    <script src="/node_modules/flowbite/dist/datepicker.js"></script>
-    <script src="/scripts/tailwind.config.js"></script>
-    <script src="/scripts/firebaseapi.js"></script>
-    <script src="/scripts/script.js"></script>
-    <script src="/scripts/skeleton.js"></script>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  <script src="/node_modules/flowbite/dist/flowbite.turbo.js"></script>
+  <script src="/node_modules/flowbite/dist/datepicker.js"></script>
+  <script src="/scripts/tailwind.config.js"></script>
+  <script src="/scripts/firebaseapi.js"></script>
+  <script src="/scripts/script.js"></script>
+  <script src="/scripts/skeleton.js"></script>
+</body>
+
 </html>

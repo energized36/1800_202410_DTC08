@@ -82,6 +82,32 @@ function add() {
     $("#data_gui").toggleClass("collapse");
 }
 
+function filterByTimeRange(timeRange, dataList) {
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = today.getMonth() + 1
+    const day = today.getDate()
+    const currentDate = new Date(year, month - 1, day)
+    switch (timeRange) {
+        case 'week':
+            const lastMonday = new Date(currentDate)
+            lastMonday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
+            return dataList.filter(item => new Date(item.date) >= lastMonday && new Date(item.date) <= currentDate);
+        case 'month':
+            const firstDayOfMonth = new Date(year, month - 1, 1);
+            return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
+        case 'year':
+            const firstDayOfYear = new Date(year, 0, 1);
+            return dataList.filter(item => new Date(item.date) >= firstDayOfYear && new Date(item.date) <= currentDate);
+        case 'all':
+            return dataList;
+        default:
+            console.error('Invalid time range');
+            return [];
+    }
+}
+
+
 function formatDate(dateString) {
     const date = new Date(dateString);
     const todaysDate = new Date();
@@ -258,18 +284,12 @@ function displayUserData(spendingData, targetID, logo) {
     });
 }
 
-function queryUserTotal(userID) {
-    db.collection("users").doc(userID).onSnapshot((doc) => {
-        if (doc.exists) {
-            let total = doc.data().total || 0;
-            total = parseFloat(total).toFixed(2)
-            $("#total").text(`$${total}`)
-        } else {
-            $("#total").text("$00.00");
-        }
-    }, (error) => {
-        console.error("Error getting user document:", error);
-    });
+function displayUserTotal(spendingData) {
+    total = 0
+    spendingData.forEach(data => {
+        total += parseFloat(data.price)
+    })
+    $("#total").text(`$${total}`)
 }
 
 function displayChart(spending_data) {
@@ -316,22 +336,26 @@ function displayChart(spending_data) {
 
 }
 
-function queryUserData(userID) {
+function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
             spendingData.push({ ...doc.data() });
         });
-        spendingData = spendingData.reverse()
-        $(`#data_row`).empty()
-        $("#categories").empty()
-        console.log(spendingData);
+        spendingData = spendingData.reverse();
+        $("#data_row").empty();
+        $("#categories").empty();
+        spendingData = filterByTimeRange(timeRange, spendingData);
+        console.log(spendingData)
         displayUserData(spendingData, "data_row", true);
-        displayChart(spendingData)
+        displayUserTotal(spendingData)
+        displayChart(spendingData);
     }, error => {
         console.error("Error getting spending data:", error);
     });
 }
+
+
 
 async function get_user_id() {
     return new Promise((resolve, reject) => {
@@ -380,8 +404,7 @@ function toggleLineGraph() {
 }
 
 async function setUp(userID) {
-    queryUserData(userID);
-    queryUserTotal(userID);
+    queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
@@ -391,6 +414,9 @@ async function setUp(userID) {
     $("#cancel").on("click", add);
     $("#barGraphButton").on("click", toggleBarGraph);
     $("#lineGraphButton").on("click", toggleLineGraph);
+    $('input[name="date-picker"]').on('change', function() {
+        queryUserData(userID, $(this).val());
+    });
 
     // Michael ToDo:
     // ToDo: mobile navbar not working
