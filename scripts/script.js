@@ -382,12 +382,19 @@ async function getSpendingData(userID) {
 }
 
 function toggleBarGraph() {
-    console.log("clicked")
-    // chart.updateOptions({
-    //     chart: {
-    //         type: "bar"
-    //     }
-    // })
+    chart.updateOptions({
+        chart: {
+            type: "bar"
+        }
+    })
+}
+
+function toggleLineGraph() {
+    chart.updateOptions({
+        chart: {
+            type: "area"
+        }
+    })
 }
 
 async function setUp(userID) {
@@ -400,7 +407,8 @@ async function setUp(userID) {
         add_data(userID);
     });
     $("#cancel").on("click", add);
-    $("#barGraph").on("click", toggleBarGraph);
+    $("#barGraphButton").on("click", toggleBarGraph);
+    $("#lineGraphButton").on("click", toggleLineGraph);
 
     // Michael ToDo:
     // ToDo: mobile navbar not working
