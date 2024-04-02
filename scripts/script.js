@@ -293,15 +293,15 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 
-    $(`#${targetID}_form`).submit(function (event) {
+    $(`#${targetID}_form`).submit(function(event) {
         event.preventDefault();
-        $(this).find('input[type="checkbox"]:checked').each(() => {
+        $(this).find('input[type="checkbox"]:checked').each(function() {
             getUserID().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
-
+                
                 spendingData.delete().then(() => {
                     console.log("Document successfully deleted!");
-                }).catch(function (error) {
+                }).catch(function(error) {
                     console.error("Error deleting document: ", error);
                 });
             })
