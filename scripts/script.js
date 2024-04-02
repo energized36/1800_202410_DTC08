@@ -398,46 +398,6 @@ function toggleLineGraph() {
     })
 }
 
-function toggleGraph90Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 7776000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph30Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 2592000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph7Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 604800000).getTime(),
-        }
-    })
-}
-
-function toggleGraphToday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 86400000).getTime(),
-        }
-    })
-}
-
-function toggleGraphYesterday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 172800000).getTime(),
-        }
-    })
-}
-
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
