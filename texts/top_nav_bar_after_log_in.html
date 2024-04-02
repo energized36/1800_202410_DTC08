@@ -1,46 +1,45 @@
-<nav class="top-0 left-0 w-full flex p-4 bg-white md:items-center border flex-col">
-  <div class="flex w-full">
-    <div class="hidden">
-      <svg xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-user-circle stroke-green-accent md:hidden" width="44" height="44"
-        viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-        <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-        <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-      </svg>
+<header class="fixed top-0 left-0 w-full flex p-4 bg-white md:items-center border flex-col">
+    <div class="flex w-full">
+      <div class="hidden">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-user-circle stroke-green-accent md:hidden" width="44" height="44"
+          viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+          <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+        </svg>
+      </div>
+      <p class="text-4xl font-black text-green-sub font-inter">TRCKR</p>
+      <div class="flex w-full mx-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="p-2 icon icon-tabler icon-tabler-search" width="44" height="44"
+          viewBox="0 0 24 24" stroke-width="3" stroke="#6DB423" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+          <path d="M21 21l-6 -6" />
+        </svg>
+      </div>
+      <div id="Hamburger" class="flex flex-col md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-accent"
+          width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 6l16 0" />
+          <path d="M4 12l16 0" />
+          <path d="M4 18l16 0" />
+        </svg>
+      </div>
     </div>
-    <p class="text-4xl font-black text-green-sub font-inter">TRCKR</p>
-    <div class="flex w-full mx-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="p-2 icon icon-tabler icon-tabler-search" width="44" height="44"
-        viewBox="0 0 24 24" stroke-width="3" stroke="#6DB423" fill="none" stroke-linecap="round"
-        stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-        <path d="M21 21l-6 -6" />
-      </svg>
-      <input class="rounded-2xl w-full" type="text" id="searchInput" />
-      <div id="searchResult"></div>
+    
+    <div class="z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4 collapse"
+      id="dropdown">
+      <a href="#"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left">Profile</a>
+      <a href="#"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left">Settings</a>
+      <a href="login.html"
+        class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left">Log
+        Out</a>
     </div>
-    <div id="Hamburger" class="flex flex-col md:hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-accent"
-        width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
-        stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M4 6l16 0" />
-        <path d="M4 12l16 0" />
-        <path d="M4 18l16 0" />
-      </svg>
-    </div>
-  </div>
-  <div class="z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4"
-    id="dropdown">
-    <a href="#"
-      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-right">Profile</a>
-    <a href="#"
-      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-right">Settings</a>
-    <a href="login.html"
-      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-right">Log
-      Out</a>
-  </div>
-</nav>
+  </header>
