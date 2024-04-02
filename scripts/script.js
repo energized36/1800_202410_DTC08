@@ -271,7 +271,6 @@ function displayUserData(spendingData, targetID, logo) {
     });
     Object.keys(groupedByDate).forEach(date => {
         const logs = groupedByDate[date];
-        const categoryIcon = logo ? getLogo(logs[0].category) : '';
         let html = `
                 <div class="bg-white mx-2 mt-2 flex items-center flex-col">
                     <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
@@ -281,7 +280,7 @@ function displayUserData(spendingData, targetID, logo) {
                     <input type="checkbox" id="${log.id}" class="peer hidden">
                     <label for="${log.id}" class=" ml-4 inline-block relative rounded-full h-4 w-5 border-2 border-gray-300 cursor-pointer peer-checked:border-gold-main peer-checked:bg-gold-main"></label>
                     <div class="size-[60px] mx-4">
-                        ${categoryIcon}
+                        ${getLogo(log.category)}
                     </div>
                     <div class="font-inter font-bold flex text-md justify-between w-full text-lg">
                         <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
