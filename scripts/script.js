@@ -93,16 +93,21 @@ function add() {
 }
 
 function filterByTimeRange(timeRange, dataList) {
-    const today = new Date()
-    const year = today.getFullYear()
-    const month = today.getMonth() + 1
-    const day = today.getDate()
-    const currentDate = new Date(year, month - 1, day)
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+
     switch (timeRange) {
         case 'week':
-            const lastMonday = new Date(currentDate)
-            lastMonday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
-            return dataList.filter(item => new Date(item.date) >= lastMonday && new Date(item.date) <= currentDate);
+            const today = currentDate.getDay();
+            const previousMonday = new Date(currentDate);
+            previousMonday.setDate(currentDate.getDate() - today + (today === 0 ? -6 : 1));
+
+            return dataList.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= previousMonday && itemDate <= currentDate;
+            });
         case 'month':
             const firstDayOfMonth = new Date(year, month - 1, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
@@ -116,6 +121,7 @@ function filterByTimeRange(timeRange, dataList) {
             return [];
     }
 }
+
 
 
 function formatDate(dateString) {
@@ -287,24 +293,21 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 
-    $(`#${targetID}_form`).submit(function(event) {
+    $(`#${targetID}_form`).submit(function (event) {
         event.preventDefault();
-        $(this).find('input[type="checkbox"]:checked').each(function() {
+        $(this).find('input[type="checkbox"]:checked').each(function () {
             get_user_id().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
-                
-                spendingData.delete().then(function() {
+
+                spendingData.delete().then(function () {
                     console.log("Document successfully deleted!");
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error("Error deleting document: ", error);
                 });
             })
         });
     });
 }
-
-
-
 
 function getUserTotal(spendingData) {
     total = 0
@@ -352,7 +355,7 @@ function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
-            spendingData.push({...doc.data(), id: doc.id});
+            spendingData.push({ ...doc.data(), id: doc.id });
         });
         spendingData = spendingData.reverse();
         $("#data_row").empty();
@@ -463,7 +466,7 @@ async function setUp(userID) {
     $("#cancel").on("click", add);
     $("#barGraphButton").on("click", toggleBarGraph);
     $("#lineGraphButton").on("click", toggleLineGraph);
-    $('input[name="date-picker"]').on('change', function() {
+    $('input[name="date-picker"]').on('change', function () {
         queryUserData(userID, $(this).val());
     });
 
