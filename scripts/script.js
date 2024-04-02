@@ -81,6 +81,11 @@ const options = {
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render()
 
+function hamburger_click_handler() {
+    console.log("inside hamburger_click_handler");
+    $('#dropdown').toggleClass("collapse");
+}
+
 function add() {
     window.scrollTo(0, 0);
     console.log("Inside add function")
@@ -436,6 +441,7 @@ function toggleGraphYesterday() {
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
+    $("#Hamburger").on("click", hamburger_click_handler);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
         addData(userID);
