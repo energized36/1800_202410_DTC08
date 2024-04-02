@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
             var elementToReplace = document.getElementById("topnavholder");
 
             elementToReplace.innerHTML = html;
+            $("#Hamburger").on("click", () => {
+                $('#dropdown').toggleClass("collapse");
+            });
         })
         .catch(error => console.error('Error fetching new HTML:', error));
 });

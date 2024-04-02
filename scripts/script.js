@@ -81,11 +81,6 @@ const options = {
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render()
 
-function hamburger_click_handler() {
-    console.log("inside hamburger_click_handler");
-    $('#dropdown').toggleClass("collapse");
-}
-
 function add() {
     window.scrollTo(0, 0);
     console.log("Inside add function")
@@ -121,8 +116,6 @@ function filterByTimeRange(timeRange, dataList) {
             return [];
     }
 }
-
-
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -292,15 +285,15 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 
-    $(`#${targetID}_form`).submit(function(event) {
+    $(`#${targetID}_form`).submit(function (event) {
         event.preventDefault();
-        $(this).find('input[type="checkbox"]:checked').each(function() {
+        $(this).find('input[type="checkbox"]:checked').each(function () {
             getUserID().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
-                
+
                 spendingData.delete().then(() => {
                     console.log("Document successfully deleted!");
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.error("Error deleting document: ", error);
                 });
             })
@@ -456,7 +449,6 @@ function toggleGraphYesterday() {
 
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
-    $("#Hamburger").on("click", hamburger_click_handler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
