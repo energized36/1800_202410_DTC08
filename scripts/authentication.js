@@ -64,11 +64,9 @@ function saveChanges() {
   const currentUser = auth.currentUser;
   if (currentUser) {
     const newName = document.getElementById('name').value;
-    const newBio = document.getElementById('message').value;
 
     db.collection("users").doc(currentUser.uid).update({
       name: newName,
-      bio: newBio
     })
     .then(() => {
       console.log("User information updated successfully");
@@ -87,26 +85,38 @@ function deleteAccount() {
   if (currentUser) {
     const confirmation = confirm("Are you sure you want to delete your account?");
     if (confirmation) {
-      db.collection("users").doc(currentUser.uid).delete()
+      db.collection("users").doc(currentUser.uid).collection("spending_data").get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        })
         .then(() => {
-          console.log("User document deleted from Firestore");
-          currentUser.delete()
+          db.collection("users").doc(currentUser.uid).delete()
             .then(() => {
-              console.log("User account deleted successfully");
-              window.location.href = "index.html";
+              console.log("User document deleted from Firestore");
+              currentUser.delete()
+                .then(() => {
+                  console.log("User account deleted successfully");
+                  window.location.href = "index.html";
+                })
+                .catch((error) => {
+                  console.error("Error deleting user account: ", error);
+                });
             })
             .catch((error) => {
-              console.error("Error deleting user account: ", error);
+              console.error("Error deleting user document from Firestore: ", error);
             });
         })
         .catch((error) => {
-          console.error("Error deleting user document from Firestore: ", error);
+          console.error("Error deleting subcollection 'spending data': ", error);
         });
     }
   } else {
     console.log("No user is signed in");
   }
 }
+
 
 function loadUserData() {
   var user = firebase.auth().currentUser;
