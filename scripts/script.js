@@ -295,11 +295,11 @@ function displayUserData(spendingData, targetID, logo) {
 
     $(`#${targetID}_form`).submit(function (event) {
         event.preventDefault();
-        $(this).find('input[type="checkbox"]:checked').each(function () {
-            get_user_id().then(userID => {
+        $(this).find('input[type="checkbox"]:checked').each(() => {
+            getUserID().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
 
-                spendingData.delete().then(function () {
+                spendingData.delete().then(() => {
                     console.log("Document successfully deleted!");
                 }).catch(function (error) {
                     console.error("Error deleting document: ", error);
@@ -370,7 +370,7 @@ function queryUserData(userID, timeRange) {
     });
 }
 
-async function get_user_id() {
+async function getUserID() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -478,7 +478,7 @@ async function setUp(userID) {
 }
 
 $("document").ready(() => {
-    get_user_id().then((userID) => {
+    getUserID().then((userID) => {
         setUp(userID)
     })
 });
