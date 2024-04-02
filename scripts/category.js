@@ -293,21 +293,6 @@ async function get_user_id() {
     });
 }
 
-async function getSpendingData(userID) {
-    return new Promise((resolve, reject) => {
-        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
-            let spendingData = []
-            snapshot.docs.forEach((doc) => {
-                spendingData.push({ ...doc.data() })
-            })
-            resolve(spendingData)
-        }), error => {
-            console.error("Error getting spending data:", error)
-            reject(error);
-        }
-    })
-}
-
 function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#Hamburger").on("click", hamburger_click_handler);

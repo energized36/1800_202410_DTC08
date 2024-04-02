@@ -352,8 +352,8 @@ function queryUserData(userID, timeRange) {
         spendingData = spendingData.reverse();
         $("#data_row").empty();
         $("#categories").empty();
+
         spendingData = filterByTimeRange(timeRange, spendingData);
-        console.log(spendingData)
         displayUserData(spendingData, "data_row", true);
         $("#total").text(`$${getUserTotal(spendingData)}`)
         displayChart(spendingData);
@@ -376,20 +376,6 @@ async function getUserID() {
     });
 }
 
-async function getSpendingData(userID) {
-    return new Promise((resolve, reject) => {
-        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
-            let spendingData = []
-            snapshot.docs.forEach((doc) => {
-                spendingData.push({ ...doc.data() })
-            })
-            resolve(spendingData)
-        }), error => {
-            console.error("Error getting spending data:", error)
-            reject(error);
-        }
-    })
-}
 
 function toggleBarGraph() {
     ApexCharts.exec("mychart", 'updateOptions', {
@@ -458,6 +444,7 @@ async function setUp(userID) {
     $("#barGraphButton").on("click", toggleBarGraph);
     $("#lineGraphButton").on("click", toggleLineGraph);
     $('input[name="date-picker"]').on('change', function () {
+        console.log("Date range initiates new Data")
         queryUserData(userID, $(this).val());
     });
 
