@@ -81,6 +81,11 @@ const options = {
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render()
 
+function hamburger_click_handler() {
+    console.log("inside hamburger_click_handler");
+    $('#dropdown').toggleClass("collapse");
+}
+
 function add() {
     window.scrollTo(0, 0);
     console.log("Inside add function")
@@ -352,8 +357,8 @@ function queryUserData(userID, timeRange) {
         spendingData = spendingData.reverse();
         $("#data_row").empty();
         $("#categories").empty();
+
         spendingData = filterByTimeRange(timeRange, spendingData);
-        console.log(spendingData)
         displayUserData(spendingData, "data_row", true);
         $("#total").text(`$${getUserTotal(spendingData)}`)
         displayChart(spendingData);
@@ -376,20 +381,6 @@ async function getUserID() {
     });
 }
 
-async function getSpendingData(userID) {
-    return new Promise((resolve, reject) => {
-        db.collection("users").doc(userID).collection("spending_data").onSnapshot(snapshot => {
-            let spendingData = []
-            snapshot.docs.forEach((doc) => {
-                spendingData.push({ ...doc.data() })
-            })
-            resolve(spendingData)
-        }), error => {
-            console.error("Error getting spending data:", error)
-            reject(error);
-        }
-    })
-}
 
 function toggleBarGraph() {
     ApexCharts.exec("mychart", 'updateOptions', {
@@ -450,6 +441,7 @@ function toggleGraphYesterday() {
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
+    $("#Hamburger").on("click", hamburger_click_handler);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
         addData(userID);
@@ -458,6 +450,7 @@ async function setUp(userID) {
     $("#barGraphButton").on("click", toggleBarGraph);
     $("#lineGraphButton").on("click", toggleLineGraph);
     $('input[name="date-picker"]').on('change', function () {
+        console.log("Date range initiates new Data")
         queryUserData(userID, $(this).val());
     });
 
