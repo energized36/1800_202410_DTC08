@@ -15,7 +15,6 @@ function register() {
       db.collection('users').doc(user.uid).set({
         name: fullname,
         email: email,
-        last_login: Date.now()
       })
       .then(function () {
         db.collection('users').doc(user.uid).collection('spending_data').add({})
@@ -128,7 +127,6 @@ function loadUserData() {
         var userData = doc.data();
         document.getElementById("name").value = userData.name || '';
         document.getElementById("email").value = userData.email || '';
-        document.getElementById("message").value = userData.bio || '';
       } else {
         console.log("No such document!");
       }
