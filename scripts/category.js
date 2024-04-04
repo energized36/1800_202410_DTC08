@@ -1,4 +1,4 @@
-function hamburger_click_handler() {
+function hamburgerClickHandler() {
     console.log("inside hamburger_click_handler");
     $('#dropdown').toggleClass("collapse");
 }
@@ -16,22 +16,28 @@ function filterByTimeRange(timeRange, dataList) {
     const day = today.getDate()
     const currentDate = new Date(year, month - 1, day)
     switch (timeRange) {
-        case 'week':
+        case "week":
             const lastMonday = new Date(currentDate)
             lastMonday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
             return dataList.filter(item => new Date(item.date) >= lastMonday && new Date(item.date) <= currentDate);
-        case 'month':
+        case "month":
             const firstDayOfMonth = new Date(year, month - 1, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
-        case 'year':
+        case "year":
             const firstDayOfYear = new Date(year, 0, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfYear && new Date(item.date) <= currentDate);
-        case 'all':
+        case "all":
             return dataList;
         default:
-            console.error('Invalid time range');
+            console.error("Invalid time range");
             return [];
     }
+}
+
+function add() {
+    window.scrollTo(0, 0);
+    console.log("Inside add function");
+    $("#data_gui").toggleClass("collapse");
 }
 
 function formatDate(dateString) {
@@ -57,41 +63,41 @@ function formatDate(dateString) {
 }
 
 function toTitleCase(str) {
-    return str.toLowerCase().replace(/\b\w/g, function (char) {
+    return str.toLowerCase().replace(/\b\w/g, function(char) {
         return char.toUpperCase();
     });
 }
 
 async function addData(userID) {
     var category = $("input[name='category']:checked").val();
-    var data_name = $("#data_name").val();
-    var data_price = $("#data_price").val();
-    var data_date = $("#data_date").val();
-    var user_ref = db.collection("users").doc(userID);
+    var dataName = $("#data_name").val();
+    var dataPrice = $("#data_price").val();
+    var dataDate = $("#data_date").val();
+    var userRef = db.collection("users").doc(userID);
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
-    $("input[name='category']").prop('checked', false);
+    $("input[name='category']").prop("checked", false);
 
-    if (category && data_price) {
+    if (category && dataPrice) {
 
-        console.log("adding data to", userID, category, data_date, data_name, data_price);
-        var document_attributes = {
+        console.log("adding data to", userID, category, dataDate, dataName, dataPrice);
+        var documentAttributes = {
             category: category,
-            name: data_name,
-            price: parseFloat(data_price).toFixed(2),
-            date: data_date
+            name: dataName,
+            price: parseFloat(dataPrice).toFixed(2),
+            date: dataDate
         };
-        var userDoc = await user_ref.get();
-        var current_total = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
-        var new_total = current_total + parseFloat(data_price);
-        await user_ref.update({ total: new_total });
+        var userDoc = await userRef.get();
+        var currentTotal = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
+        var newTotal = currentTotal + parseFloat(dataPrice);
+        await userRef.update({ total: newTotal });
 
-        user_ref.collection("spending_data").add(document_attributes)
-            .then(function (docRef) {
+        userRef.collection("spending_data").add(documentAttributes)
+            .then(function(docRef) {
                 console.log("Document added with ID: ", docRef.id);
             })
-            .catch(function (error) {
+            .catch(function(error) {
                 console.error("Error adding document: ", error);
             });
     }
@@ -210,7 +216,6 @@ function displayUserData(spendingData, targetID, logo) {
     });
 }
 
-
 function displayCategories(spendingData) {
     const categoryTotals = {};
     let total = 0;
@@ -254,32 +259,32 @@ function displayCategories(spendingData) {
 }
 
 function getUserTotal(spendingData) {
-    total = 0
+    let total = 0;
     spendingData.forEach(data => {
-        total += parseFloat(data.price)
-    })
-    return total.toFixed(2)
+        total += parseFloat(data.price);
+    });
+    return total.toFixed(2);
 }
 
 function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
-        snapshot.docs.forEach((doc) => {
+        snapshot.docs.forEach(doc => {
             spendingData.push({ ...doc.data() });
         });
-        spendingData = spendingData.reverse()
-        $(`#data_row`).empty()
-        $("#categories").empty()
+        spendingData = spendingData.reverse();
+        $(`#data_row`).empty();
+        $("#categories").empty();
         spendingData = filterByTimeRange(timeRange, spendingData);
         displayCategories(spendingData);
         displayUserData(spendingData, "data_row", true);
-        $("#total").text(`$${getUserTotal(spendingData)}`)
+        $("#total").text(`$${getUserTotal(spendingData)}`);
     }, error => {
         console.error("Error getting spending data:", error);
     });
 }
 
-async function get_user_id() {
+async function getUserId() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -295,23 +300,20 @@ async function get_user_id() {
 
 function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
-    $("#Hamburger").on("click", hamburger_click_handler);
+    $("#Hamburger").on("click", hamburgerClickHandler);
     $("#add").on("click", add);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
         addData(userID);
     });
     $("#cancel").on("click", add);
-    $('input[name="date-picker"]').on('change', function() {
+    $('input[name="date-picker"]').on("change", function() {
         queryUserData(userID, $(this).val());
     });
 }
 
 $("document").ready(() => {
-    get_user_id().then((userID) => {
-        setUp(userID)
-    })
+    getUserId().then(userID => {
+        setUp(userID);
+    });
 });
-
-
-
