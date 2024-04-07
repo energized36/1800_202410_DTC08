@@ -407,7 +407,7 @@ function toggleLineGraph() {
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
-    $("#Hamburger").on("click", hamburger_click_handler);
+    $("#Hamburger").on("click", hamburgerClickHandler);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
         addData(userID);
