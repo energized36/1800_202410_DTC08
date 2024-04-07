@@ -37,6 +37,25 @@
             fontFamily: {
               inter: ["Inter"],
             },
+            animation:{
+                'error': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+            },
+            keyframes: {
+                'shake' : {
+                    '10%, 90%': {
+                        transform: 'translate3d(-1px, 0, 0)'
+                    },
+                    '20%, 80%' : {
+                        transform: 'translate3d(2px, 0, 0)'
+                    },
+                    '30%, 50%, 70%': {
+                        transform: 'translate3d(-4px, 0, 0)'
+                    },
+                    '40%, 60%': {
+                        transform: 'translate3d(4px, 0, 0)'
+                    }
+                }
+              },
             colors: {
               "green-main": "#4A9B30",
               "green-sub": "#6DB423",
@@ -60,47 +79,10 @@
   </head>
 
   <body class="min-h-screen max-w-[2000px] mx-auto flex flex-col justify-center">
-    <header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col">
-      <div class="flex w-full justify-between items-center">
-        <div class="hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle stroke-green-main md:hidden" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-          </svg>
-        </div>
-        <p class="text-3xl md:text-6xl font-black text-green-main font-inter">Trckr</p>
 
-        <!-- <div class="flex w-full mx-4">
-        <svg xmlns="http://www.w3.org/2000/svg" class="p-2 icon icon-tabler icon-tabler-search" width="44" height="44"
-          viewBox="0 0 24 24" stroke-width="3" stroke="#4A9B30" fill="none" stroke-linecap="round"
-          stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-          <path d="M21 21l-6 -6" />
-        </svg>
-        <input class="rounded-2xl w-full" type="text" />
-      </div> -->
+    <div id="innavholder" class="h-full"></div>
 
-        <div id="Hamburger" class="md:hidden size-10">
-          <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-main" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M4 6l16 0" />
-            <path d="M4 12l16 0" />
-            <path d="M4 18l16 0" />
-          </svg>
-        </div>
-      </div>
-
-      <div class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4" id="dropdown">
-        <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Profile</a>
-        <a href="profile.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Settings</a>
-        <a href="login.html" class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Log Out</a>
-      </div>
-    </header>
-
-    <div id="data_gui" class="collapse absolute z-50 top-[100px] left-0 w-full">
+    <div id="data_gui" class="collapse absolute z-50 top-[100px] left-0 w-full shadow-md">
       <div class="bg-white rounded-xl shadow-md w-full md:max-w-[600px] p-2">
         <div class="flex md:justify-center">
           <div class="size-1/3 m-2 md:size-fit">
@@ -168,7 +150,7 @@
             </label>
           </div>
 
-          <div class="size-1/3 m-2 md:size-fit">
+          <div class="size-1/3 m-2 md:size-fit content-* after:content[' ']">
             <input type="radio" name="category" id="school" class="peer hidden" value="school" />
             <label for="school" class="stroke-green-accent block rounded-md shadow-md size-full md:size-32 peer-checked:bg-green-accent peer-checked:stroke-white cursor-pointer stroke-green-accent">
               <svg xmlns="http://www.w3.org/2000/svg" class="size-full icon icon-tabler icon-tabler-school" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -327,28 +309,6 @@
       </div>
 
       <div class="md:flex md:flex-col md:w-[100%] mx-2">
-        <!-- date range changer -->
-        <div>
-          <ul class="flex items-center justify-evenly w-full text-sm font-inter bg-whiterounded-lg shadow-md my-4 font-extrabold rounded-xl">
-            <li>
-              <input id="horizontal-list-radio-1m" type="radio" value="week" name="date-picker" class="hidden peer" checked />
-              <label for="horizontal-list-radio-1m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Week</label>
-            </li>
-            <li>
-              <input id="horizontal-list-radio-3m" type="radio" value="month" name="date-picker" class="hidden peer" />
-              <label for="horizontal-list-radio-3m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Month</label>
-            </li>
-            <li>
-              <input id="horizontal-list-radio-6m" type="radio" value="year" name="date-picker" class="hidden peer" />
-              <label for="horizontal-list-radio-6m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Year</label>
-            </li>
-            <li>
-              <input id="horizontal-list-radio-all" type="radio" value="all" name="date-picker" class="hidden peer" />
-              <label for="horizontal-list-radio-all" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">ALL</label>
-            </li>
-          </ul>
-        </div>
-
         <div class="font-inter text-center text-6xl font-bold rounded-xl tracking-wide shadow-md text-green-accent">
           <p class="font-inter text-white text-lg bg-green-sub rounded-t-md">Total</p>
           <p id="total" class=""></p>
@@ -413,6 +373,27 @@
               </div>
             </div>
           </div>
+        </div>
+        <!-- date range changer -->
+        <div>
+          <ul class="flex items-center justify-evenly w-full text-sm font-inter bg-whiterounded-lg shadow-md my-4 font-extrabold rounded-xl">
+            <li>
+              <input id="horizontal-list-radio-1m" type="radio" value="week" name="date-picker" class="hidden peer" checked />
+              <label for="horizontal-list-radio-1m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Week</label>
+            </li>
+            <li>
+              <input id="horizontal-list-radio-3m" type="radio" value="month" name="date-picker" class="hidden peer" />
+              <label for="horizontal-list-radio-3m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Month</label>
+            </li>
+            <li>
+              <input id="horizontal-list-radio-6m" type="radio" value="year" name="date-picker" class="hidden peer" />
+              <label for="horizontal-list-radio-6m" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">Year</label>
+            </li>
+            <li>
+              <input id="horizontal-list-radio-all" type="radio" value="all" name="date-picker" class="hidden peer" />
+              <label for="horizontal-list-radio-all" class="inline-block py-3 px-4 text-sm font-inter text-green-main cursor-pointer transition-colors duration-300 rounded-lg peer-checked:bg-green-accent peer-checked:text-white">ALL</label>
+            </li>
+          </ul>
         </div>
         <div class="mb-auto flex flex-col min-h-[300px] overflow-auto my-2 md:h-[100%]">
           <form id="data_row_form">

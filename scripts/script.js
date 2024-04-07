@@ -40,10 +40,6 @@ const options = {
     grid: {
         show: true,
         strokeDashArray: 4,
-        // padding: {
-        //     left: 0,
-        //     right: 0
-        // },
     },
 
     series: [
@@ -87,9 +83,18 @@ function hamburger_click_handler() {
 }
 
 function add() {
+    if ($("#noCategorySelectedError").length === 0) {
+        window.scrollTo(0, 0);
+        console.log("Inside add function")
+        $("#data_gui").toggleClass("collapse");
+    }
+}
+
+function cancelAdd() {
     window.scrollTo(0, 0);
     console.log("Inside add function")
     $("#data_gui").toggleClass("collapse");
+    $("#noCategorySelectedError").remove()
 }
 
 function filterByTimeRange(timeRange, dataList) {
@@ -176,6 +181,25 @@ async function addData(userID) {
             .catch(function (error) {
                 console.error("Error adding document: ", error);
             });
+    }
+    else {
+        if ($("#noCategorySelectedError").length <= 0) {
+            $("#data_gui").append(`
+            <div class='bg-white flex text-red-500 text-center items-center justify-center gap-1' id='noCategorySelectedError'>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                <path d="M12 8v4" />
+                <path d="M12 16h.01" />
+                </svg>
+                Please select a category
+            </div>`)
+            $("#data_gui").addClass("animate-error")
+            setTimeout(() => {
+                $("#data_gui").removeClass("animate-error")
+            }, 2000);
+        }
+
     }
     add();
 }
@@ -381,7 +405,6 @@ async function getUserID() {
     });
 }
 
-
 function toggleBarGraph() {
     ApexCharts.exec("mychart", 'updateOptions', {
         chart: {
@@ -446,7 +469,7 @@ async function setUp(userID) {
     $("#save").on("click", () => {
         addData(userID);
     });
-    $("#cancel").on("click", add);
+    $("#cancel").on("click", cancelAdd);
     $("#barGraphButton").on("click", toggleBarGraph);
     $("#lineGraphButton").on("click", toggleLineGraph);
     $('input[name="date-picker"]').on('change', function () {
@@ -459,6 +482,9 @@ async function setUp(userID) {
     // ToDo: fix lorem on landing page
     // ToDo: add border around island buttons
     // ToDo: fix formatting on bar chart
+    // ToDo: add names to categories
+    // ToDo: hamburger login page
+    // ToDo: Prevent additional error divs
 }
 
 $("document").ready(() => {
