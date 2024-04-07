@@ -16,12 +16,19 @@ function clearInputs() {
     $('#confirm-password').val('');
 }
 
+function hamburgerClickHandler() {
+    $("#dropdown").toggleClass("collapse");
+}
+
 $(document).ready(() => {
     clearInputs();
-    $("#switchToSignUp").click(() => {
-        toggleForm();
-    })
-    $("#switchToLogIn").click(() => {
+
+    $("#test").on("click", () => {
+        console.log("inside hamburgerClickHandler");
+        hamburgerClickHandler();
+    });
+
+    $("#switchToSignUp, #switchToLogIn").on("click", () => {
         toggleForm();
     })
     
@@ -55,10 +62,5 @@ $(document).ready(() => {
         } else {
             console.log("Cannot register due to incorrect passwords.");
         }
-    })
-    
-    $("#Hamburger").on("click", () => {
-        console.log("hamburger clicked")
-        $("#dropdown").toggleClass("collapse")
     })
 });
