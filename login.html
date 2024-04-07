@@ -1,114 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Trckr</title>
-    <meta name="document" content="My 1800 App" />
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Trckr</title>
+  <meta name="document" content="My 1800 App" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="scripts/tailwind.config.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/tailwind.config.js"></script>
 
 
-    <link rel="stylesheet" href="./styles/loginstyle.css" />
+  <script src="./scripts/firebaseapi.js"></script>
+  <script src="./scripts/authentication.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@100..900&family=Raleway:ital,wght@0,200;1,200&display=swap"
+    rel="stylesheet" />
 
-    <script src="./scripts/./Skeletons/loginpage-skeleton.js"></script>
-
-    <script src="./scripts/firebaseapi.js"></script>
-    <script src="./scripts/authentication.js"></script>
-    <script src="./scripts/script.js"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              inter: ["Inter"],
-            },
-            colors: {
-              "green-main": "#4A9B30",
-              "green-sub": "#6DB423",
-              "green-accent": "#4A9B30",
-              "gold-main": "#FDCC00",
-              "gold-sub": "#FFD900",
-            },
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ["Inter"],
+          },
+          colors: {
+            "green-main": "#4A9B30",
+            "green-sub": "#6DB423",
+            "green-accent": "#4A9B30",
+            "gold-main": "#FDCC00",
+            "gold-sub": "#FFD900",
           },
         },
-      };
-    </script>
-  </head>
+      },
+    };
+  </script>
+</head>
 
-<body class="">
-    <nav id="loginnav"></nav>
+<body class="font-inter">
+  <nav id="loginnav"></nav>
+  <br>
 
-    <br>
-    <div class="login-wrap">
-        <div class="login-html">
-          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-          <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-          <div class="login-form">
-            <div class="sign-in-htm">
-              <div class="group">
-                <label for="login-email" class="label">Email</label>
-                <input id="login-email" type="email" class="input">
-              </div>
-              <div class="group">
-                <label for="login-password" class="label">Password</label>
-                <input id="login-password" type="password" class="input" data-type="password">
-              </div>
-              <div class="group">
-                <input id="check" type="checkbox" class="check" checked>
-                <label for="check"><span class="icon"></span> Keep me Signed in</label>
-              </div>
-              <div class="group">
-                <input type="submit" class="button" value="Sign In" onclick="login()">
-              </div>
-              <div class="hr"></div>
-              <div class="foot-lnk">
-                <a href="#forgot">Forgot Password?</a>
+  <div class="login-wrap flex justify-center rounded-xl shadow-md my-8 w-[300px] mx-auto p-8">
+    <div class="login-html">
+      <div class="login-form">
+        <!-- log in div -->
+        <div>
+          <div class="sign-in-html" id="sign-in-html">
+            <div class="group">
+              <label for="login-email" class="label text-gray-400">Email</label>
+              <input id="login-email" type="email" class="input outline-none rounded-lg bg-gray-100 w-full p-2 mb-4 text-gray-500" p>
+            </div>
+            <div class="group relative pb-4">
+              <label for="login-password" class="label text-gray-400">Password</label>
+              <div class="">
+                <input id="login-password" type="password"
+                  class="input outline-none rounded-lg bg-gray-100 w-full p-2 text-gray-500" data-type="password">
+                <div class="toggleView absolute top-7 right-10">
+                  <input type="checkbox" id="togglePassword" class="peer size-10 hidden">
+                  <label for="togglePassword" class="cursor-pointer">
+                    <div class="closedEye absolute top-0">
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-eye-closed size-8 opacity-40" width="44" height="44"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
+                        <path d="M3 15l2.5 -3.8" />
+                        <path d="M21 14.976l-2.492 -3.776" />
+                        <path d="M9 17l.5 -4" />
+                        <path d="M15 17l-.5 -4" />
+                      </svg>
+                    </div>
+                    <div class="openedEye absolute top-0 hidden">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye size-8 opacity-40"
+                        width="44" height="44" viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                      </svg>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
-            <div class="sign-up-htm">
-              <div class="group">
-                <label for="name" class="label">Name</label>
-                <input id="name" type="text" class="input">
-              </div>
-              <div class="group">
-                <label for="signup-email" class="label">Email</label>
-                <input id="signup-email" type="email" class="input">
-              </div>
-              <div class="group">
-                <label for="signup-password" class="label">Password</label>
-                <input id="signup-password" type="password" class="input" data-type="password">
-              </div>
-              <div class="group">
-                <input type="submit" class="button" value="Sign Up" onclick="register()">
-              </div>
-              <div class="hr"></div>
-              <div class="foot-lnk">
-                <label for="tab-1">Already Member?</a>
-              </div>
+            <div class="group flex flex-col justify-center">
+              <input type="submit"
+                class="mx-auto button bg-gold-main text-white rounded-lg py-2 px-4 cursor-pointer font-bold mt-4"
+                value="Log In" onclick="login()" type="button">
+              <button id="switchToSignUp" class="text-gray-300 text-sm mt-2">Sign Up</button>
             </div>
           </div>
         </div>
-      </div>
-      
 
-    <footer id="footerholder"></footer>
-    <script src="./scripts/Skeletons/footer-skeleton.js"></script>
+        <!-- sign up div -->
+        <div class="sign-up-html hidden" id="sign-up-html">
+          <div class="group">
+            <label for="name" class="label text-gray-400">Name</label>
+            <input id="name" type="text" class="input outline-none rounded-lg bg-gray-100 w-full p-2 mb-4 text-gray-500">
+          </div>
+          <div class="group">
+            <label for="signup-email" class="label text-gray-400">Email</label>
+            <input id="signup-email" type="email" class="input outline-none rounded-lg bg-gray-100 w-full p-2 mb-4 text-gray-500">
+          </div>
+          <div class="group relative">
+            <label for="signup-password" class="label text-gray-400">Password</label>
+            <div class="">
+              <input id="signup-password" type="password"
+                class="input outline-none rounded-lg bg-gray-100 w-full p-2 mb-4 text-gray-500 " data-type="password">
+                <div class="toggleView absolute top-7 right-10">
+                  <input type="checkbox" id="togglePassword" class="peer size-10 hidden">
+                  <label for="togglePassword" class="cursor-pointer">
+                    <div class="closedEye absolute top-0">
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-eye-closed size-8 opacity-40" width="44" height="44"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
+                        <path d="M3 15l2.5 -3.8" />
+                        <path d="M21 14.976l-2.492 -3.776" />
+                        <path d="M9 17l.5 -4" />
+                        <path d="M15 17l-.5 -4" />
+                      </svg>
+                    </div>
+                    <div class="openedEye absolute top-0 hidden">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye size-8 opacity-40"
+                        width="44" height="44" viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                      </svg>
+                    </div>
+                  </label>
+                </div>
+            </div>
+          </div>
+          <div id="confirm-password-div" class="group relative">
+            <label for="confirm-password" class="label text-gray-400">Confirm Password</label>
+            <input id="confirm-password" type="password"
+              class="input outline-none rounded-lg bg-gray-100 w-full p-2 text-gray-500" data-type="password">
+              <div class="toggleView absolute top-7 right-10">
+                <input type="checkbox" id="togglePassword" class="peer size-10 hidden">
+                <label for="togglePassword" class="cursor-pointer">
+                  <div class="closedEye absolute top-0">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      class="icon icon-tabler icon-tabler-eye-closed size-8 opacity-40" width="44" height="44"
+                      viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M21 9c-2.4 2.667 -5.4 4 -9 4c-3.6 0 -6.6 -1.333 -9 -4" />
+                      <path d="M3 15l2.5 -3.8" />
+                      <path d="M21 14.976l-2.492 -3.776" />
+                      <path d="M9 17l.5 -4" />
+                      <path d="M15 17l-.5 -4" />
+                    </svg>
+                  </div>
+                  <div class="openedEye absolute top-0 hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye size-8 opacity-40"
+                      width="44" height="44" viewBox="0 0 24 24" stroke-width="2" stroke="#9e9e9e" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                      <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                    </svg>
+                  </div>
+                </label>
+              </div>
+              <p id="passwordNoMatch" class="text-red-500 text-xs invisible pt-2">Password does not match.</p>
+          </div>
+          <div class="group flex flex-col justify-center">
+            <input id="signUp" type="submit"
+              class="mx-auto button bg-gold-main text-white rounded-lg py-2 px-4 cursor-pointer font-bold mt-2"
+              value="Sign Up">
+            <button id="switchToLogIn" class="text-gray-300 text-sm mt-2">Log In</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer id="footerholder" class="mt-auto"></footer>
+  
+  <script src="./scripts/Skeletons/loginpage-skeleton.js"></script>
+  <script src="./scripts/Skeletons/footer-skeleton.js"></script>
+  <script src="scripts/login.js"></script>
 
 </body>
 
