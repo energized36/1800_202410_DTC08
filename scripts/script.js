@@ -78,7 +78,7 @@ const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render();
 
 function hamburgerClickHandler() {
-    console.log("inside hamburger_click_handler");
+    console.log("inside hamburgerClickHandler");
     $("#dropdown").toggleClass("collapse");
 }
 
