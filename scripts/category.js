@@ -10,16 +10,21 @@ function add() {
 }
 
 function filterByTimeRange(timeRange, dataList) {
-    const today = new Date()
-    const year = today.getFullYear()
-    const month = today.getMonth() + 1
-    const day = today.getDate()
-    const currentDate = new Date(year, month - 1, day)
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+
     switch (timeRange) {
         case "week":
-            const lastMonday = new Date(currentDate)
-            lastMonday.setDate(currentDate.getDate() - currentDate.getDay() + 1)
-            return dataList.filter(item => new Date(item.date) >= lastMonday && new Date(item.date) <= currentDate);
+            const today = currentDate.getDay();
+            const previousMonday = new Date(currentDate);
+            previousMonday.setDate(currentDate.getDate() - today + (today === 0 ? -6 : 1));
+
+            return dataList.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= previousMonday && itemDate <= currentDate;
+            });
         case "month":
             const firstDayOfMonth = new Date(year, month - 1, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
@@ -279,6 +284,7 @@ function queryUserData(userID, timeRange) {
         displayCategories(spendingData);
         displayUserData(spendingData, "data_row", true);
         $("#total").text(`$${getUserTotal(spendingData)}`);
+        console.log(spendingData)
     }, error => {
         console.error("Error getting spending data:", error);
     });
