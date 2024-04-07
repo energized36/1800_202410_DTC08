@@ -1,15 +1,36 @@
-<nav class="flex flex-col justify-between md:flex-row">
-    <div class=" w-full bg-gray-100 p-4 md:p-4">
-        <div class="flex row justify-between items-center">
-        <p class="text-4xl md:text-6xl font-black font-inter my-auto text-green-main"><a href="index.html">Trckr</a></p>
-        <img class="visible color-green-main hover: md:collapse size-10" src="images\burger-menu-svgrepo-com.svg" id="Hamburger"/>   
-        <div class="hidden md:flex items-center p-4">
-        <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">About</a></div>
-        <div class=""><a href="#" class="inline-block align-middle text-3xl font-inter text-green-main font-bold px-6">Features</a></div>
-        </div>
+<header class="fixed top-0 left-0 w-full flex p-4 bg-white items-center border flex-col">
+  <div class="flex w-full justify-between items-center">
+    <div class="hidden">
+      <svg xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-user-circle stroke-green-main md:hidden" width="44" height="44"
+        viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+        <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+        <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+        </svg>
     </div>
-    <div class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end md:hidden bg-white rounded-xl pl-4" id="dropdown">
-      <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl">About</a>
-      <a href="#" class="hover:bg-green-accent hover:bg-opacity-25 align-middle text-3xl font-inter text-green-main font-bold w-full rounded-xl">Contact</a>
+    <a href="index.html" class="text-3xl md:text-6xl font-black text-green-main font-inter">Trckr</a>
+    <div id="test" class="md:hidden size-10">
+      <svg xmlns="http://www.w3.org/2000/svg" class="self-end icon icon-tabler icon-tabler-menu-2 stroke-green-main"
+        width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M4 6l16 0" />
+        <path d="M4 12l16 0" />
+        <path d="M4 18l16 0" />
+        </svg>
     </div>
-  </nav>
+  </div>
+
+  <div class="collapse z-50 relative my-auto flex flex-col items-center md:flex-row w-full md:justify-end bg-white pt-4"
+    id="dropdown">
+    <a href="profile.html"
+      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Profile</a>
+    <a href="#"
+      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Contact</a>
+    <a href="index.html"
+      class="hover:bg-green-accent hover:bg-opacity-25 text-3xl font-inter text-green-main font-bold w-full text-left rounded-xl pl-2">Log
+      Out</a>
+  </div>
+</header>

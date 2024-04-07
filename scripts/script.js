@@ -1,6 +1,6 @@
 const options = {
     chart: {
-        id: 'mychart',
+        id: "mychart",
         height: "100%",
         maxWidth: "100%",
         type: "area",
@@ -30,7 +30,7 @@ const options = {
     dataLabels: {
         enabled: false,
         formatter: function (val, opts) {
-            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     },
     stroke: {
@@ -67,7 +67,7 @@ const options = {
     yaxis: {
         labels: {
             formatter: function (value) {
-                return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                return "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
         },
         show: true,
@@ -75,11 +75,11 @@ const options = {
 }
 
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
-chart.render()
+chart.render();
 
-function hamburger_click_handler() {
-    console.log("inside hamburger_click_handler");
-    $('#dropdown').toggleClass("collapse");
+function hamburgerClickHandler() {
+    console.log("inside hamburgerClickHandler");
+    $("#dropdown").toggleClass("collapse");
 }
 
 function add() {
@@ -92,7 +92,7 @@ function add() {
 
 function cancelAdd() {
     window.scrollTo(0, 0);
-    console.log("Inside add function")
+    console.log("Inside add function");
     $("#data_gui").toggleClass("collapse");
     $("#noCategorySelectedError").remove()
 }
@@ -104,7 +104,7 @@ function filterByTimeRange(timeRange, dataList) {
     const month = currentDate.getMonth() + 1;
 
     switch (timeRange) {
-        case 'week':
+        case "week":
             const today = currentDate.getDay();
             const previousMonday = new Date(currentDate);
             previousMonday.setDate(currentDate.getDate() - today + (today === 0 ? -6 : 1));
@@ -113,16 +113,16 @@ function filterByTimeRange(timeRange, dataList) {
                 const itemDate = new Date(item.date);
                 return itemDate >= previousMonday && itemDate <= currentDate;
             });
-        case 'month':
+        case "month":
             const firstDayOfMonth = new Date(year, month - 1, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfMonth && new Date(item.date) <= currentDate);
-        case 'year':
+        case "year":
             const firstDayOfYear = new Date(year, 0, 1);
             return dataList.filter(item => new Date(item.date) >= firstDayOfYear && new Date(item.date) <= currentDate);
-        case 'all':
+        case "all":
             return dataList;
         default:
-            console.error('Invalid time range');
+            console.error("Invalid time range");
             return [];
     }
 }
@@ -151,30 +151,30 @@ function formatDate(dateString) {
 
 async function addData(userID) {
     var category = $("input[name='category']:checked").val();
-    var data_name = $("#data_name").val();
-    var data_price = $("#data_price").val();
-    var data_date = $("#data_date").val();
-    var user_ref = db.collection("users").doc(userID);
+    var dataName = $("#data_name").val();
+    var dataPrice = $("#data_price").val();
+    var dataDate = $("#data_date").val();
+    var userRef = db.collection("users").doc(userID);
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
-    $("input[name='category']").prop('checked', false);
+    $("input[name='category']").prop("checked", false);
 
-    if (category && data_price) {
+    if (category && dataPrice) {
 
-        console.log("adding data to", userID, category, data_date, data_name, data_price);
-        var document_attributes = {
+        console.log("adding data to", userID, category, dataDate, dataName, dataPrice);
+        var documentAttributes = {
             category: category,
-            name: data_name,
-            price: parseFloat(data_price).toFixed(2),
-            date: data_date
+            name: dataName,
+            price: parseFloat(dataPrice).toFixed(2),
+            date: dataDate
         };
-        var userDoc = await user_ref.get();
-        var current_total = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
-        var new_total = current_total + parseFloat(data_price);
-        await user_ref.update({ total: new_total });
+        var userDoc = await userRef.get();
+        var currentTotal = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
+        var newTotal = currentTotal + parseFloat(dataPrice);
+        await userRef.update({ total: newTotal });
 
-        user_ref.collection("spending_data").add(document_attributes)
+        userRef.collection("spending_data").add(documentAttributes)
             .then(function (docRef) {
                 console.log("Document added with ID: ", docRef.id);
             })
@@ -218,7 +218,7 @@ function getLogo(name) {
                             <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
                             <path d="M17 17h-11v-14h-2" />
                             <path d="M6 5l14 1l-1 7h-13" />
-                            </svg>`
+                            </svg>`;
             break;
         case "food":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +228,7 @@ function getLogo(name) {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path
                     d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12zm0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" />
-            </svg>`
+            </svg>`;
             break;
         case "clothing":
             categoryIcon = ` <svg xmlns="http://www.w3.org/2000/svg" class="stroke-gold-main size-full icon icon-tabler icon-tabler-shirt"
@@ -236,9 +236,9 @@ function getLogo(name) {
                 stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
-            </svg>`
+            </svg>`;
             break;
-        case "self_care":
+        case "selfCare":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-mood-heart stroke-gold-main" width="44" height="44"
                             viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
@@ -249,9 +249,9 @@ function getLogo(name) {
                             <path d="M15 10h.01" />
                             <path d="M9.5 15a3.59 3.59 0 0 0 2.774 .99" />
                             <path d="M18.994 21.5l2.518 -2.58a1.74 1.74 0 0 0 .004 -2.413a1.627 1.627 0 0 0 -2.346 -.005l-.168 .172l-.168 -.172a1.627 1.627 0 0 0 -2.346 -.004a1.74 1.74 0 0 0 -.004 2.412l2.51 2.59z" />
-                            </svg>`
+                            </svg>`;
             break;
-        case "online_shopping":
+        case "onlineShopping":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-world-www stroke-gold-main" width="44" height="44"
                             viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
@@ -266,20 +266,20 @@ function getLogo(name) {
                             <path d="M2 10l1 4l1.5 -4l1.5 4l1 -4" />
                             <path d="M17 10l1 4l1.5 -4l1.5 4l1 -4" />
                             <path d="M9.5 10l1 4l1.5 -4l1.5 4l1 -4" />
-                            </svg>`
+                            </svg>`;
             break;
         case "school":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="stroke-gold-main size-full icon icon-tabler icon-tabler-school" width="44" height="44" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
                 <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-                </svg>`
+                </svg>`;
             break;
         default:
-            categoryIcon = null
+            categoryIcon = null;
             break;
     }
-    return categoryIcon
+    return categoryIcon;
 }
 
 function displayUserData(spendingData, targetID, logo) {
@@ -314,62 +314,73 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 
-    $(`#${targetID}_form`).submit(function (event) {
+    $(`#${targetID}_form`).on("submit", (event) => {
         event.preventDefault();
         $(this).find('input[type="checkbox"]:checked').each(function () {
             getUserID().then(userID => {
-                var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'))
+                var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'));
 
                 spendingData.delete().then(() => {
                     console.log("Document successfully deleted!");
                 }).catch(function (error) {
                     console.error("Error deleting document: ", error);
                 });
-            })
+            });
         });
+    });
+
+    $(document).on("change", "#data_row :checkbox", () => {
+        amount = 0;
+        $('#data_row input[type="checkbox"]:checked').each(() => amount += 1);
+        if (amount > 0) {
+            console.log("at least one checkbox checked");
+            $('#Delete').addClass("animate-bounce border-2 border-green-accent");
+        } else {
+            console.log("no checkbox checked");
+            $('#Delete').removeClass("animate-bounce border-2 border-green-accent");
+        }
     });
 }
 
 function getUserTotal(spendingData) {
-    total = 0
+    total = 0;
     spendingData.forEach(data => {
-        total += parseFloat(data.price)
-    })
-    return total.toFixed(2)
+        total += parseFloat(data.price);
+    });
+    return total.toFixed(2);
 }
 
-function displayChart(spending_data) {
-    spending_data.reverse()
-    let userPriceArray = []
-    let userPurchaseDateArray = []
-    let total = 0
+function displayChart(spendingData) {
+    spendingData.reverse();
+    let userPriceArray = [];
+    let userPurchaseDateArray = [];
+    let total = 0;
     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    spending_data.forEach(purchase => {
-        let date = new Date(purchase.date)
-        let purchaseDate = new Date(purchase.date)
-        let purchaseDay = purchaseDate.getDate()
-        let purchaseMonth = monthNames[purchaseDate.getMonth()]
-        let purchaseYear = purchaseDate.getFullYear()
-        let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`
+    spendingData.forEach(purchase => {
+        let date = new Date(purchase.date);
+        let purchaseDate = new Date(purchase.date);
+        let purchaseDay = purchaseDate.getDate();
+        let purchaseMonth = monthNames[purchaseDate.getMonth()];
+        let purchaseYear = purchaseDate.getFullYear();
+        let dateString = `${purchaseMonth}-${purchaseDay}-${purchaseYear}`;
         // console.log(dateString)
         if (userPurchaseDateArray.includes(dateString)) {
-            userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price)
+            userPriceArray[userPriceArray.length - 1] += parseFloat(purchase.price);
         }
         else {
-            total = 0
-            userPriceArray.push(total += parseFloat(purchase.price))
-            userPurchaseDateArray.push(dateString)
+            total = 0;
+            userPriceArray.push(total += parseFloat(purchase.price));
+            userPurchaseDateArray.push(dateString);
         }
-    })
+    });
     chart.updateSeries([{
         data: userPriceArray
-    }])
+    }]);
     chart.updateOptions({
         xaxis: {
             categories: userPurchaseDateArray
         }
-    })
-
+    });
 }
 
 function queryUserData(userID, timeRange) {
@@ -384,7 +395,7 @@ function queryUserData(userID, timeRange) {
 
         spendingData = filterByTimeRange(timeRange, spendingData);
         displayUserData(spendingData, "data_row", true);
-        $("#total").text(`$${getUserTotal(spendingData)}`)
+        $("#total").text(`$${getUserTotal(spendingData)}`);
         displayChart(spendingData);
     }, error => {
         console.error("Error getting spending data:", error);
@@ -410,7 +421,7 @@ function toggleBarGraph() {
         chart: {
             type: "bar"
         },
-    })
+    });
 }
 
 function toggleLineGraph() {
@@ -418,53 +429,13 @@ function toggleLineGraph() {
         chart: {
             type: "area"
         }
-    })
-}
-
-function toggleGraph90Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 7776000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph30Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 2592000000).getTime(),
-        }
-    })
-}
-
-function toggleGraph7Days() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 604800000).getTime(),
-        }
-    })
-}
-
-function toggleGraphToday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 86400000).getTime(),
-        }
-    })
-}
-
-function toggleGraphYesterday() {
-    chart.updateOptions({
-        xaxis: {
-            min: new Date(Date.now() - 172800000).getTime(),
-        }
-    })
+    });
 }
 
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
-    $("#Hamburger").on("click", hamburger_click_handler);
+    $("#Hamburger").on("click", hamburgerClickHandler);
     $("#desktop_add_btn").on("click", add);
     $("#save").on("click", () => {
         addData(userID);
@@ -476,6 +447,9 @@ async function setUp(userID) {
         console.log("Date range initiates new Data")
         queryUserData(userID, $(this).val());
     });
+
+    
+    
 
     // Michael ToDo:
     // ToDo: About page
@@ -489,7 +463,6 @@ async function setUp(userID) {
 
 $("document").ready(() => {
     getUserID().then((userID) => {
-        setUp(userID)
-    })
+        setUp(userID);
+    });
 });
-
