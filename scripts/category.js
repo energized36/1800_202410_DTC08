@@ -143,7 +143,7 @@ function getLogo(name) {
                 <path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" />
             </svg>`
             break;
-        case "self_care":
+        case "selfCare":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-mood-heart stroke-gold-main" width="44" height="44"
                             viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
@@ -156,7 +156,7 @@ function getLogo(name) {
                             <path d="M18.994 21.5l2.518 -2.58a1.74 1.74 0 0 0 .004 -2.413a1.627 1.627 0 0 0 -2.346 -.005l-.168 .172l-.168 -.172a1.627 1.627 0 0 0 -2.346 -.004a1.74 1.74 0 0 0 -.004 2.412l2.51 2.59z" />
                             </svg>`
             break;
-        case "online_shopping":
+        case "onlineShopping":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
                             class=" size-full icon icon-tabler icon-tabler-world-www stroke-gold-main" width="44" height="44"
                             viewBox="0 0 24 24" stroke-width="2" fill="none" stroke-linecap="round"
