@@ -184,7 +184,7 @@ async function addData(userID) {
     }
     else {
         if ($("#noCategorySelectedError").length <= 0) {
-            $("#data_gui").append(`
+            $("#data_gui_container").append(`
             <div class='bg-white flex text-red-500 text-center items-center justify-center gap-1' id='noCategorySelectedError'>
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -194,10 +194,10 @@ async function addData(userID) {
                 </svg>
                 Please select a category
             </div>`)
-            $("#data_gui").addClass("animate-error")
+            $("#data_gui").toggleClass("animate-error")
             setTimeout(() => {
-                $("#data_gui").removeClass("animate-error")
-            }, 2000);
+                $("#data_gui").toggleClass("animate-error")
+            }, 500);
         }
 
     }
@@ -448,17 +448,16 @@ async function setUp(userID) {
         queryUserData(userID, $(this).val());
     });
 
-    
-    
+
+    $("#data_gui").toggleClass("collapse")
+
 
     // Michael ToDo:
     // ToDo: About page
     // ToDo: fix lorem on landing page
-    // ToDo: add border around island buttons
-    // ToDo: fix formatting on bar chart
     // ToDo: add names to categories
     // ToDo: hamburger login page
-    // ToDo: Prevent additional error divs
+
 }
 
 $("document").ready(() => {
