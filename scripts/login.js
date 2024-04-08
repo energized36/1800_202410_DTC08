@@ -23,7 +23,7 @@ function hamburgerClickHandler() {
 $(document).ready(() => {
     clearInputs();
 
-    $("#test").on("click", () => {
+    $("#Hamburger").on("click", () => {
         console.log("inside hamburgerClickHandler");
         hamburgerClickHandler();
     });
