@@ -454,9 +454,6 @@ async function setUp(userID) {
 
     // Michael ToDo:
     // ToDo: About page
-    // ToDo: fix lorem on landing page
-    // ToDo: add names to categories
-    // ToDo: hamburger login page
 
 }
 
