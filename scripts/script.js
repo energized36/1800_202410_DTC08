@@ -448,10 +448,6 @@ async function setUp(userID) {
         queryUserData(userID, $(this).val());
     });
 
-
-    $("#data_gui").toggleClass("collapse")
-
-
     // Michael ToDo:
     // ToDo: About page
 
