@@ -19,7 +19,7 @@ function register() {
       .then(function () {
         db.collection('users').doc(user.uid).collection('spending_data').add({})
         .then(function () {
-          alert('User Created!');
+          // alert('User Created!');
           window.location.href = 'home.html';
         })
         .catch(function (error) {
@@ -42,7 +42,7 @@ function register() {
   
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(function () {
-        alert('User logged in!');
+        // alert('User logged in!');
         window.location.href = 'home.html';
       })
       .catch(function (error) {
