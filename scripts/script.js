@@ -169,10 +169,6 @@ async function addData(userID) {
             price: parseFloat(dataPrice).toFixed(2),
             date: dataDate
         };
-        var userDoc = await userRef.get();
-        var currentTotal = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
-        var newTotal = currentTotal + parseFloat(dataPrice);
-        await userRef.update({ total: newTotal });
 
         userRef.collection("spending_data").add(documentAttributes)
             .then(function (docRef) {
@@ -300,7 +296,7 @@ function displayUserData(spendingData, targetID, logo) {
             html += `
                 <div class="flex items-center justify-between w-full">
                     <input type="checkbox" id="${log.id}" class="peer hidden">
-                    <label for="${log.id}" class=" ml-4 inline-block relative rounded-full h-4 w-5 border-2 border-gray-300 cursor-pointer peer-checked:border-gold-main peer-checked:bg-gold-main"></label>
+                    <label for="${log.id}" class=" ml-4 inline-block relative rounded-full h-3 w-4 border-2 border-gray-300 cursor-pointer peer-checked:border-gold-main peer-checked:bg-gold-main"></label>
                     <div class="size-[60px] mx-4">
                         ${getLogo(log.category)}
                     </div>
@@ -314,12 +310,11 @@ function displayUserData(spendingData, targetID, logo) {
         $(`#${targetID}`).append(html);
     });
 
-    $(`#${targetID}_form`).on("submit", (event) => {
+    $(`#${targetID}_form`).on("submit", function (event) {
         event.preventDefault();
         $(this).find('input[type="checkbox"]:checked').each(function () {
             getUserID().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'));
-
                 spendingData.delete().then(() => {
                     console.log("Document successfully deleted!");
                 }).catch(function (error) {
@@ -329,17 +324,22 @@ function displayUserData(spendingData, targetID, logo) {
         });
     });
 
-    $(document).on("change", "#data_row :checkbox", () => {
-        amount = 0;
-        $('#data_row input[type="checkbox"]:checked').each(() => amount += 1);
+    $("#data_row_form input[type='reset']").on("click", () => {
+        $("#Delete").removeClass("animate-pulse");
+    });
+
+    $("#data_row :checkbox").on("change", () => {
+        let amount = $('#data_row input[type="checkbox"]:checked').length;
         if (amount > 0) {
-            console.log("at least one checkbox checked");
-            $('#Delete').addClass("animate-bounce border-2 border-green-accent");
+            console.log("At least one checkbox checked");
+            $("#Delete").addClass("animate-pulse");
         } else {
-            console.log("no checkbox checked");
-            $('#Delete').removeClass("animate-bounce border-2 border-green-accent");
+            $("#Delete").removeClass("animate-pulse");
+            console.log("No checkbox checked");
         }
     });
+
+
 }
 
 function getUserTotal(spendingData) {
