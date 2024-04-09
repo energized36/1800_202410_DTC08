@@ -93,18 +93,33 @@ async function addData(userID) {
             price: parseFloat(dataPrice).toFixed(2),
             date: dataDate
         };
-        var userDoc = await userRef.get();
-        var currentTotal = userDoc.exists ? parseFloat(userDoc.data().total || 0) : 0;
-        var newTotal = currentTotal + parseFloat(dataPrice);
-        await userRef.update({ total: newTotal });
 
         userRef.collection("spending_data").add(documentAttributes)
-            .then(function(docRef) {
+            .then(function (docRef) {
                 console.log("Document added with ID: ", docRef.id);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.error("Error adding document: ", error);
             });
+    }
+    else {
+        if ($("#noCategorySelectedError").length <= 0) {
+            $("#data_gui_container").append(`
+                <div class='bg-white flex text-red-500 text-center items-center justify-center gap-1 font-inter' id='noCategorySelectedError'>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="16" height="16" viewBox="0 0 24 24" stroke-width="2" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                    <path d="M12 8v4" />
+                    <path d="M12 16h.01" />
+                    </svg>
+                    Please select a category / input price
+                </div>`)
+            $("#data_gui").toggleClass("animate-error")
+            setTimeout(() => {
+                $("#data_gui").toggleClass("animate-error")
+            }, 500);
+        }
+
     }
     add();
 }
