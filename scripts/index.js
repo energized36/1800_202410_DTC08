@@ -1,3 +1,4 @@
+// When hamburger is clicked, display hamburger men
 function hamburgerClickHandler() {
     console.log("inside hamburgerClickHandler");
     $("#dropdown").toggleClass("collapse");

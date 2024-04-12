@@ -79,7 +79,7 @@ const options = {
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render();
 
-// When hamburger is clicked, display hamburger menu
+// When hamburger is clicked, display hamburger men
 function hamburgerClickHandler() {
     console.log("inside hamburgerClickHandler");
     $("#dropdown").toggleClass("collapse");
@@ -103,83 +103,132 @@ function cancelAdd() {
     $("#noCategorySelectedError").remove()
 }
 
+/**
+ * Filter the given data list based on the specified time range.
+ * @param {string} timeRange - The time range to filter by (e.g., "week", "month", "year", "all").
+ * @param {Array} dataList - The array of objects containing data to filter.
+ * @returns {Array} - The filtered array of objects based on the specified time range.
+ */
 function filterByTimeRange(timeRange, dataList) {
+
+    // Get the current date
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
+
+    // Extract current day, month, and year
     const dayOfWeek = currentDate.getDay();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const dayOfMonth = currentDate.getDate();
 
+    // Switch based on the specified time range
     switch (timeRange) {
         case "week":
+            // Calculate the date of the previous Monday
             const previousMonday = new Date(currentDate);
             if (dayOfWeek === 0) {
+                // If today is Sunday, set the date to 6 days ago (previous Monday)
                 previousMonday.setDate(dayOfMonth - 6);
             } else {
+                // Otherwise, set the date to the Monday of the current week
                 previousMonday.setDate(dayOfMonth - dayOfWeek + 1);
             }
+            // Filter the data list to include only items within the current week
             return dataList.filter(item => {
                 const itemDate = new Date(item.date);
                 return itemDate >= previousMonday && itemDate <= currentDate;
             });
         case "month":
+            // Calculate the date of the first day of the current month
             const firstDayOfMonth = new Date(year, month, 1);
+            // Filter the data list to include only items within the current month
             return dataList.filter(item => {
                 const itemDate = new Date(item.date);
                 return itemDate >= firstDayOfMonth && itemDate <= currentDate;
             });
         case "year":
+            // Calculate the date of the first day of the current year
             const firstDayOfYear = new Date(year, 0, 1);
+            // Filter the data list to include only items within the current year
             return dataList.filter(item => {
                 const itemDate = new Date(item.date);
                 return itemDate >= firstDayOfYear && itemDate <= currentDate;
             });
         case "all":
+            // Return the entire data list without filtering
             return dataList;
         default:
+            // If an invalid time range is provided, log an error and return an empty array
             console.error("Invalid time range");
             return [];
     }
 }
 
+/**
+ * Format the given date string based on its relation to the current date.
+ * If the date is today, returns "Today".
+ * If the date is yesterday, returns "Yesterday".
+ * Otherwise, returns the date in a medium date style format. ex Mar 4, 2024
+ * @param {string} dateString - The date string to format.
+ * @returns {string} - The formatted date string.
+ */
 function formatDate(dateString) {
+    // Convert the date string to a Date object
     const date = new Date(dateString);
 
+    // Get today's date
     const todaysDate = new Date();
 
+    // Get yesterday's date
     const yesterdaysDate = new Date();
     yesterdaysDate.setDate(yesterdaysDate.getDate() - 1);
 
+    // Check if the date is today
     if (date.getDate() === todaysDate.getDate() &&
         date.getMonth() === todaysDate.getMonth() &&
         date.getFullYear() === todaysDate.getFullYear()) {
         return "Today";
     }
 
+    // Check if the date is yesterday
     if (date.getDate() === yesterdaysDate.getDate() &&
         date.getMonth() === yesterdaysDate.getMonth() &&
         date.getFullYear() === yesterdaysDate.getFullYear()) {
         return "Yesterday";
     }
 
+    // If the date is not today or yesterday, format it using the medium date style
     return date.toLocaleDateString(undefined, { dateStyle: "medium" });
 }
 
+
+/**
+ * Add spending data to the database for the specified user.
+ * @param {string} userID - The ID of the user.
+ * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+ */
 async function addData(userID) {
+    // Get the selected category, data name, price, and date from the input fields
     var category = $("input[name='category']:checked").val();
     var dataName = $("#data_name").val();
     var dataPrice = $("#data_price").val();
     var dataDate = $("#data_date").val();
+    
+    // Reference to the user's document in the database
     var userRef = db.collection("users").doc(userID);
+
+    // Clear input fields
     $("#data_name").val("");
     $("#data_price").val("");
     $("#data_date").val("");
     $("input[name='category']").prop("checked", false);
 
+    // Check if category and price are provided
     if (category && dataPrice) {
-
-        console.log("adding data to", userID, category, dataDate, dataName, dataPrice);
+        // Log adding data
+        console.log("Adding data to", userID, category, dataDate, dataName, dataPrice);
+        
+        // Document attributes to be added to the spending_data collection
         var documentAttributes = {
             category: category,
             name: dataName,
@@ -187,15 +236,16 @@ async function addData(userID) {
             date: dataDate
         };
 
-        userRef.collection("spending_data").add(documentAttributes)
+        // Add document to the spending_data collection
+        return userRef.collection("spending_data").add(documentAttributes)
             .then(function (docRef) {
                 console.log("Document added with ID: ", docRef.id);
             })
             .catch(function (error) {
                 console.error("Error adding document: ", error);
             });
-    }
-    else {
+    } else {
+        // Display error message if category or price is missing
         if ($("#noCategorySelectedError").length <= 0) {
             $("#data_gui_container").append(`
                 <div class='bg-white flex text-red-500 text-center items-center justify-center gap-1 font-inter' id='noCategorySelectedError'>
@@ -212,14 +262,21 @@ async function addData(userID) {
                 $("#data_gui").toggleClass("animate-error")
             }, 500);
         }
-
     }
+    // Trigger add function to display the input menu
     add();
 }
 
+
+/**
+ * Return a SVG icon based on the provided category name.
+ * @param {string} name - The name of the category.
+ * @returns {string|null} - The SVG icon as a string or null if the category is not recognized.
+ */
 function getLogo(name) {
     let categoryIcon;
 
+    // Selects an SVG icon based on the category name
     switch (name) {
         case "groceries":
             categoryIcon = `<svg xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +353,14 @@ function getLogo(name) {
 }
 
 
+/**
+ * Display user spending data grouped by date.
+ * @param {Object} spendingData - The user's spending data.
+ * @param {string} targetID - The ID of the HTML element where the data will be displayed.
+ * @param {boolean} logo - Option to display Logos.
+ */
 function displayUserData(spendingData, targetID, logo) {
+    // Group spending data by date
     const groupedByDate = {};
     Object.keys(spendingData).forEach(key => {
         const date = formatDate(spendingData[key].date);
@@ -305,18 +369,22 @@ function displayUserData(spendingData, targetID, logo) {
         }
         groupedByDate[date].push(spendingData[key]);
     });
+    
+    // Iterate over each date group
     Object.keys(groupedByDate).forEach(date => {
         const logs = groupedByDate[date];
         let html = `
                     <div class="bg-white mx-2 mt-2 flex items-center flex-col">
                         <div class="rounded-t-xl my-auto px-2 text-green-main font-black font-inter text-xl w-full">${date}</div>`;
+        
+        // Generate HTML for each spending log in the group
         logs.forEach(log => {
             html += `
                     <div class="flex items-center justify-between w-full">
                         <input type="checkbox" id="${log.id}" class="peer hidden">
                         <label for="${log.id}" class=" ml-4 inline-block relative rounded-full h-3 w-4 border-2 border-gray-300 cursor-pointer peer-checked:border-gold-main peer-checked:bg-gold-main"></label>
                         <div class="size-[60px] mx-4">
-                            ${getLogo(log.category)}
+                            ${getLogo(log.category)} <!-- Get category logo using the provided function -->
                         </div>
                         <div class="font-inter font-bold flex text-md justify-between w-full text-lg">
                             <div class="text-green-accent text-opacity-7 capitalize">${log.name}</div>
@@ -325,11 +393,15 @@ function displayUserData(spendingData, targetID, logo) {
                     </div>`;
         });
         html += `</div>`;
+        
+        // Append the generated HTML to the target element
         $(`#${targetID}`).append(html);
     });
 
+    // Add event listener for form submission
     $(`#${targetID}_form`).on("submit", function (event) {
         event.preventDefault();
+        // Handle deletion of selected spending data
         $(this).find('input[type="checkbox"]:checked').each(function () {
             getUserID().then(userID => {
                 var spendingData = db.collection("users").doc(userID).collection("spending_data").doc($(this).attr('id'));
@@ -341,21 +413,6 @@ function displayUserData(spendingData, targetID, logo) {
             });
         });
     });
-
-    // $("#data_row_form input[type='reset']").on("click", () => {
-    //     $("#Delete").removeClass("animate-pulse");
-    // });
-
-    // $("#data_row :checkbox").on("change", () => {
-    //     let amount = $('#data_row input[type="checkbox"]:checked').length;
-    //     if (amount > 0) {
-    //         console.log("At least one checkbox checked");
-    //         $("#Delete").addClass("animate-pulse");
-    //     } else {
-    //         $("#Delete").removeClass("animate-pulse");
-    //         console.log("No checkbox checked");
-    //     }
-    // });
 }
 
 // Takes all of users spending data and returns the accumulated total
@@ -401,25 +458,40 @@ function displayChart(spendingData) {
     });
 }
 
-// Retreives user data based on specified time range
+/**
+ * Retrieves user data based on the specified time range and updates the UI accordingly.
+ * 
+ * @param {string} userID - The ID of the user whose data is being retrieved.
+ * @param {string} timeRange - The time range for filtering the data (week, month, year, all).
+ * @returns {void}
+ */
 function queryUserData(userID, timeRange) {
+    // Firestore query to retrieve spending data
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
         snapshot.docs.forEach((doc) => {
             spendingData.push({ ...doc.data(), id: doc.id });
         });
-        spendingData = spendingData.reverse(); // orders it by newest to oldest
-        $("#data_row").empty();
-        $("#categories").empty();
+        spendingData = spendingData.reverse(); // Orders the data from newest to oldest
+        $("#data_row").empty(); // Clear existing data from the DOM
+        $("#categories").empty(); // Clear existing category data from the DOM
 
-        spendingData = filterByTimeRange(timeRange, spendingData); // Changes changes the time range
+        // Filter the spending data based on the specified time range
+        spendingData = filterByTimeRange(timeRange, spendingData);
+        
+        // Display filtered spending data in the UI
         displayUserData(spendingData, "data_row", true);
+        
+        // Update the total amount displayed in the UI
         $("#total").text(`$${getUserTotal(spendingData)}`);
+        
+        // Update the chart with the filtered spending data
         displayChart(spendingData);
     }, error => {
         console.error("Error getting spending data:", error);
     });
 }
+
 
 // Gets user ID
 async function getUserID() {
@@ -454,24 +526,48 @@ function toggleLineGraph() {
     });
 }
 
-// Setup functions/event listeners
+/**
+ * Sets up event listeners and initializes UI based on user ID.
+ * 
+ * @param {string} userID - The ID of the user for setting up the UI.
+ * @returns {void}
+ */
 async function setUp(userID) {
+    // Query user data and initialize UI based on selected date range
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
+    
+    // Event listener for the "Add" button
     $("#add").on("click", add);
+    
+    // Event listener for the hamburger icon
     $("#Hamburger").on("click", hamburgerClickHandler);
+    
+    // Event listener for the "Add" button in desktop view
     $("#desktop_add_btn").on("click", add);
+    
+    // Event listener for the "Save" button
     $("#save").on("click", () => {
         addData(userID);
     });
+    
+    // Event listener for the "Cancel" button
     $("#cancel").on("click", cancelAdd);
+    
+    // Event listener for the "Bar Graph" button
     $("#barGraphButton").on("click", toggleBarGraph);
+    
+    // Event listener for the "Line Graph" button
     $("#lineGraphButton").on("click", toggleLineGraph);
+    
+    // Event listener for changes in date picker selection
     $('input[name="date-picker"]').on('change', function () {
-        console.log("Date range initiates new Data")
+        // Log when the date range initiates new data retrieval
+        console.log("Date range initiates new Data");
+        // Query user data based on the selected date range
         queryUserData(userID, $(this).val());
     });
-
 }
+
 
 // When document is loaded, pass user ID to setup function above
 $("document").ready(() => {

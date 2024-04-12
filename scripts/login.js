@@ -1,13 +1,27 @@
-
+/**
+ * Toggles between sign-in and sign-up forms.
+ * 
+ * @returns {void}
+ */
 function toggleForm() {
     $("#sign-in-html").toggleClass("hidden");
     $("#sign-up-html").toggleClass("hidden");
 }
 
+/**
+ * Checks if the password matches the confirmation password.
+ * 
+ * @returns {boolean} - Returns true if passwords match, false otherwise.
+ */
 function checkPassword() {
     return $("#signup-password").val() == $("#confirm-password").val();
 }
 
+/**
+ * Clears input fields.
+ * 
+ * @returns {void}
+ */
 function clearInputs() {
     $('#login-email').val('');
     $('#login-password').val('');
@@ -16,6 +30,11 @@ function clearInputs() {
     $('#confirm-password').val('');
 }
 
+/**
+ * Handles click event for the hamburger icon to toggle dropdown.
+ * 
+ * @returns {void}
+ */
 function hamburgerClickHandler() {
     $("#dropdown").toggleClass("collapse");
 }
@@ -24,7 +43,6 @@ $(document).ready(() => {
     clearInputs();
 
     $("#Hamburger").on("click", () => {
-        console.log("inside hamburgerClickHandler");
         hamburgerClickHandler();
     });
 
