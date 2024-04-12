@@ -2,13 +2,13 @@
 
 ## 1. Project Description
 
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ...
+Trckr provides a simple way users to track their day-to-day expenses with the use of an intuative ui and simple design. 
+Core features are adding and deleting expenses, viewing expenses by categories and using a graph to visually interpret expenses.
 
 ## 2. Names of Contributor
 List team members and/or short bio's here...
 
-- my name is michael and i want to make cool stuff with code!
+- My name is michael and i want to make cool stuff with code!
 - I am Erryl and I am eager to implement my idea into a fully functioning website
 - I am Alzen Landayan and I am very excited about this project because a a lot of cool ideas will be manifested..
 
@@ -18,6 +18,7 @@ List team members and/or short bio's here...
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 
 - HTML, CSS, JavaScript
+- Tailwind
 - Bootstrap 5.0 (Frontend library)
 - Firebase 8.0 (BAAS - Backend as a Service)
 - Flowbite footer, and chart library
@@ -29,16 +30,15 @@ State what a user needs to do when they come to your project. How do others star
 Here are the steps ...
 
 - Open index using Five server extention
-- Sign up an email and passowrd
+- Sign up an email and password
 - Start loggin your expenses
+- View expenses through category page
 
 ## 5. Known Bugs and Limitations
 
 Here are some known bugs:
 
-- Hamburger menu in log in page doesnt 
-- ...
-- ...
+- Hamburger button in the menu doesnt load
 
 ## 6. Features for Future
 
