@@ -3,11 +3,7 @@ function hamburgerClickHandler() {
     $('#dropdown').toggleClass("collapse");
 }
 
-function add() {
-    window.scrollTo(0, 0);
-    console.log("Inside add function")
-    $("#data_gui").toggleClass("collapse");
-}
+
 
 function filterByTimeRange(timeRange, dataList) {
     const currentDate = new Date();
@@ -68,7 +64,7 @@ function formatDate(dateString) {
 }
 
 function toTitleCase(str) {
-    return str.toLowerCase().replace(/\b\w/g, function(char) {
+    return str.toLowerCase().replace(/\b\w/g, function (char) {
         return char.toUpperCase();
     });
 }
@@ -273,7 +269,7 @@ function displayCategories(spendingData) {
             <div id="${category.category}-total" class="font-inter font-bold text-green-main text-xl text-right">${category.total.toFixed(2)}</div>
             <div id="${category.category}-logs" class="max-h-[200px] overflow-y-auto -z-10"></div>
         </div>`);
-        
+
         displayUserData(categoryLogs, `${category.category}-logs`, false);
     });
 }
@@ -328,7 +324,7 @@ function setUp(userID) {
         addData(userID);
     });
     $("#cancel").on("click", add);
-    $('input[name="date-picker"]').on("change", function() {
+    $('input[name="date-picker"]').on("change", function () {
         queryUserData(userID, $(this).val());
     });
 }
