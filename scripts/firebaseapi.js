@@ -1,3 +1,4 @@
+// Firebase config information
 const firebaseConfig = {
   apiKey: "AIzaSyDwuru35xP0eibbVWge0mxdE2wgenaoeG4",
   authDomain: "trckr-login.firebaseapp.com",
@@ -8,9 +9,10 @@ const firebaseConfig = {
   measurementId: "G-X1TPJG9R8B"
 };
 
-
+// Starts firebase
 firebase.initializeApp(firebaseConfig);
 
+// Declares firebase variables to use
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();

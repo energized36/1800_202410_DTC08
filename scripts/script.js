@@ -1,3 +1,4 @@
+// options to pass to the apex charts object
 const options = {
     chart: {
         id: "mychart",
@@ -74,14 +75,17 @@ const options = {
     },
 }
 
+// Initialize and render the chart
 const chart = new ApexCharts(document.getElementById("area-chart"), options);
 chart.render();
 
+// When hamburger is clicked, display hamburger menu
 function hamburgerClickHandler() {
     console.log("inside hamburgerClickHandler");
     $("#dropdown").toggleClass("collapse");
 }
 
+// Displays menu to input data
 function add() {
     if ($("#noCategorySelectedError").length === 0) {
         window.scrollTo(0, 0);
@@ -90,6 +94,7 @@ function add() {
     }
 }
 
+// Cancel button to close add menu
 function cancelAdd() {
     window.scrollTo(0, 0);
     console.log("Inside add function");
@@ -104,7 +109,7 @@ function filterByTimeRange(timeRange, dataList) {
     const dayOfWeek = currentDate.getDay();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
-    const dayOfMonth= currentDate.getDate();
+    const dayOfMonth = currentDate.getDate();
 
     switch (timeRange) {
         case "week":
@@ -137,8 +142,6 @@ function filterByTimeRange(timeRange, dataList) {
             return [];
     }
 }
-
-
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -292,6 +295,7 @@ function getLogo(name) {
     return categoryIcon;
 }
 
+
 function displayUserData(spendingData, targetID, logo) {
     const groupedByDate = {};
     Object.keys(spendingData).forEach(key => {
@@ -354,6 +358,7 @@ function displayUserData(spendingData, targetID, logo) {
     // });
 }
 
+// Takes all of users spending data and returns the accumulated total
 function getUserTotal(spendingData) {
     total = 0;
     spendingData.forEach(data => {
@@ -362,6 +367,7 @@ function getUserTotal(spendingData) {
     return total.toFixed(2);
 }
 
+// Fills up the chart with the proper spending data given
 function displayChart(spendingData) {
     spendingData.reverse();
     let userPriceArray = [];
@@ -395,6 +401,7 @@ function displayChart(spendingData) {
     });
 }
 
+// Retreives user data based on specified time range
 function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
@@ -414,6 +421,7 @@ function queryUserData(userID, timeRange) {
     });
 }
 
+// Gets user ID
 async function getUserID() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
@@ -428,6 +436,7 @@ async function getUserID() {
     });
 }
 
+// Toggles graph to change to bar graph
 function toggleBarGraph() {
     ApexCharts.exec("mychart", 'updateOptions', {
         chart: {
@@ -436,6 +445,7 @@ function toggleBarGraph() {
     });
 }
 
+// Toggles graph to change to line graph
 function toggleLineGraph() {
     chart.updateOptions({
         chart: {
@@ -444,6 +454,7 @@ function toggleLineGraph() {
     });
 }
 
+// Setup functions/event listeners
 async function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#add").on("click", add);
@@ -460,11 +471,9 @@ async function setUp(userID) {
         queryUserData(userID, $(this).val());
     });
 
-    // Michael ToDo:
-    // ToDo: About page
-
 }
 
+// When document is loaded, pass user ID to setup function above
 $("document").ready(() => {
     getUserID().then((userID) => {
         setUp(userID);

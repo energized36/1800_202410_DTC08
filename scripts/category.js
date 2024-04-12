@@ -1,9 +1,15 @@
+// Displays hamburger menu when hamburger is clicked
 function hamburgerClickHandler() {
     console.log("inside hamburger_click_handler");
     $('#dropdown').toggleClass("collapse");
 }
 
-
+// Displays the menu to add a new transaction entry
+function add() {
+    window.scrollTo(0, 0);
+    console.log("Inside add function");
+    $("#data_gui").toggleClass("collapse");
+}
 
 function filterByTimeRange(timeRange, dataList) {
     const currentDate = new Date();
@@ -35,12 +41,6 @@ function filterByTimeRange(timeRange, dataList) {
     }
 }
 
-function add() {
-    window.scrollTo(0, 0);
-    console.log("Inside add function");
-    $("#data_gui").toggleClass("collapse");
-}
-
 function formatDate(dateString) {
     const date = new Date(dateString);
     const todaysDate = new Date();
@@ -69,6 +69,7 @@ function toTitleCase(str) {
     });
 }
 
+// Takes input data and adds to the database
 async function addData(userID) {
     var category = $("input[name='category']:checked").val();
     var dataName = $("#data_name").val();
@@ -120,6 +121,7 @@ async function addData(userID) {
     add();
 }
 
+// Retrieves the respective category svg based on the passed argument
 function getLogo(name) {
     let categoryIcon;
 
@@ -198,6 +200,7 @@ function getLogo(name) {
     return categoryIcon
 }
 
+
 function displayUserData(spendingData, targetID, logo) {
     const groupedByDate = {};
 
@@ -274,6 +277,7 @@ function displayCategories(spendingData) {
     });
 }
 
+// Takes all of users spending data and returns the accumulated total
 function getUserTotal(spendingData) {
     let total = 0;
     spendingData.forEach(data => {
@@ -282,6 +286,7 @@ function getUserTotal(spendingData) {
     return total.toFixed(2);
 }
 
+// Retreives user data based on specified time range
 function queryUserData(userID, timeRange) {
     db.collection("users").doc(userID).collection("spending_data").orderBy("date").onSnapshot(snapshot => {
         let spendingData = [];
@@ -301,6 +306,7 @@ function queryUserData(userID, timeRange) {
     });
 }
 
+// Retrieves user ID
 async function getUserId() {
     return new Promise((resolve, reject) => {
         firebase.auth().onAuthStateChanged(user => {
@@ -315,6 +321,8 @@ async function getUserId() {
     });
 }
 
+
+// Setup functions/event listeners
 function setUp(userID) {
     queryUserData(userID, $('input[name="date-picker"]:checked').val());
     $("#Hamburger").on("click", hamburgerClickHandler);
@@ -329,6 +337,7 @@ function setUp(userID) {
     });
 }
 
+// When document is loaded, pass user ID to setup function above
 $("document").ready(() => {
     getUserId().then(userID => {
         setUp(userID);
