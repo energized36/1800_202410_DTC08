@@ -38,7 +38,7 @@ Here are the steps ...
 
 Here are some known bugs:
 
-- Hamburger button in the menu doesnt load
+- Dropdown menu doesn't work in profile and log in.
 
 ## 6. Features for Future
 
