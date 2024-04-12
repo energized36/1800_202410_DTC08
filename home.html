@@ -8,6 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -15,12 +16,20 @@
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <!-- Apex charts  -->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="./styles/style.css" />
+  <script src="./navbar/style.css"></script>
 
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -29,12 +38,11 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+  <!-- Flowbite CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-  <script src="./navbar/style.css"></script>
 
+
+  <!-- Tailwind theme customization -->
   <script>
     tailwind.config = {
       theme: {
@@ -338,8 +346,8 @@
             <input class=" font-inter text-green-accent rounded-xl font-bold shadow-md py-2 px-4" type="reset"
               value="Reset" />
             <div class="relative">
-              <input id="Delete" class=" font-inter text-green-accent rounded-xl font-bold shadow-md py-2 px-4" type="submit"
-                value="Delete" />
+              <input id="Delete" class=" font-inter text-green-accent rounded-xl font-bold shadow-md py-2 px-4"
+                type="submit" value="Delete" />
             </div>
           </div>
           <div id="data_row"></div>
@@ -350,10 +358,13 @@
 
   <footer id="homebarholder"></footer>
 
+  <!-- JS files for libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="/node_modules/flowbite/dist/flowbite.turbo.js"></script>
   <script src="/node_modules/flowbite/dist/datepicker.js"></script>
   <script src="/scripts/tailwind.config.js"></script>
+
+  <!-- JS files for skeleton and functionality -->
   <script src="/scripts/firebaseapi.js"></script>
   <script src="./scripts/./Skeletons/loggedin-skeleton.js"></script>
   <script src="./scripts/Skeletons/homebar-skeleton.js"></script>
