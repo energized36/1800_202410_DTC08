@@ -23,6 +23,7 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 - Firebase 8.0 (BAAS - Backend as a Service)
 - Flowbite footer, and chart library
 - Apex charts
+- AI used for debugging and formatting of JS code.
 
 ## 4. Complete setup/installion/usage
 
